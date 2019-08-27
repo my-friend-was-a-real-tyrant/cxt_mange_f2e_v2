@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
+    "sourceMap": false,
+    "experimentalDecorators": true,
     "target": "es5",
+    "baseUrl": "src",
     "lib": [
       "dom",
       "dom.iterable",
