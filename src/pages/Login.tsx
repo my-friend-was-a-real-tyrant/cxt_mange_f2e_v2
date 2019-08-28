@@ -5,14 +5,20 @@
  */
 import React, {FunctionComponent, ChangeEvent, FormEvent, useState} from 'react'
 import {withRouter, RouteComponentProps} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {bindActionCreators, Dispatch} from 'redux'
 import {Form, Icon, Input, Button, Checkbox} from 'antd'
+import * as actions from 'store/actions/common'
 import fetch from 'fetch/axios'
 import {FormComponentProps} from 'antd/lib/form'
 import CryptoJS from "crypto-js";
 import 'assets/styles/login.less'
 
+interface IProps {
+  setMenuList: () => void;
+}
 
-const Login: FunctionComponent<FormComponentProps & RouteComponentProps> = (props) => {
+const Login: FunctionComponent<IProps & FormComponentProps & RouteComponentProps> = (props) => {
   const [userStatus, setUserStatus] = useState<boolean>(false)
   // 检测用户是否存在
   const checkUser = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,15 +39,32 @@ const Login: FunctionComponent<FormComponentProps & RouteComponentProps> = (prop
   // 提交登录
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const params = {
-      client_id: 'ROBOT',
-      client_secret: 1,
-      grant_type: "password",
-      username: 'liuhao0627',
-      password: CryptoJS.SHA1('&m34nh4fd22888888').toString(CryptoJS.enc.Hex),
-    }
-    fetch.post(`/api/oauth/token/getAccessToken`, null, {params}).then((res: any) => {
-      console.log(res)
+    props.form.validateFields((err, values) => {
+      if (err) return false;
+      const params = {
+        client_id: 'ROBOT',
+        client_secret: 1,
+        grant_type: "password",
+        username: values.username,
+        password: CryptoJS.SHA1(`&m34nh4fd22${values.password}`).toString(CryptoJS.enc.Hex),
+      }
+      fetch.post(`/api/oauth/token/getAccessToken`, null, {params}).then((res: any) => {
+        if (res.code === 20000) {
+          localStorage.setItem('access_token', res.data.access_token)
+          getUser()
+        }
+      })
+    })
+  }
+
+  // 获取用户信息
+  const getUser = () => {
+    fetch.get(`/apiv1/uac/token?access_token=${localStorage.getItem('access_token')}`).then((res: any) => {
+      if (res.code === 20000) {
+        localStorage.setItem('mjoys_user_id', res.data.id)
+        localStorage.setItem('mjoys_user', JSON.stringify(res.data))
+        props.setMenuList()
+      }
     })
   }
 
@@ -55,7 +78,7 @@ const Login: FunctionComponent<FormComponentProps & RouteComponentProps> = (prop
           prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
           onBlur={(e: ChangeEvent<HTMLInputElement>) => checkUser(e)}
           onChange={() => setUserStatus(false)}
-          placeholder="Username"
+          placeholder="请输入用户名"
         />,
       )}
     </Form.Item>
@@ -66,12 +89,12 @@ const Login: FunctionComponent<FormComponentProps & RouteComponentProps> = (prop
         <Input
           prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
           type="password"
-          placeholder="Password"
+          placeholder="请输入密码"
         />,
       )}
     </Form.Item>
     <Form.Item>
-      {getFieldDecorator('remember', {valuePropName: 'checked', initialValue: true})(
+      {getFieldDecorator('remember', {valuePropName: 'checked', initialValue: false})(
         <Checkbox>一周内登录不过期</Checkbox>
       )}
       <Button type="primary" htmlType="submit" className="login-form-button">
@@ -80,5 +103,8 @@ const Login: FunctionComponent<FormComponentProps & RouteComponentProps> = (prop
     </Form.Item>
   </Form>
 }
-
-export default withRouter(Form.create<FormComponentProps & RouteComponentProps>()(Login))
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setMenuList: () => bindActionCreators(actions.setMenuList(), dispatch)
+})
+const WrapperLogin = Form.create<IProps & FormComponentProps & RouteComponentProps>()(Login)
+export default withRouter(connect(null, mapDispatchToProps)(WrapperLogin))
