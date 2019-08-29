@@ -2,16 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux';
-import App from './App';
 import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from "redux-devtools-extension"
-import reducers from 'store/reducers'
+import {ConfigProvider} from 'antd'
+import zhCN from 'antd/es/locale/zh_CN';
+import rootReducers from 'store/reducers'
+import AppRouter from 'router/AppRouter'
+
 const applyMiddle = process.env.NODE_ENV === 'production' ? applyMiddleware(thunk) : composeWithDevTools(applyMiddleware(thunk));
-const store = createStore(reducers,applyMiddle)
+const store = createStore(rootReducers, applyMiddle)
+
 ReactDOM.render(
-  <Provider store={store}>
-    <App/>
-  </Provider>, document.getElementById('root'));
+  <ConfigProvider locale={zhCN}>
+    <Provider store={store}>
+      <AppRouter/>
+    </Provider>
+  </ConfigProvider>, document.getElementById('root'));
 
 serviceWorker.unregister();

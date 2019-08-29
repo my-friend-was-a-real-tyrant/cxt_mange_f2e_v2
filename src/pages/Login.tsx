@@ -6,7 +6,7 @@
 import React, {FunctionComponent, ChangeEvent, FormEvent, useState} from 'react'
 import {withRouter, RouteComponentProps} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {bindActionCreators, Dispatch} from 'redux'
+import {Dispatch} from 'redux'
 import {Form, Icon, Input, Button, Checkbox} from 'antd'
 import * as actions from 'store/actions/common'
 import fetch from 'fetch/axios'
@@ -15,7 +15,7 @@ import CryptoJS from "crypto-js";
 import 'assets/styles/login.less'
 
 interface IProps {
-  setMenuList: () => void;
+  thunkSetMenuList: () => void;
 }
 
 const Login: FunctionComponent<IProps & FormComponentProps & RouteComponentProps> = (props) => {
@@ -63,48 +63,51 @@ const Login: FunctionComponent<IProps & FormComponentProps & RouteComponentProps
       if (res.code === 20000) {
         localStorage.setItem('mjoys_user_id', res.data.id)
         localStorage.setItem('mjoys_user', JSON.stringify(res.data))
-        props.setMenuList()
+        props.thunkSetMenuList()
+        props.history!.push('/')
       }
     })
   }
 
   const {getFieldDecorator} = props.form;
-  return <Form onSubmit={handleSubmit} className="login-form">
-    <Form.Item validateStatus={userStatus ? 'error' : 'validating'} help={userStatus ? '用户名校验失败!!' : ''}>
-      {getFieldDecorator('username', {
-        rules: [{required: true, message: '请输入正确的用户名!'}],
-      })(
-        <Input
-          prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-          onBlur={(e: ChangeEvent<HTMLInputElement>) => checkUser(e)}
-          onChange={() => setUserStatus(false)}
-          placeholder="请输入用户名"
-        />,
-      )}
-    </Form.Item>
-    <Form.Item>
-      {getFieldDecorator('password', {
-        rules: [{required: true, message: '请输入密码!'}],
-      })(
-        <Input
-          prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-          type="password"
-          placeholder="请输入密码"
-        />,
-      )}
-    </Form.Item>
-    <Form.Item>
-      {getFieldDecorator('remember', {valuePropName: 'checked', initialValue: false})(
-        <Checkbox>一周内登录不过期</Checkbox>
-      )}
-      <Button type="primary" htmlType="submit" className="login-form-button">
-        登录
-      </Button>
-    </Form.Item>
-  </Form>
+  return (
+    <Form onSubmit={handleSubmit} className="login-form">
+      <Form.Item validateStatus={userStatus ? 'error' : 'validating'} help={userStatus ? '用户名校验失败!!' : ''}>
+        {getFieldDecorator('username', {
+          rules: [{required: true, message: '请输入正确的用户名!'}],
+        })(
+          <Input
+            prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+            onBlur={(e: ChangeEvent<HTMLInputElement>) => checkUser(e)}
+            onChange={() => setUserStatus(false)}
+            placeholder="请输入用户名"
+          />,
+        )}
+      </Form.Item>
+      <Form.Item>
+        {getFieldDecorator('password', {
+          rules: [{required: true, message: '请输入密码!'}],
+        })(
+          <Input
+            prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+            type="password"
+            placeholder="请输入密码"
+          />,
+        )}
+      </Form.Item>
+      <Form.Item>
+        {getFieldDecorator('remember', {valuePropName: 'checked', initialValue: false})(
+          <Checkbox>一周内登录不过期</Checkbox>
+        )}
+        <Button type="primary" htmlType="submit" className="login-form-button">
+          登录
+        </Button>
+      </Form.Item>
+    </Form>
+  )
 }
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setMenuList: () => bindActionCreators(actions.setMenuList(), dispatch)
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  thunkSetMenuList: () => dispatch(actions.thunkSetMenuList())
 })
 const WrapperLogin = Form.create<IProps & FormComponentProps & RouteComponentProps>()(Login)
 export default withRouter(connect(null, mapDispatchToProps)(WrapperLogin))

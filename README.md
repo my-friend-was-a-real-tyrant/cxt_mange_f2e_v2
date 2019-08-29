@@ -1,44 +1,39 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 开发规范
+  - 注释
+    - 组件文件头部需添加注释
+    - ```typescript
+      /*
+       * @Author: sunyonghua
+       * @Date: 2019-08-26 16:10:04
+       * @Description: 登录界面
+       */
+      ```
+    - 方法注释
+    - ```typescript
+      //提交登录
+      const handleSubmit=()=>{
+        // ...do something
+      }
+      ```
+    - 变量注释同上，根据情况而加
+  - 引用组件顺序
+    - 先引用外部组件库,,再引用当前组件块级组件, 然后是 common 里的公共函数库最后是 css 样式
+    - ```typescript
+        import * as React from 'react';
+        import { Dropdown, Menu, Icon } from 'antd';
+        import Header from './Header';
+        import toast from 'common/toast';
+        import './index.less';
+       ```
+  - 引号
+    - 单引号或者反引号
+  - 命名
+    - 文件名：大驼峰式风格，LoginForm.tsx
+    - 类名: 类名同文件名，大驼峰式风格，字母和数字，例如：AbcTest。禁止汉字、特殊符号，禁止非大驼峰式风格。
+    - 函数名: 小驼峰式风格，字母和数字，例如：abcTest。禁止汉字、特殊符号，禁止非小驼峰式风格，例如snake_case等。
+    - 变量名: 同函数名。
+    - 常量: 全大写风格，大写字母、数字和下划线，单词之间以下划线分隔，例如：ABC_TEST。禁止汉字、特殊符号、小写字母。
+    - 使用 onXxx 形式作为 props 中用于回调的属性名称。
+    - 组件内的事件函数使用 handle 开头尾,handleCheckBtn。
+    - 使用 withXxx 形式的词作为高阶组件的名称。
+    - 接口命名前面带上 I 表示 interface
