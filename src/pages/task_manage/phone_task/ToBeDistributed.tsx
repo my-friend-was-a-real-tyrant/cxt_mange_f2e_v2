@@ -19,6 +19,10 @@ interface IResult {
   total: number;
 }
 
+interface IProps extends FormComponentProps {
+  serialData: Array<object>
+}
+
 const renderContent = (value: any, row: any, index: number) => {
   return {
     children: value,
@@ -28,7 +32,7 @@ const renderContent = (value: any, row: any, index: number) => {
   }
 }
 
-const ToBeDistributed: FunctionComponent<FormComponentProps> = props => {
+const ToBeDistributed: FunctionComponent<IProps> = props => {
 
   const [result, setResult] = useState<IResult>({data: [], total: 0})
   const [loading, setLoading] = useState<boolean>(false)
@@ -40,7 +44,6 @@ const ToBeDistributed: FunctionComponent<FormComponentProps> = props => {
   const [selectedRowKeys2, setSelectedRowKeys2] = useState<any>([])
   const [checked, setChecked] = useState<boolean>(false)
   const [editStatus, setEditStatus] = useState<boolean>(false)
-  const [serialData, setSerialData] = useState<Array<object>>([])
   const getReport = () => {
     const regDate = props.form.getFieldValue('regDate') || []
     const serialno_id = props.form.getFieldValue('serialno_id') || ''
@@ -83,26 +86,12 @@ const ToBeDistributed: FunctionComponent<FormComponentProps> = props => {
   useEffect(() => {
     getCompany()
     getReport()
-    getSerialData()
   }, [])
 
   // update
   useEffect(() => {
     getReport()
   }, [search])
-
-  // 获取数据批次
-  const getSerialData = () => {
-    const params = {
-      limit_tasks: 1,
-    }
-    fetch.get(`/apiv1/otb/import/getImportSerialNoNamesFromTask`, {params}).then((res: any) => {
-      if (res.code === 20000) {
-        setSerialData(res.data || [])
-      }
-    })
-  }
-
 
   // 获取坐席
   const getCompany = () => {
@@ -343,7 +332,7 @@ const ToBeDistributed: FunctionComponent<FormComponentProps> = props => {
         {getFieldDecorator('serialno_id', {initialValue: ''})(
           <Select>
             <Select.Option key="000" value={''}>全部批次 </Select.Option>
-            {serialData.map((v: any) => <Select.Option key={v.id}>
+            {props.serialData.map((v: any) => <Select.Option key={v.id}>
               {v.show_name}: (剩余 {v.not_allot_count} 条)
             </Select.Option>)}
           </Select>
@@ -419,4 +408,4 @@ const ToBeDistributed: FunctionComponent<FormComponentProps> = props => {
     </Modal>
   </div>
 }
-export default Form.create()(ToBeDistributed)
+export default Form.create<IProps>()(ToBeDistributed)

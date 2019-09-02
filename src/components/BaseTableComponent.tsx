@@ -13,6 +13,7 @@ interface IProps {
   readonly bordered?: boolean;
   readonly loading?: boolean;
   readonly total?: number;
+  readonly offset?: boolean;
 
   [propName: string]: any;
 
@@ -22,7 +23,10 @@ interface IProps {
 const BaseTableComponent: FunctionComponent<IProps> = (props) => {
 
   const handleChange = (pagination: any, filters: any, sorter: any) => {
-    const {onChange} = props
+    const {onChange, offset} = props
+    if (offset) {
+      pagination.current = (pagination.current - 1) * pagination.pageSize + 1
+    }
     const field = sorter.field
     let sorterField = ''
     if (field) {
@@ -38,6 +42,7 @@ const BaseTableComponent: FunctionComponent<IProps> = (props) => {
   const {dataSource, columns, bordered, loading, size, total} = props;
   return (
     <Table {...props}
+           rowKey={(record: any, index: number) => record.id || index}
            dataSource={dataSource}
            columns={columns}
            bordered={bordered}

@@ -17,6 +17,10 @@ interface IResult {
   total: number;
 }
 
+interface IProps extends FormComponentProps {
+  serialData: Array<object>
+}
+
 const renderContent = (value: any, row: any, index: number) => {
   return {
     children: value,
@@ -26,7 +30,7 @@ const renderContent = (value: any, row: any, index: number) => {
   }
 }
 
-const Allocated: FunctionComponent<FormComponentProps> = props => {
+const Allocated: FunctionComponent<IProps> = props => {
   const [result, setResult] = useState<IResult>({data: [], total: 0})
   const [loading, setLoading] = useState<boolean>(false)
   const [search, setSearch] = useState<ISearch>({page: 1, pageSize: 10, orderBy: 'time_create desc', is_allot: 1})
@@ -34,7 +38,6 @@ const Allocated: FunctionComponent<FormComponentProps> = props => {
   const [prevSearch, setPrevSearch] = useState({serialno_id: '', reg_date_b: '', reg_date_e: ''})
   const [company, setCompany] = useState<Array<object>>([])
   const [checked, setChecked] = useState<boolean>(false)
-  const [serialData, setSerialData] = useState<Array<object>>([])
 
 
   const getReport = () => {
@@ -79,23 +82,9 @@ const Allocated: FunctionComponent<FormComponentProps> = props => {
     })
   }
 
-
-  // 获取数据批次
-  const getSerialData = () => {
-    const params = {
-      limit_tasks: 0,
-    }
-    fetch.get(`/apiv1/otb/import/getImportSerialNoNamesFromTask`, {params}).then((res: any) => {
-      if (res.code === 20000) {
-        setSerialData(res.data || [])
-      }
-    })
-  }
-
   // init
   useEffect(() => {
     getCompany()
-    getSerialData()
   }, [])
 
   // update
@@ -263,7 +252,7 @@ const Allocated: FunctionComponent<FormComponentProps> = props => {
           <Select
             showSearch>
             <Select.Option key="000" value={''}>全部批次 </Select.Option>
-            {serialData.map((v: any) => <Select.Option key={v.id} value={`${v.show_name}%${v.id}`}>
+            {props.serialData.map((v: any) => <Select.Option key={v.id} value={`${v.show_name}%${v.id}`}>
               {v.show_name}
             </Select.Option>)}
           </Select>
@@ -335,4 +324,4 @@ const Allocated: FunctionComponent<FormComponentProps> = props => {
   </div>
 }
 
-export default Form.create()(Allocated)
+export default Form.create<IProps>()(Allocated)
