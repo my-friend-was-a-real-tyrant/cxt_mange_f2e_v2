@@ -8,6 +8,8 @@ interface IItemAttr {
   id: number;
   parentId: number;
   url: string;
+  status: number;
+  other_url: string;
   name: string;
   children: Array<IItemAttr>;
 }
@@ -19,7 +21,7 @@ const composeMenu = <T extends IItemAttr>(treeData: T[], parentId: number): T[] 
 
   for (let i = 0, len = treeData.length; i < len; i++) {
     let item: T = treeData[i];
-    if (item.parentId === parentId) {
+    if (item.parentId === parentId && item.status === 1) {
       children = composeMenu(treeData, item.id);
       if (children.length > 0) {
         item.children = children

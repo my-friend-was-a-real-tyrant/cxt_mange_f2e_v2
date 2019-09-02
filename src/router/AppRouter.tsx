@@ -8,11 +8,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import App from 'pages/App'
 import Login from 'pages/Login';
 
-
 const AppRouter = () => {
   return <Router>
     <Switch>
-      <Route path="/" component={App} />
+      <Route exact path="/" component={App} />
       <Route exact path="/login" component={Login} />
       <Route path="/app" component={App} />
     </Switch>

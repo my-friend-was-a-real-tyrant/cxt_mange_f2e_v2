@@ -11,6 +11,9 @@ module.exports = override(
   }),
   addLessLoader({
     javascriptEnabled: true,
-    // modifyVars: { '@primary-color': '#ff18e3', '@border-color-base': '#333' }
+    modifyVars: {
+      '@primary-color': '#6692FF',
+      "@error-color": '#FF7B76',// 错误色
+    }
   })
 );

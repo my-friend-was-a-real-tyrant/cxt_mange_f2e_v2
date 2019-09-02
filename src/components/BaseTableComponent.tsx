@@ -13,15 +13,26 @@ interface IProps {
   readonly bordered?: boolean;
   readonly loading?: boolean;
   readonly total?: number;
+
   [propName: string]: any;
 
-  onChange?(e: React.ChangeEvent<HTMLElement>): void
+  onChange?(pagination: any, order: string): void
 }
 
 const BaseTableComponent: FunctionComponent<IProps> = (props) => {
 
-  const handleChange = () => {
-
+  const handleChange = (pagination: any, filters: any, sorter: any) => {
+    const {onChange} = props
+    const field = sorter.field
+    let sorterField = ''
+    if (field) {
+      // 排序时把所有大写转为下划线加小写 方便后端seq查询...
+      for (let i = 0; i < field.length; i++) {
+        sorterField += /[A-Z]/.test(field[i]) ? '_' + field[i].toLowerCase() : field[i]
+      }
+    }
+    const order = sorter.order === 'ascend' ? (sorterField ? sorterField + ' asc' : '') : sorterField ? sorterField + ' desc' : ''
+    onChange && onChange(pagination, order)
   }
 
   const {dataSource, columns, bordered, loading, size, total} = props;
@@ -45,7 +56,7 @@ const BaseTableComponent: FunctionComponent<IProps> = (props) => {
 BaseTableComponent.defaultProps = {
   dataSource: [],
   columns: [],
-  bordered: true,
+  bordered: false,
   loading: false,
   size: 'middle',
   total: 0

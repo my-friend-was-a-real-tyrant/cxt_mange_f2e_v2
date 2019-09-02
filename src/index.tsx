@@ -5,14 +5,14 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from "redux-devtools-extension"
-import {ConfigProvider} from 'antd'
+import {ConfigProvider, message} from 'antd'
 import zhCN from 'antd/es/locale/zh_CN';
 import rootReducers from 'store/reducers'
 import AppRouter from 'router/AppRouter'
 
 const applyMiddle = process.env.NODE_ENV === 'production' ? applyMiddleware(thunk) : composeWithDevTools(applyMiddleware(thunk));
 const store = createStore(rootReducers, applyMiddle)
-
+message.config({top: 100, maxCount: 1,});
 ReactDOM.render(
   <ConfigProvider locale={zhCN}>
     <Provider store={store}>

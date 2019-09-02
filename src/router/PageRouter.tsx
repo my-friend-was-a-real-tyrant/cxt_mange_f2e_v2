@@ -4,14 +4,27 @@
  * @Description: pages route 配置
  */
 import React from 'react'
-import {Route, Switch} from 'react-router-dom'
-import Home from 'pages/Home'
-import CloudChat from 'pages/wechat/CloudChat'
+import { Route, Switch } from 'react-router-dom'
+
+// 工作台
+import Work from 'pages/work_bench/work'
+import SearchCar from 'pages/work_bench/search_car'
+
+// 作业管理
+import PhoneTask from 'pages/task_manage/phone_task';
+import WechatManage from 'pages/task_manage/wechat_manage';
+import ShortMessage from 'pages/task_manage/short_message';
+// 报表管理
 
 const PageRouter = () => {
   return <Switch>
-    <Route path="/app/home" component={Home}/>
-    <Route path="/app/cloud-chat" component={CloudChat}/>
+    {/* 工作台 */}
+    <Route path="/app/work" component={Work} />
+    <Route path="/app/search_car" component={SearchCar} />
+    {/* 作业管理 */}
+    <Route path="/app/phone_task" component={PhoneTask} />
+    <Route path="/app/wechat_manage" component={WechatManage} />
+    <Route path="/app/short_message" component={ShortMessage} />
   </Switch>
 }
 

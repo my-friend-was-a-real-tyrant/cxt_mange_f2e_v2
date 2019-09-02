@@ -1,3 +1,8 @@
+/*
+ * @Author: sunyonghua
+ * @Date: 2019-08-28 11:43:25
+ * @Description: file content
+ */
 import fetch from 'fetch/axios'
 import {Dispatch} from 'redux'
 import constants from "../constants/common"
@@ -10,7 +15,7 @@ export const thunkSetMenuList = () => (dispatch: Dispatch) => {
     order: '+dorder',
     appcode: 'ROBOT',
     userid: localStorage.getItem('mjoys_user_id'),
-    access_token: localStorage.getItem('access_token'),
+    // access_token: localStorage.getItem('access_token'),
   }
   fetch.get(`/apiv1/uac/user/pagefunctiontree`, {params}).then((res: any) => {
     if (res.code === 20000) {

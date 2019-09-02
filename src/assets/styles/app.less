@@ -1,0 +1,100 @@
+body {
+  min-width: 1200px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #595e7bad;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #5a5e6f26;
+  border-radius: 10px;
+}
+
+.ant-menu-vertical.ant-menu-sub {
+  background: linear-gradient(to bottom, #4D5573, #2E344C);
+}
+
+.ant-layout-header {
+  height: 80px;
+  line-height: 80px;
+}
+
+.ant-menu-horizontal {
+  line-height: normal;
+}
+
+.ant-menu-sub {
+  min-width: 130px !important;
+}
+
+.App {
+  &-header {
+    background: linear-gradient(to bottom, #4D5573, #2E344C);
+
+    .ant-menu-dark {
+      background: transparent;
+      height: 100%;
+    }
+
+    .ant-menu-submenu {
+      height: 100%;
+
+      &-active {
+        background: #eee;
+      }
+
+      &-title {
+        height: 100%;
+      }
+    }
+
+    .ant-menu-item {
+      height: 100%;
+    }
+
+    .menu-link,
+    .ant-menu-submenu-title {
+      height: 100%;
+      display: flex !important;
+      flex-flow: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .anticon {
+      margin-right: 0;
+      font-size: 20px;
+      margin-bottom: 3px;
+    }
+  }
+
+  &-container {
+    min-height: calc(100vh - 46px);
+    background: #F4F6FC;
+    padding: 20px 15px 15px;
+
+    &__inner {
+      height: 90%;
+      background: #fff;
+      box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      padding-bottom: 10px;
+    }
+  }
+}
+
+
+.ant-table-fixed {
+  table-layout: fixed;
+}
+
+.ant-btn-primary {
+  background-color: linear-gradient(red, blue) !important;
+}

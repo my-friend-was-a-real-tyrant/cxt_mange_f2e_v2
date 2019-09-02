@@ -1,13 +1,13 @@
-import React from 'react'
+import React,{Fragment} from 'react'
 import BaseMenuComponent from './BaseMenuComponent'
 import { connect } from 'react-redux'
 
 class BaseHeaderComponent extends React.Component {
   render() {
     return (
-      <div>
+      <Fragment>
         <BaseMenuComponent />
-      </div>
+      </Fragment>
     )
   }
 }

@@ -2,9 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d1f6d38-bda6-426c-9f9f-55409573732d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/pages/task_manage/phone_task/Allocated.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/task_manage/phone_task/TaskList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/task_manage/phone_task/ToBeDistributed.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/task_manage/phone_task/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config-overrides.js" beforeDir="false" afterPath="$PROJECT_DIR$/config-overrides.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/styles/app.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/styles/app.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/styles/login.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/styles/login.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/BaseHeaderComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/BaseHeaderComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/BaseMenuComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/BaseMenuComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/BaseTableComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/BaseTableComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fetch/axios.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/fetch/axios.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Home.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/wechat/CloudChat.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/AppRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/AppRouter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/PageRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/PageRouter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/common.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/common.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/composeMenu.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/composeMenu.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,52 +35,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/index.tsx">
+        <entry file="file://$PROJECT_DIR$/src/pages/task_manage/phone_task/Allocated.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+            <state relative-caret-position="207">
+              <caret line="316" column="11" lean-forward="true" selection-start-line="316" selection-start-column="11" selection-end-line="316" selection-end-column="11" />
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
+                <element signature="e#0#67#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/App.tsx">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/pages/task_manage/phone_task/ToBeDistributed.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/fetch/axios.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="3" selection-start-column="3" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/router/AppRouter.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="3" selection-start-column="3" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/router/PageRouter.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="3" selection-start-column="3" selection-end-column="3" />
+            <state relative-caret-position="5264">
+              <caret line="373" column="23" lean-forward="true" selection-start-line="373" selection-start-column="23" selection-end-line="373" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -71,20 +58,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/BaseTableComponent.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/pages/Home.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="13" column="9" lean-forward="true" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="575">
+              <caret line="34" column="25" lean-forward="true" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -95,6 +70,7 @@
     <findStrings>
       <find>setMenuList</find>
       <find>cxt</find>
+      <find>isallot</find>
     </findStrings>
     <replaceStrings>
       <replace>app</replace>
@@ -133,11 +109,15 @@
         <option value="$PROJECT_DIR$/src/components/TheTableComponent.tsx" />
         <option value="$PROJECT_DIR$/src/router/PageRouter.tsx" />
         <option value="$PROJECT_DIR$/src/router/AppRouter.tsx" />
+        <option value="$PROJECT_DIR$/yarn.lock" />
+        <option value="$PROJECT_DIR$/src/pages/Home.tsx" />
         <option value="$PROJECT_DIR$/src/fetch/axios.ts" />
         <option value="$PROJECT_DIR$/src/index.tsx" />
-        <option value="$PROJECT_DIR$/yarn.lock" />
+        <option value="$PROJECT_DIR$/src/pages/task_manage/phone_task/TaskList.tsx" />
+        <option value="$PROJECT_DIR$/src/pages/task_manage/phone_task/index.tsx" />
+        <option value="$PROJECT_DIR$/src/pages/task_manage/phone_task/Allocated.tsx" />
         <option value="$PROJECT_DIR$/src/components/BaseTableComponent.tsx" />
-        <option value="$PROJECT_DIR$/src/pages/Home.tsx" />
+        <option value="$PROJECT_DIR$/src/pages/task_manage/phone_task/ToBeDistributed.tsx" />
       </list>
     </option>
   </component>
@@ -151,6 +131,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -161,24 +142,13 @@
             <path>
               <item name="cxt_manage_f2e" type="b2602c69:ProjectViewProjectNode" />
               <item name="cxt_manage_f2e" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cxt_manage_f2e" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cxt_manage_f2e" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cxt_manage_f2e" type="b2602c69:ProjectViewProjectNode" />
               <item name="cxt_manage_f2e" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cxt_manage_f2e" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cxt_manage_f2e" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="fetch" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cxt_manage_f2e" type="b2602c69:ProjectViewProjectNode" />
@@ -190,18 +160,27 @@
               <item name="cxt_manage_f2e" type="b2602c69:ProjectViewProjectNode" />
               <item name="cxt_manage_f2e" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="router" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="task_manage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cxt_manage_f2e" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cxt_manage_f2e" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="task_manage" type="462c0819:PsiDirectoryNode" />
+              <item name="phone_task" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pages/task_manage/phone_task" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -218,6 +197,9 @@
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/task_manage/phone_task" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/pages" />
       <recent name="$PROJECT_DIR$/src" />
@@ -252,6 +234,7 @@
       <workItem from="1566910637447" duration="3783000" />
       <workItem from="1566961500603" duration="9217000" />
       <workItem from="1567079717501" duration="10000" />
+      <workItem from="1567392700977" duration="2794000" />
     </task>
     <task id="LOCAL-00001" summary="add: store">
       <created>1566956244179</created>
@@ -264,13 +247,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39375000" />
+    <option name="totallyTimeSpent" value="42169000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18097281" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18311875" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -479,43 +462,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/App.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/fetch/axios.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="3" selection-start-column="3" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/AppRouter.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="3" selection-start-column="3" selection-end-column="3" />
-          <folding>
-            <element signature="e#86#111#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/router/PageRouter.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -526,13 +472,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/BaseTableComponent.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/Home.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
@@ -540,6 +479,81 @@
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/AppRouter.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="3" selection-start-column="3" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/fetch/axios.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="25" column="37" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
+          <folding>
+            <element signature="e#84#146#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/App.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/task_manage/phone_task/TaskList.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="11" column="27" lean-forward="true" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/task_manage/phone_task/index.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="32" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/task_manage/phone_task/Allocated.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="316" column="11" lean-forward="true" selection-start-line="316" selection-start-column="11" selection-end-line="316" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/BaseTableComponent.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="34" column="25" lean-forward="true" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/task_manage/phone_task/ToBeDistributed.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5264">
+          <caret line="373" column="23" lean-forward="true" selection-start-line="373" selection-start-column="23" selection-end-line="373" selection-end-column="23" />
         </state>
       </provider>
     </entry>
