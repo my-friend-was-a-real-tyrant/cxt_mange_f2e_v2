@@ -7,7 +7,10 @@ class BaseHeaderComponent extends React.Component {
   render() {
     return (
       <Fragment>
-        <BaseMenuComponent/>
+        <div className="header-left-wrapper">
+          <span className="logo">AI车险通</span>
+          <BaseMenuComponent/>
+        </div>
         <BaseUserComponent/>
       </Fragment>
     )

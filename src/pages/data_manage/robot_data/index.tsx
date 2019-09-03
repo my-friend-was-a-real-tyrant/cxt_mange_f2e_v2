@@ -139,7 +139,6 @@ const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (
           <Form.Item label="日期">
             {getFieldDecorator('time', {initialValue: []})(
               <DatePicker.RangePicker
-                style={{width: '180px'}}
                 format="YYYY-MM-DD"
                 suffixIcon=" "
                 placeholder={['开始日期', '结束日期']}

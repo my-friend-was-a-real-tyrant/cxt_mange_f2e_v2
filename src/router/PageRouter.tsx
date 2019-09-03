@@ -17,10 +17,13 @@ import ShortMessage from 'pages/task_manage/short_message';
 // 报表管理
 
 // 数据管理
-import RobotDataManage from 'pages/robot_manage/robot_data'
-import AgentDataManage from 'pages/robot_manage/agent_data'
-import AgentDataDetail from 'pages/robot_manage/agent_data/AgentDataDetail'
-import RobotDataDetail from 'pages/robot_manage/robot_data/RobotDataDetail'
+import RobotDataManage from 'pages/data_manage/robot_data'
+import AgentDataManage from 'pages/data_manage/agent_data'
+import AgentDataDetail from 'pages/data_manage/agent_data/AgentDataDetail'
+import RobotDataDetail from 'pages/data_manage/robot_data/RobotDataDetail'
+// 机器人管理
+import CallPlan from 'pages/robot_manage/call_plan/CallPlan'
+
 
 const PageRouter = () => {
   return <Switch>
@@ -32,6 +35,8 @@ const PageRouter = () => {
     <Route exact path="/app/agent_data" component={AgentDataManage}/>
     <Route path="/app/agent_data/:id" component={AgentDataDetail}/>
     <Route path="/app/robot_data/:id" component={RobotDataDetail}/>
+    {/* 机器人管理 */}
+    <Route path="/app/call_plan" component={CallPlan}/>
     {/* 作业管理 */}
     <Route path="/app/phone_task" component={PhoneTask}/>
     <Route path="/app/wechat_manage" component={WechatManage}/>

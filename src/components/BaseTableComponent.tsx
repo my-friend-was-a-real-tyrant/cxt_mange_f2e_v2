@@ -64,7 +64,7 @@ const BaseTableComponent: FunctionComponent<IProps> = (props) => {
 BaseTableComponent.defaultProps = {
   dataSource: [],
   columns: [],
-  bordered: false,
+  bordered: true,
   loading: false,
   size: 'middle',
   total: 0

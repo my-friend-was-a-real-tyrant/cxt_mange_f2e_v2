@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9d1f6d38-bda6-426c-9f9f-55409573732d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/styles/antd.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/BaseUserComponent.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/robot_manage/agent_data/AgentDataDetail.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/robot_manage/robot_data/RobotDataDetail.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-overrides.js" beforeDir="false" afterPath="$PROJECT_DIR$/config-overrides.js" afterDir="false" />
+    <list default="true" id="9d1f6d38-bda6-426c-9f9f-55409573732d" name="Default Changelist" comment="add: 数据管理详情">
+      <change afterPath="$PROJECT_DIR$/src/pages/robot_manage/call_plan/CallPlan.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/robot_manage/call_plan/SearchForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assets/styles/app.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/styles/app.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/styles/global.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/styles/global.less" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/BaseHeaderComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/BaseHeaderComponent.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/BaseTableComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/BaseTableComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fetch/axios.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/fetch/axios.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/robot_manage/agent_data/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/robot_manage/agent_data/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/robot_manage/robot_data/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/robot_manage/robot_data/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/task_manage/short_message/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/task_manage/short_message/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/robot_manage/agent_data/AgentDataDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/data_manage/agent_data/AgentDataDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/robot_manage/agent_data/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/data_manage/agent_data/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/robot_manage/robot_data/RobotDataDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/data_manage/robot_data/RobotDataDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/robot_manage/robot_data/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/data_manage/robot_data/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/PageRouter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/PageRouter.tsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,69 +26,75 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/App.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/router/PageRouter.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="28" column="57" lean-forward="true" selection-start-line="28" selection-start-column="57" selection-end-line="28" selection-end-column="57" />
+            <state relative-caret-position="129">
+              <caret line="15" column="59" lean-forward="true" selection-start-line="15" selection-start-column="59" selection-end-line="15" selection-end-column="59" />
               <folding>
-                <element signature="e#467#526#0" expanded="true" />
+                <element signature="e#467#525#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/BaseTableComponent.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1365">
+              <caret line="66" column="16" selection-start-line="66" selection-start-column="16" selection-end-line="66" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/robot_manage/call_plan/SearchForm.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="676">
+              <caret line="47" column="20" lean-forward="true" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#66#0" expanded="true" />
+                <element signature="e#1666#1797#0" />
+                <element signature="e#1804#1933#0" />
+                <element signature="e#2144#2611#0" />
+                <element signature="e#2618#2968#0" />
+                <element signature="e#2975#3048#0" />
+                <element signature="e#3055#3572#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/data_manage/robot_data/index.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="130" column="10" selection-start-line="130" selection-start-column="10" selection-end-line="137" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#67#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/pages/task_manage/short_message/index.tsx">
+        <entry file="file://$PROJECT_DIR$/src/pages/robot_manage/call_plan/CallPlan.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="114" column="3" lean-forward="true" selection-start-line="114" selection-start-column="3" selection-end-line="114" selection-end-column="3" />
+            <state relative-caret-position="525">
+              <caret line="25" column="60" selection-start-line="25" selection-start-column="60" selection-end-line="25" selection-end-column="60" />
               <folding>
-                <element signature="e#0#68#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/robot_manage/robot_data/RobotDataDetail.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="102" column="14" selection-start-line="102" selection-start-column="14" selection-end-line="102" selection-end-column="14" />
-              <folding>
-                <element signature="e#0#68#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config-overrides.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="15" column="38" lean-forward="true" selection-start-line="15" selection-start-column="38" selection-end-line="15" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/robot_manage/robot_data/index.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
-              <caret line="102" column="26" lean-forward="true" selection-start-line="102" selection-start-column="26" selection-end-line="102" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#67#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/robot_manage/agent_data/index.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="62" column="2" selection-start-line="62" selection-start-column="2" selection-end-line="64" selection-end-column="3" />
-              <folding>
-                <element signature="e#0#67#0" expanded="true" />
+                <element signature="e#0#56#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -119,9 +121,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/assets/styles/login.less" />
-        <option value="$PROJECT_DIR$/types/ajax.d.ts" />
-        <option value="$PROJECT_DIR$/src/react-app-env.d.ts" />
         <option value="$PROJECT_DIR$/src/fetch/service.ts" />
         <option value="$PROJECT_DIR$/src/types/ajax.d.ts" />
         <option value="$PROJECT_DIR$/package.json" />
@@ -138,7 +137,6 @@
         <option value="$PROJECT_DIR$/src/App.tsx" />
         <option value="$PROJECT_DIR$/src/pages/wechat/CloutChat.tsx" />
         <option value="$PROJECT_DIR$/src/pages/wechat/CloudChat.tsx" />
-        <option value="$PROJECT_DIR$/src/pages/App.tsx" />
         <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/src/components/TheTableComponent.tsx" />
         <option value="$PROJECT_DIR$/src/router/AppRouter.tsx" />
@@ -155,21 +153,25 @@
         <option value="$PROJECT_DIR$/src/fetch/service/common.ts" />
         <option value="$PROJECT_DIR$/src/pages/task_manage/wechat_manage/index.tsx" />
         <option value="$PROJECT_DIR$/src/utils/utils.ts" />
-        <option value="$PROJECT_DIR$/src/components/BaseHeaderComponent.tsx" />
         <option value="$PROJECT_DIR$/src/components/BaseUserComponent.tsx" />
         <option value="$PROJECT_DIR$/src/pages/Login.tsx" />
         <option value="$PROJECT_DIR$/src/pages/robot_manage/agent_data/index.tsx" />
         <option value="$PROJECT_DIR$/src/assets/styles/global.less" />
-        <option value="$PROJECT_DIR$/src/assets/styles/app.less" />
         <option value="$PROJECT_DIR$/src/assets/styles/antd.less" />
         <option value="$PROJECT_DIR$/src/fetch/axios.ts" />
         <option value="$PROJECT_DIR$/src/pages/robot_manage/agent_data/AgentDataDetail.tsx" />
-        <option value="$PROJECT_DIR$/src/components/BaseTableComponent.tsx" />
         <option value="$PROJECT_DIR$/src/pages/robot_manage/robot_data/index.tsx" />
-        <option value="$PROJECT_DIR$/src/router/PageRouter.tsx" />
         <option value="$PROJECT_DIR$/src/pages/robot_manage/robot_data/RobotDataDetail.tsx" />
         <option value="$PROJECT_DIR$/config-overrides.js" />
         <option value="$PROJECT_DIR$/src/pages/task_manage/short_message/index.tsx" />
+        <option value="$PROJECT_DIR$/src/components/BaseHeaderComponent.tsx" />
+        <option value="$PROJECT_DIR$/src/assets/styles/app.less" />
+        <option value="$PROJECT_DIR$/src/pages/App.tsx" />
+        <option value="$PROJECT_DIR$/src/router/PageRouter.tsx" />
+        <option value="$PROJECT_DIR$/src/pages/data_manage/robot_data/index.tsx" />
+        <option value="$PROJECT_DIR$/src/pages/robot_manage/call_plan/SearchForm.tsx" />
+        <option value="$PROJECT_DIR$/src/components/BaseTableComponent.tsx" />
+        <option value="$PROJECT_DIR$/src/pages/robot_manage/call_plan/CallPlan.tsx" />
       </list>
     </option>
   </component>
@@ -199,6 +201,18 @@
               <item name="cxt_manage_f2e" type="b2602c69:ProjectViewProjectNode" />
               <item name="cxt_manage_f2e" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cxt_manage_f2e" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cxt_manage_f2e" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cxt_manage_f2e" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cxt_manage_f2e" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -206,15 +220,30 @@
               <item name="cxt_manage_f2e" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="task_manage" type="462c0819:PsiDirectoryNode" />
+              <item name="data_manage" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cxt_manage_f2e" type="b2602c69:ProjectViewProjectNode" />
               <item name="cxt_manage_f2e" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="task_manage" type="462c0819:PsiDirectoryNode" />
-              <item name="short_message" type="462c0819:PsiDirectoryNode" />
+              <item name="data_manage" type="462c0819:PsiDirectoryNode" />
+              <item name="robot_data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cxt_manage_f2e" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cxt_manage_f2e" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="robot_manage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cxt_manage_f2e" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cxt_manage_f2e" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="robot_manage" type="462c0819:PsiDirectoryNode" />
+              <item name="call_plan" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cxt_manage_f2e" type="b2602c69:ProjectViewProjectNode" />
@@ -249,11 +278,12 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/data_manage" />
       <recent name="$PROJECT_DIR$/src/pages" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
@@ -294,7 +324,7 @@
       <workItem from="1566961500603" duration="9217000" />
       <workItem from="1567079717501" duration="10000" />
       <workItem from="1567392700977" duration="3178000" />
-      <workItem from="1567398141197" duration="40932000" />
+      <workItem from="1567398141197" duration="46825000" />
     </task>
     <task id="LOCAL-00001" summary="add: store">
       <created>1566956244179</created>
@@ -314,7 +344,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83485000" />
+    <option name="totallyTimeSpent" value="89378000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -338,7 +368,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="TypeScript" order="10" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32891566" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="13" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -390,7 +420,8 @@
     <MESSAGE value="add: store" />
     <MESSAGE value="add: 电话任务" />
     <MESSAGE value="add: 数据管理列表" />
-    <option name="LAST_COMMIT_MESSAGE" value="add: 数据管理列表" />
+    <MESSAGE value="add: 数据管理详情" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: 数据管理详情" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/assets/styles/login.less">
@@ -487,13 +518,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="3" selection-start-column="3" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/App.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -611,25 +635,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/BaseHeaderComponent.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="5" lean-forward="true" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/assets/styles/global.less">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/styles/app.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="24" lean-forward="true" selection-start-column="24" selection-end-column="24" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/assets/styles/antd.less">
       <provider selected="true" editor-type-id="text-editor">
@@ -672,14 +679,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/BaseTableComponent.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="26" column="37" lean-forward="true" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/robot_manage/agent_data/AgentDataDetail.tsx">
+    <entry file="file://$PROJECT_DIR$/src/pages/data_manage/agent_data/AgentDataDetail.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-23">
           <caret line="52" column="29" lean-forward="true" selection-start-line="52" selection-start-column="29" selection-end-line="52" selection-end-column="29" />
@@ -707,7 +707,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/robot_manage/agent_data/index.tsx">
+    <entry file="file://$PROJECT_DIR$/src/pages/data_manage/agent_data/index.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="296">
           <caret line="62" column="2" selection-start-line="62" selection-start-column="2" selection-end-line="64" selection-end-column="3" />
@@ -717,17 +717,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/robot_manage/robot_data/index.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="102" column="26" lean-forward="true" selection-start-line="102" selection-start-column="26" selection-end-line="102" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#67#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/robot_manage/robot_data/RobotDataDetail.tsx">
+    <entry file="file://$PROJECT_DIR$/src/pages/data_manage/robot_data/RobotDataDetail.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="169">
           <caret line="102" column="14" selection-start-line="102" selection-start-column="14" selection-end-line="102" selection-end-column="14" />
@@ -744,22 +734,89 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/PageRouter.tsx">
+    <entry file="file://$PROJECT_DIR$/src/pages/task_manage/short_message/index.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="28" column="57" lean-forward="true" selection-start-line="28" selection-start-column="57" selection-end-line="28" selection-end-column="57" />
+        <state relative-caret-position="253">
+          <caret line="134" column="5" lean-forward="true" selection-start-line="134" selection-start-column="5" selection-end-line="134" selection-end-column="5" />
           <folding>
-            <element signature="e#467#526#0" expanded="true" />
+            <element signature="e#0#68#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/task_manage/short_message/index.tsx">
+    <entry file="file://$PROJECT_DIR$/src/assets/styles/app.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="114" column="3" lean-forward="true" selection-start-line="114" selection-start-column="3" selection-end-line="114" selection-end-column="3" />
+        <state relative-caret-position="261">
+          <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/BaseHeaderComponent.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="10" column="31" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/App.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
           <folding>
-            <element signature="e#0#68#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/PageRouter.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="15" column="59" lean-forward="true" selection-start-line="15" selection-start-column="59" selection-end-line="15" selection-end-column="59" />
+          <folding>
+            <element signature="e#467#525#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/data_manage/robot_data/index.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="130" column="10" selection-start-line="130" selection-start-column="10" selection-end-line="137" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/BaseTableComponent.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1365">
+          <caret line="66" column="16" selection-start-line="66" selection-start-column="16" selection-end-line="66" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/robot_manage/call_plan/SearchForm.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="676">
+          <caret line="47" column="20" lean-forward="true" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#66#0" expanded="true" />
+            <element signature="e#1666#1797#0" />
+            <element signature="e#1804#1933#0" />
+            <element signature="e#2144#2611#0" />
+            <element signature="e#2618#2968#0" />
+            <element signature="e#2975#3048#0" />
+            <element signature="e#3055#3572#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/robot_manage/call_plan/CallPlan.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="25" column="60" selection-start-line="25" selection-start-column="60" selection-end-line="25" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
           </folding>
         </state>
       </provider>
