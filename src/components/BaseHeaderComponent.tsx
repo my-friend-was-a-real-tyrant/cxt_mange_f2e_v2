@@ -1,12 +1,14 @@
-import React,{Fragment} from 'react'
+import React, {Fragment} from 'react'
+import {connect} from 'react-redux'
 import BaseMenuComponent from './BaseMenuComponent'
-import { connect } from 'react-redux'
+import BaseUserComponent from './BaseUserComponent'
 
 class BaseHeaderComponent extends React.Component {
   render() {
     return (
       <Fragment>
-        <BaseMenuComponent />
+        <BaseMenuComponent/>
+        <BaseUserComponent/>
       </Fragment>
     )
   }

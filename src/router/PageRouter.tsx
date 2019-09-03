@@ -19,6 +19,8 @@ import ShortMessage from 'pages/task_manage/short_message';
 // 数据管理
 import RobotDataManage from 'pages/robot_manage/robot_data'
 import AgentDataManage from 'pages/robot_manage/agent_data'
+import AgentDataDetail from 'pages/robot_manage/agent_data/AgentDataDetail'
+import RobotDataDetail from 'pages/robot_manage/robot_data/RobotDataDetail'
 
 const PageRouter = () => {
   return <Switch>
@@ -26,8 +28,10 @@ const PageRouter = () => {
     <Route path="/app/work" component={Work}/>
     <Route path="/app/search_car" component={SearchCar}/>
     {/* 数据管理 */}
-    <Route path="/app/robot_data" component={RobotDataManage}/>
-    <Route path="/app/agent_data" component={AgentDataManage}/>
+    <Route exact path="/app/robot_data" component={RobotDataManage}/>
+    <Route exact path="/app/agent_data" component={AgentDataManage}/>
+    <Route path="/app/agent_data/:id" component={AgentDataDetail}/>
+    <Route path="/app/robot_data/:id" component={RobotDataDetail}/>
     {/* 作业管理 */}
     <Route path="/app/phone_task" component={PhoneTask}/>
     <Route path="/app/wechat_manage" component={WechatManage}/>

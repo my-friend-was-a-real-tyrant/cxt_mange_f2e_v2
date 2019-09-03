@@ -13,7 +13,7 @@ module.exports = override(
     javascriptEnabled: true,
     modifyVars: {
       '@primary-color': '#6692FF',
-      "@error-color": '#fb766c',// 错误色
+      "@error-color": '#ff4b44',// 错误色
     }
   })
 );

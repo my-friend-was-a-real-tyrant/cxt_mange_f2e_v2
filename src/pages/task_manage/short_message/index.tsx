@@ -164,6 +164,7 @@ const ShortMessage: FunctionComponent<FormComponentProps> = (props) => {
             columns={columns}
             dataSource={messageList}
             bordered
+            total={total}
             rowKey="id"
             loading={loading}
             onChange={handleTableChange}/>

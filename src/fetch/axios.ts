@@ -12,8 +12,8 @@ axios.create({
 // 添加请求拦截器
 axios.interceptors.request.use((config: AxiosRequestConfig) => {
   // 在发送请求之前做些什么
-  if (config.url && config.url.indexOf('getAccessToken') === -1) {
-    config.url = `${config.url}${config.url.indexOf('?') ? '?' : '&'}access_token=${localStorage.getItem('access_token')}`
+  if (config.url && config.url.indexOf('getAccessToken') === -1 && config.url.indexOf('app/manage/user/validate') === -1) {
+    config.url = `${config.url}${config.url.indexOf('?') === -1 ? '?' : '&'}access_token=${localStorage.getItem('access_token')}`
   }
   return config;
 }, (error) => {

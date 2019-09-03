@@ -1,5 +1,6 @@
 import React, {FunctionComponent, useState, useEffect} from 'react'
-import {Select, DatePicker, Form, Button, Icon, Modal, Input, Upload, message} from 'antd'
+import {RouteComponentProps} from 'react-router-dom'
+import {Select, DatePicker, Form, Button, Icon, Modal, Input, Upload, message, Tabs} from 'antd'
 import fetch from 'fetch/axios'
 import {FormComponentProps} from 'antd/lib/form'
 import BaseTableComponent from 'components/BaseTableComponent'
@@ -14,9 +15,9 @@ interface IBusinessItem {
 const formItemLayout = {
   labelCol: {span: 6},
   wrapperCol: {span: 14},
-};
+}
 
-const RobotData: FunctionComponent<FormComponentProps> = (props) => {
+const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (props) => {
 
   const [businessList, setBusinessList] = useState<Array<IBusinessItem>>([])
   const [search, setSearch] = useState({limit: 10, offset: 1})
@@ -103,6 +104,10 @@ const RobotData: FunctionComponent<FormComponentProps> = (props) => {
     data: (file: any) => ({name: file.name, chunk: 0, chunks: 1})
   }
 
+  const jumpDetail = (row: any) => {
+    props.history.push(`/app/robot_data/${row.business_id}`)
+  }
+
 
   const columns = [
     {title: '业务', dataIndex: 'business_name', key: 'business_name',},
@@ -114,79 +119,83 @@ const RobotData: FunctionComponent<FormComponentProps> = (props) => {
       title: '操作', width: 240, render: (row: any) =>
         <Button.Group className="Group">
           <Button type="primary" onClick={() => setShow(row.business_id)}><Icon type="cloud-upload"/>上传数据</Button>
-          <Button type="primary"><Icon type="profile"/>查看详情</Button>
+          <Button type="primary" onClick={() => jumpDetail(row)}><Icon type="profile"/>查看详情</Button>
         </Button.Group>
     }
   ]
 
   return <div style={{padding: '0 10px'}}>
-    <Form layout="inline">
-      <Form.Item label="业务">
-        {getFieldDecorator('business_id', {initialValue: "-1"})(
-          <Select style={{width: 200}}>
-            <Select.Option key="-1" value="-1">全部业务</Select.Option>
-            {businessOption}
-          </Select>
-        )}
-      </Form.Item>
-      <Form.Item label="日期">
-        {getFieldDecorator('time', {initialValue: []})(
-          <DatePicker.RangePicker
-            style={{width: '180px'}}
-            format="YYYY-MM-DD"
-            suffixIcon=" "
-            placeholder={['开始日期', '结束日期']}
-            ranges={quickTimeSelect()}
-          />
-        )}
-      </Form.Item>
-      <Form.Item label="日期">
-        <Button type="primary" onClick={() => setSearch({...search, offset: 1})}>搜索</Button>
-      </Form.Item>
-    </Form>
-    <BaseTableComponent
-      rowKey="business_id"
-      columns={columns}
-      dataSource={result.data}
-      total={result.total}
-      loading={loading}
-      bordered/>
+    <Tabs>
+      <Tabs.TabPane key="1" tab="机器人数据管理">
+        <Form layout="inline">
+          <Form.Item label="业务">
+            {getFieldDecorator('business_id', {initialValue: "-1"})(
+              <Select style={{width: 200}}>
+                <Select.Option key="-1" value="-1">全部业务</Select.Option>
+                {businessOption}
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item label="日期">
+            {getFieldDecorator('time', {initialValue: []})(
+              <DatePicker.RangePicker
+                style={{width: '180px'}}
+                format="YYYY-MM-DD"
+                suffixIcon=" "
+                placeholder={['开始日期', '结束日期']}
+                ranges={quickTimeSelect()}
+              />
+            )}
+          </Form.Item>
+          <Form.Item label="日期">
+            <Button type="primary" onClick={() => setSearch({...search, offset: 1})}>搜索</Button>
+          </Form.Item>
+        </Form>
+        <BaseTableComponent
+          rowKey="business_id"
+          columns={columns}
+          dataSource={result.data}
+          total={result.total}
+          loading={loading}
+          bordered/>
 
-    <Modal visible={Boolean(show)}
-           title="上传数据"
-           onOk={() => onSubmit()}
-           onCancel={() => setShow(false)}
-           destroyOnClose>
-      <Form>
-        <Form.Item label="展示名称" {...formItemLayout}>
-          {getFieldDecorator('showname', {
-            initialValue: '', rules: [
-              {
-                required: true,
-                message: '请填写正确的展示名称!',
-              },
-            ]
-          })(
-            <Input placeholder="请填写展示名称"/>
-          )}
-        </Form.Item>
-        <Form.Item label="详细描述" {...formItemLayout}>
-          {getFieldDecorator('comment', {initialValue: ''})(
-            <Input placeholder="请填写展示名称"/>
-          )}
-        </Form.Item>
-        <Form.Item label="选择文件" {...formItemLayout}>
-          <div style={{display: 'flex'}}>
-            <Upload {...uploadConfig}>
-              {!fileName && <Button type="primary" icon="upload">上传文件</Button>}
-            </Upload>
-            &nbsp;
-            &nbsp;
-            <a href={`/assets/download-tpl/human-car-tpl`} download="car-tpl">模版下载</a>
-          </div>
-        </Form.Item>
-      </Form>
-    </Modal>
+        <Modal visible={Boolean(show)}
+               title="上传数据"
+               onOk={() => onSubmit()}
+               onCancel={() => setShow(false)}
+               destroyOnClose>
+          <Form>
+            <Form.Item label="展示名称" {...formItemLayout}>
+              {getFieldDecorator('showname', {
+                initialValue: '', rules: [
+                  {
+                    required: true,
+                    message: '请填写正确的展示名称!',
+                  },
+                ]
+              })(
+                <Input placeholder="请填写展示名称"/>
+              )}
+            </Form.Item>
+            <Form.Item label="详细描述" {...formItemLayout}>
+              {getFieldDecorator('comment', {initialValue: ''})(
+                <Input placeholder="请填写展示名称"/>
+              )}
+            </Form.Item>
+            <Form.Item label="选择文件" {...formItemLayout}>
+              <div style={{display: 'flex'}}>
+                <Upload {...uploadConfig}>
+                  {!fileName && <Button type="primary" icon="upload">上传文件</Button>}
+                </Upload>
+                &nbsp;
+                &nbsp;
+                <a href={`/assets/download-tpl/human-car-tpl`} download="car-tpl">模版下载</a>
+              </div>
+            </Form.Item>
+          </Form>
+        </Modal>
+      </Tabs.TabPane>
+    </Tabs>
   </div>
 }
 

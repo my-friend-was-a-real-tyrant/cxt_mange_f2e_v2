@@ -64,7 +64,7 @@ const Login: FunctionComponent<IProps & FormComponentProps & RouteComponentProps
         localStorage.setItem('mjoys_user_id', res.data.id)
         localStorage.setItem('mjoys_user', JSON.stringify(res.data))
         props.thunkSetMenuList()
-        props.history!.push('/')
+        props.history.push('/')
       }
     })
   }

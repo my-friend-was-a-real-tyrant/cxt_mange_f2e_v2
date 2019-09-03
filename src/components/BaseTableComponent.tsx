@@ -3,7 +3,7 @@
  * @Date: 2019-08-28 15:59:56
  * @Description: table组件封装
  */
-import React, {FunctionComponent} from 'react'
+import React, {FunctionComponent, useState} from 'react'
 import {Table} from 'antd'
 
 interface IProps {
@@ -21,9 +21,10 @@ interface IProps {
 }
 
 const BaseTableComponent: FunctionComponent<IProps> = (props) => {
-
+  const [current, setCurrent] = useState(1)
   const handleChange = (pagination: any, filters: any, sorter: any) => {
     const {onChange, offset} = props
+    // setCurrent(pagination.current)
     if (offset) {
       pagination.current = (pagination.current - 1) * pagination.pageSize + 1
     }
@@ -40,6 +41,7 @@ const BaseTableComponent: FunctionComponent<IProps> = (props) => {
   }
 
   const {dataSource, columns, bordered, loading, size, total} = props;
+  console.log(current)
   return (
     <Table {...props}
            rowKey={(record: any, index: number) => record.id || index}
@@ -53,6 +55,7 @@ const BaseTableComponent: FunctionComponent<IProps> = (props) => {
              showQuickJumper: true,
              showSizeChanger: true,
              total: total,
+             // current,
              pageSizeOptions: ['10', '20', '50', '100'],
              showTotal: total => `总共 ${total} 条`
            }}/>
