@@ -14,6 +14,7 @@ import SearchCar from 'pages/work_bench/search_car'
 import PhoneTask from 'pages/task_manage/phone_task';
 import WechatManage from 'pages/task_manage/wechat_manage';
 import ShortMessage from 'pages/task_manage/short_message';
+
 // 报表管理
 
 // 数据管理
@@ -23,8 +24,8 @@ import AgentDataDetail from 'pages/data_manage/agent_data/AgentDataDetail'
 import RobotDataDetail from 'pages/data_manage/robot_data/RobotDataDetail'
 // 机器人管理
 import CallPlan from 'pages/robot_manage/call_plan/CallPlan'
-
-
+import CallList from 'pages/robot_manage/call_list/CallList'
+import CallDetail from 'pages/robot_manage/call_detail/CallDetail'
 const PageRouter = () => {
   return <Switch>
     {/* 工作台 */}
@@ -37,6 +38,8 @@ const PageRouter = () => {
     <Route path="/app/robot_data/:id" component={RobotDataDetail}/>
     {/* 机器人管理 */}
     <Route path="/app/call_plan" component={CallPlan}/>
+    <Route path="/app/call_list" component={CallList}/>
+    <Route path="/app/call_details" component={CallDetail}/>
     {/* 作业管理 */}
     <Route path="/app/phone_task" component={PhoneTask}/>
     <Route path="/app/wechat_manage" component={WechatManage}/>
