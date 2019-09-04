@@ -21,13 +21,12 @@ interface IProps {
 }
 
 const BaseTableComponent: FunctionComponent<IProps> = (props) => {
+
   const [current, setCurrent] = useState(1)
+
   const handleChange = (pagination: any, filters: any, sorter: any) => {
-    const {onChange, offset} = props
-    // setCurrent(pagination.current)
-    if (offset) {
-      pagination.current = (pagination.current - 1) * pagination.pageSize + 1
-    }
+    const {onChange} = props
+    setCurrent(pagination.current)
     const field = sorter.field
     let sorterField = ''
     if (field) {
@@ -55,7 +54,7 @@ const BaseTableComponent: FunctionComponent<IProps> = (props) => {
              showQuickJumper: true,
              showSizeChanger: true,
              total: total,
-             // current,
+             current,
              pageSizeOptions: ['10', '20', '50', '100'],
              showTotal: total => `总共 ${total} 条`
            }}/>
