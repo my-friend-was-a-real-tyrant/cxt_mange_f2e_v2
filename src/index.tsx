@@ -18,6 +18,6 @@ ReactDOM.render(
     <Provider store={store}>
       <AppRouter/>
     </Provider>
-  </ConfigProvider>, document.getElementById('root'));
+  </ConfigProvider>, document.getElementById('root') as HTMLElement);
 
 serviceWorker.unregister();

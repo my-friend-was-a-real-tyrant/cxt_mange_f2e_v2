@@ -7,9 +7,17 @@ import 'assets/styles/app.less'
 
 const {Content, Header} = Layout
 
-class App extends React.Component<RouteComponentProps> {
+interface IState {
+  routePath: string;
+}
+
+class App extends React.Component<RouteComponentProps, IState> {
+  state = {
+    routePath: ''
+  }
 
   componentDidMount() {
+    this.setState({routePath: this.props.location.pathname})
     if (!localStorage.getItem('access_token')) {
       this.props.history.push('/login')
     }
@@ -21,10 +29,8 @@ class App extends React.Component<RouteComponentProps> {
         <Header className="App-header">
           <BaseHeaderComponent/>
         </Header>
-        <Content className="App-container">
-          <div className="App-container__inner">
-            <PageRouter/>
-          </div>
+        <Content className={`App-container ${this.state.routePath === '/app/work' ? 'app-work' : ''}`}>
+          <PageRouter/>
         </Content>
       </Layout>
     );
