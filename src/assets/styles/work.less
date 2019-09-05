@@ -3,7 +3,7 @@
 
   &-left {
     float: left;
-    width: 440px;
+    width: 400px;
     height: 100%;
     background: #fff;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
@@ -30,6 +30,13 @@
       height: calc(100vh - 189px);
       overflow-y: scroll;
 
+      .loadmore {
+        display: flex;
+        justify-content: center;
+        line-height: 40px;
+        align-items: center;
+      }
+
       .users-title {
         display: flex;
         justify-content: space-between;
@@ -41,8 +48,12 @@
         padding: 0 10px;
 
         li {
-          width: 100px;
+          width: 80px;
           text-align: center;
+
+          &:nth-child(4) {
+            width: 40px;
+          }
 
           &:first-child {
             text-align: left;
@@ -70,15 +81,46 @@
           }
 
           > span {
-            width: 100px;
+            width: 80px;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            b {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 24px;
+              height: 24px;
+              border-radius: 50%;
+
+              &.normal {
+                background: rgba(102, 102, 102, 0.1);
+                color: #666666;
+              }
+
+              &.online {
+                background: rgba(82, 182, 116, 0.1);
+                color: #50B674;
+              }
+
+              &.no-online {
+                background: rgba(255, 127, 122, 0.1);
+                color: #ff7f7a;
+              }
+            }
+
+            &:nth-child(4) {
+              width: 40px;
+            }
 
             &:first-child {
-              text-align: left;
+              justify-content: flex-start;
             }
 
             &:last-child {
-              text-align: right;
+              justify-content: flex-end;
               width: 50px;
             }
           }
@@ -101,11 +143,15 @@
       transition: height 0.3s ease;
 
       &.open {
-        height: 204px;
+        height: 250px;
       }
 
       .ant-form-item {
         margin-bottom: 3px;
+      }
+
+      label, .ant-select, .ant-input {
+        color: #686D7F;
       }
 
       .union_item {
@@ -123,7 +169,7 @@
         }
       }
 
-      #with_detail {
+      #uni_query, .ant-calendar-picker-input, .ant-select-selection {
         background: #F9FAFD;
         border: 1px solid #dadae1;
       }
@@ -144,7 +190,7 @@
     background: #fff;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     border-radius: 4px;
-    margin-left: 455px;
+    margin-left: 415px;
     margin-right: 415px;
   }
 }

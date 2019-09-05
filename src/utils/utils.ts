@@ -40,3 +40,18 @@ export const formatTime = (date: any[] = [], format?: string) => {
     return ['', '']
   }
 }
+
+// 获取微信时间
+export const getWechatTime = (time: string | number): string => {
+  if (!time) {
+    return ''
+  }
+  const curTime = new Date()
+  const curDate = `${curTime.getFullYear()}-${curTime.getMonth() + 1}-${curTime.getDate()}`
+
+  if (time < (new Date(curDate).getTime() + 1000 * 60 * 60 * 24) && time > new Date(curDate).getTime()) {
+    return moment(time).format('hh:mm')
+  } else {
+    return moment(time).format('MM/DD')
+  }
+}

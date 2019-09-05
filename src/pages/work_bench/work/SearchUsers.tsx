@@ -1,7 +1,10 @@
-import React, {useState, useEffect} from 'react'
-import {Form, Input, Select, DatePicker, Icon} from 'antd'
+import React, {useState} from 'react'
+import {Form, Input, Select, DatePicker, Icon, Button} from 'antd'
+import {connect} from 'react-redux'
+import {Dispatch} from 'redux'
+import * as actions from 'store/actions/work'
 import {FormComponentProps} from 'antd/es/form'
-import {quickTimeSelect} from "../../../utils/utils"
+import {formatTime, quickTimeSelect} from "utils/utils"
 
 const formItemLayout = {
   labelCol: {span: 4},
@@ -19,12 +22,34 @@ const businessStatus = [
 ]
 
 interface IProps extends FormComponentProps {
-
+  setUsersSearch: (value: any) => any;
+  thunkWorkUsers: () => any;
+  usersSearch: any;
+  setWorkUsers: (value: any) => any
 }
 
 const SearchUsers: React.FC<IProps> = (props) => {
   const [open, setOpen] = useState<boolean>(false)
 
+  const onSearch = () => {
+    const {usersSearch, setUsersSearch, thunkWorkUsers, setWorkUsers} = props;
+    props.form.validateFields(async (err, values) => {
+      const params = {
+        uni_query: values.uni_query,
+        biz_status: values.biz_status,
+        reg_date_b: formatTime(values.regDate)[0],
+        reg_date_e: formatTime(values.regDate)[1],
+        create_time_b: formatTime(values.createTime, 'YYYY-MM-DD')[0],
+        create_time_e: formatTime(values.createTime, 'YYYY-MM-DD')[1],
+        recent_time_b: formatTime(values.recentTime, 'YYYY-MM-DD')[0],
+        recent_time_e: formatTime(values.recentTime, 'YYYY-MM-DD')[1],
+      }
+      await setWorkUsers({data: [], total: 0})
+      await setUsersSearch({...usersSearch, ...params, page: 1})
+      await thunkWorkUsers()
+      setOpen(false)
+    })
+  }
 
   const {getFieldDecorator} = props.form
   return (
@@ -74,9 +99,20 @@ const SearchUsers: React.FC<IProps> = (props) => {
             </Select>
           )}
         </Form.Item>
+        <Form.Item>
+          <Button type="primary" block onClick={onSearch}> 确定搜索</Button>
+        </Form.Item>
       </Form>
     </div>
   )
 }
-
-export default Form.create()(SearchUsers)
+const WrapperSearchUsers = Form.create()(SearchUsers)
+const mapStateToProps = (state: any) => ({
+  usersSearch: state.work.usersSearch
+})
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  setUsersSearch: (value: any) => dispatch(actions.setUsersSearch(value)),
+  thunkWorkUsers: () => dispatch(actions.thunkWorkUsers()),
+  setWorkUsers: (value: any) => dispatch(actions.setWorkUsers(value))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(WrapperSearchUsers)
