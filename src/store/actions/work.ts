@@ -46,3 +46,11 @@ export const setUserLoading = (value: boolean) => ({
   type: constants.SET_USER_LOADING,
   value
 })
+
+/**
+ * @desc 设置选中用户
+ */
+export const setCurrentUser = (value: any) => ({
+  type: constants.SET_CURRENT_USER,
+  value
+})

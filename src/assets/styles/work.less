@@ -76,6 +76,10 @@
           cursor: pointer;
           padding: 0 10px;
 
+          &.active {
+            background: rgba(73, 119, 240, 0.2) !important;
+          }
+
           &:hover {
             background: rgba(73, 119, 240, 0.2) !important;
           }
@@ -161,11 +165,12 @@
         }
 
         .search-icon {
-          width: 20px;
+          width: 22px;
           height: 20px;
           background: #eee;
           margin-left: 20px;
           cursor: pointer;
+          background: url("../images/workbench_search_icon.png") no-repeat center/cover;
         }
       }
 
@@ -192,6 +197,14 @@
     border-radius: 4px;
     margin-left: 415px;
     margin-right: 415px;
+
+    .page-button {
+      margin-right: 14px;
+
+      .first {
+        margin-right: 20px;
+      }
+    }
   }
 }
 

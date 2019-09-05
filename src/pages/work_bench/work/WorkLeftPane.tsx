@@ -38,13 +38,13 @@ class WorkLeftPane extends React.Component<IProps> {
             <Users/>
           </Tabs.TabPane>
           <Tabs.TabPane key="2" tab="未 &nbsp;处&nbsp; 理">
-
+            <Users/>
           </Tabs.TabPane>
           <Tabs.TabPane key="3" tab="今日预约">
-
+            <Users/>
           </Tabs.TabPane>
           <Tabs.TabPane key="4" tab="预约过期">
-
+            <Users/>
           </Tabs.TabPane>
         </Tabs>
       </div>

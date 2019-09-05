@@ -15,9 +15,10 @@ const initState = {
     uni_query: '',
     biz_status: '',
     page: 1,
-    pageSize: 16,
+    pageSize: 1000,
   },
   getUserLoading: false,
+  currentUser: null
 }
 
 interface IActionProps {
@@ -35,6 +36,8 @@ const common = (previousState = initState, action: IActionProps): retunType => {
       return {...previousState, usersSearch: action.value}
     case constants.SET_USER_LOADING:
       return {...previousState, getUserLoading: action.value}
+    case constants.SET_CURRENT_USER:
+      return {...previousState, currentUser: action.value}
     default:
       return previousState;
   }

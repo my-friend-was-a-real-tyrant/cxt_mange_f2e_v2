@@ -1,11 +1,15 @@
 import React from 'react'
-import {Tabs} from 'antd'
+import {Tabs, Button} from 'antd'
 
 class WorkCenterPane extends React.Component {
   render() {
+    const pageButton = <div className="page-button">
+      <Button type="primary" className="first">上一条</Button>
+      <Button type="primary">下一条</Button>
+    </div>
     return (
       <div className="work-center">
-        <Tabs tabBarGutter={0} animated={false}>
+        <Tabs tabBarGutter={0} animated={false} tabBarExtraContent={pageButton}>
           <Tabs.TabPane key="1" tab="微信">
 
           </Tabs.TabPane>
