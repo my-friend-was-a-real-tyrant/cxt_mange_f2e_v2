@@ -1,9 +1,8 @@
 import React, {FunctionComponent, useState} from 'react'
-import {Form, Input, Select, DatePicker, Icon, Button} from 'antd'
+import {Form, Input, Select, DatePicker, Icon, Button, message} from 'antd'
 import {connect} from 'react-redux'
-import {Dispatch} from 'redux'
 import {FormComponentProps} from 'antd/es/form'
-import * as actions from 'store/actions/work'
+import fetch from 'fetch/axios'
 import moment from 'moment'
 import 'assets/styles/right-panel.less'
 
@@ -35,6 +34,24 @@ const UserInfo: FunctionComponent<IProps> = (props) => {
   const currentUser: any = props.currentUser;
   const [edit, setEdit] = useState<boolean>(false)
 
+  const handleChangeUserInfo = () => {
+    props.form.validateFields((err, values) => {
+      const params = {
+        id: currentUser.id,
+        ...values,
+        wx_add_time: values.wx_add_time ? moment(values.wx_add_time).format('YYYY-MM-DD') : values.wx_add_time,
+        next_follow_time: values.next_follow_time ? moment(values.next_follow_time).format('YYYY-MM-DD') : values.next_follow_time,
+        time_create: values.time_create ? moment(values.time_create).format('YYYY-MM-DD') : values.time_create,
+      }
+      fetch.post(`/apiv1/user-uni-data/update`, params).then((res: any) => {
+        if (res.code === 20000) {
+          message.success('修改成功')
+          setEdit(false)
+        }
+      })
+    })
+  }
+
   const {getFieldDecorator} = props.form;
   return (
     <div>
@@ -42,61 +59,74 @@ const UserInfo: FunctionComponent<IProps> = (props) => {
         <div className="right-panel-title">
           <span className="title">用户信息</span>
           <span className="btn" onClick={() => setEdit(!edit)}>
-            <b><Icon type="edit"/></b>&nbsp; {edit?'取消':'编辑'}
+            <b><Icon type="edit"/></b>&nbsp; {edit ? '取消' : '编辑'}
           </span>
         </div>
         <Form.Item label="车牌" {...formItemLayout}>
-          {edit ? <Input placeholder="请输入车牌号"/> : currentUser && currentUser.license}
+          {edit ? getFieldDecorator("license", {initialValue: currentUser && currentUser.license})(
+            <Input placeholder="请输入车牌号"/>
+          ) : currentUser && currentUser.license}
         </Form.Item>
         <Form.Item label="姓名"  {...formItemLayout}>
-          {edit ? <Input placeholder="请输入姓名"/> : currentUser && currentUser.name}
+          {edit ? getFieldDecorator("name", {initialValue: currentUser && currentUser.name})(
+            <Input placeholder="请输入姓名"/>
+          ) : currentUser && currentUser.name}
         </Form.Item>
         <Form.Item label="电话"  {...formItemLayout}>
-          {edit ? <Input placeholder="请输入电话"/> : currentUser && currentUser.mobile}
+          {edit ? getFieldDecorator("mobile", {initialValue: currentUser && currentUser.mobile})(
+            <Input placeholder="请输入电话"/>
+          ) : currentUser && currentUser.mobile}
         </Form.Item>
         <Form.Item label="微信"  {...formItemLayout}>
           {edit ? <Input placeholder="请输入微信" disabled/> : currentUser && currentUser.target_wx}
         </Form.Item>
         <div className="line"/>
         <Form.Item label="微信昵称"  {...formItemLayout}>
-          {edit ? <Input placeholder="请输入微信昵称" disabled/> : currentUser && currentUser.swx_nickname}
+          {edit ? <Input placeholder="请输入微信昵称" disabled/> : currentUser && currentUser.wx_nickname}
         </Form.Item>
         <Form.Item label="微信备注"  {...formItemLayout}>
-          {edit ? <Input placeholder="请输入微信备注"/> : currentUser && currentUser.swx_memo}
+          {edit ? getFieldDecorator("wx_memo", {initialValue: currentUser && currentUser.wx_memo})(
+            <Input placeholder="请输入微信备注"/>
+          ) : currentUser && currentUser.wx_memo}
         </Form.Item>
         <Form.Item label="企业微信"  {...formItemLayout}>
           {edit ? <Input placeholder="企业微信" disabled/> : currentUser && currentUser.server_wx}
         </Form.Item>
         <Form.Item label="添加日期"  {...formItemLayout}>
-
+          {edit ? getFieldDecorator("wx_add_time", {initialValue: currentUser && currentUser.wx_add_time ? moment(currentUser.wx_add_time) : null})(
+            <DatePicker disabled/>
+          ) : currentUser && currentUser.wx_add_time ? moment(currentUser.wx_add_time).format('YYYY-MM-DD') : ''}
         </Form.Item>
         <Form.Item label="好友状态"  {...formItemLayout}>
-          {edit ?
-            getFieldDecorator('wx_status', {initialValue: ''})(
-              <Select>
-                <Select.Option value="">全部</Select.Option>
-                <Select.Option value={-1}>已删除</Select.Option>
-                <Select.Option value={1}>未删除</Select.Option>
-                <Select.Option value={-2}>拉黑</Select.Option>
-              </Select>
-            ) : currentUser && wxStatus[currentUser.wx_status]}
+          {edit ? getFieldDecorator('wx_status', {initialValue: currentUser && currentUser.wx_status})(
+            <Select disabled>
+              <Select.Option value="">全部</Select.Option>
+              <Select.Option value={-1}>已删除</Select.Option>
+              <Select.Option value={1}>未删除</Select.Option>
+              <Select.Option value={-2}>拉黑</Select.Option>
+            </Select>
+          ) : currentUser && wxStatus[currentUser.wx_status]}
         </Form.Item>
         <div className="line"/>
         <Form.Item label="下发时间"  {...formItemLayout}>
-          {edit ? '' : currentUser && currentUser.time_create ? moment(currentUser.time_create).format('YYYY-MM-DD') : ''}
+          {edit ? getFieldDecorator("time_create", {initialValue: currentUser && currentUser.time_create ? moment(currentUser.time_create) : null})(
+            <DatePicker disabled/>
+          ) : currentUser && currentUser.time_create ? moment(currentUser.time_create).format('YYYY-MM-DD') : ''}
         </Form.Item>
         <Form.Item label="预约时间"  {...formItemLayout}>
-          {edit ?
-            <DatePicker/> : currentUser && currentUser.next_follow_time ? moment(currentUser.next_follow_time).format('YYYY-MM-DD') : ''}
+          {edit ? getFieldDecorator("next_follow_time", {initialValue: currentUser && currentUser.next_follow_time ? moment(currentUser.next_follow_time) : null})(
+            <DatePicker/>
+          ) : currentUser && currentUser.next_follow_time ? moment(currentUser.next_follow_time).format('YYYY-MM-DD') : ''}
         </Form.Item>
         <Form.Item label="跟进状态"  {...formItemLayout}>
-          {edit ? <Select>
-            <Select.Option value="">全部</Select.Option>
-            {businessStatus.map(m => <Select.Option value={m.type} key={m.type}>{m.title}</Select.Option>)}
-          </Select> : currentUser && currentUser.biz_status ? businessStatus[currentUser.biz_status].title : '未知'}
+          {edit ? getFieldDecorator('biz_status', {initialValue: currentUser && currentUser.biz_status})(
+            <Select>
+              <Select.Option value="">全部</Select.Option>
+              {businessStatus.map(m => <Select.Option value={m.type} key={m.type}>{m.title}</Select.Option>)}
+            </Select>) : currentUser && currentUser.biz_status ? businessStatus[currentUser.biz_status - 1].title : '未知'}
         </Form.Item>
         <Form.Item>
-          {edit?<Button type="primary" block>确认</Button>:null}
+          {edit ? <Button type="primary" block onClick={handleChangeUserInfo}>确认</Button> : null}
         </Form.Item>
       </Form>
     </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import {Tabs} from 'antd'
 import UserInfo from 'components/work/UserInfo'
+import CarInfo from 'components/work/CarInfo'
 
 class WorkRightPane extends React.Component {
   render() {
@@ -11,7 +12,7 @@ class WorkRightPane extends React.Component {
             <UserInfo/>
           </Tabs.TabPane>
           <Tabs.TabPane key="2" tab="车辆信息">
-
+            <CarInfo/>
           </Tabs.TabPane>
           <Tabs.TabPane key="3" tab="快速算价">
 
