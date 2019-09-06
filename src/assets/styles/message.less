@@ -85,4 +85,60 @@
       align-items: flex-end;
     }
   }
+
+  .message-file-panel {
+    width: 120px;
+    display: flex;
+    align-items: flex-end;
+    background: #fff;
+    padding: 5px;
+    font-size: 20px;
+
+    .file-icon {
+      width: 76px;
+      height: 76px;
+      min-width: 76px;
+      margin-right: 14px;
+      background: url(//res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png) no-repeat;
+      background-position: -346px -152px;
+      -webkit-background-size: 487px 462px;
+      background-size: 487px 462px;
+
+      &.xlsx,
+      &.xls {
+        background: url(//res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png) no-repeat;
+        background-position: -152px -246px;
+        -webkit-background-size: 487px 462px;
+        background-size: 487px 462px;
+      }
+
+      &.pdf {
+        background: url(//res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png) no-repeat;
+        background-position: -228px -246px;
+        -webkit-background-size: 487px 462px;
+        background-size: 487px 462px;
+      }
+
+      &.doc, &.docx {
+        background: url(//res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png) no-repeat;
+        background-position: -76px -246px;
+        -webkit-background-size: 487px 462px;
+        background-size: 487px 462px;
+      }
+
+      &.txt {
+        background: url(//res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png) no-repeat;
+        background-position: 0 -322px;
+        -webkit-background-size: 487px 462px;
+        background-size: 487px 462px;
+      }
+
+      &.other {
+        background: url(//res.wx.qq.com/a/wx_fed/webwx/res/static/css/5af37c4a880a95586cd41c5b251d5562@1x.png) no-repeat;
+        background-position: -346px -152px;
+        -webkit-background-size: 487px 462px;
+        background-size: 487px 462px;
+      }
+    }
+  }
 }

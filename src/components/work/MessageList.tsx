@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Message from './Message'
 import {Dispatch} from 'redux'
 import * as actions from 'store/actions/work'
+import {Empty} from 'antd'
 import 'assets/styles/wechat.less'
 
 
@@ -13,12 +14,6 @@ interface IProps {
 
 class MessageList extends React.Component<IProps> {
 
-  componentDidMount() {
-    setTimeout(() => {
-      const wrapper: any = document.querySelector('#message-list')
-      wrapper.scrollTop = wrapper.scrollHeight
-    }, 50)
-  }
 
   componentDidUpdate() {
     const {finished, offset} = this.props.wechtMessageInfo
@@ -38,7 +33,7 @@ class MessageList extends React.Component<IProps> {
 
   render() {
 
-    const {data} = this.props.wechtMessageInfo
+    const {data, finished} = this.props.wechtMessageInfo
 
     // 发送消息状态()
     const getMsgStatus = ({actionSubmitStatus, actionExecutionStatus}: { actionSubmitStatus: number; actionExecutionStatus: number }): string => {
@@ -64,10 +59,14 @@ class MessageList extends React.Component<IProps> {
                         cTime={m.timeCreate}/>
       })
     }
+    const loadMore = !finished ? <span className="loadmore-btn" onClick={() => this.loadMore()}>查看更多</span> :
+      <span className="loadmore-btn">没有更多了...</span>
     return (
       <div id="message-list">
-        <span className="loadmore-btn" onClick={() => this.loadMore()}>查看更多</span>
-        {mapMessage()}
+        {data.length ? <>
+          {loadMore}
+          {mapMessage()}
+        </> : <Empty/>}
       </div>
     )
   }

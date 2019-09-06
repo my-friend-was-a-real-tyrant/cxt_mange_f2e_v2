@@ -53,7 +53,7 @@ class SendMessage extends React.Component<IProps, IState> {
     })
   }
 
-  handleSetValue = (e: any) => {
+  handleSetValue = () => {
     const {cText} = this.state
     this.setState({show: false, innerTextValue: `${$('.text-area').html()}${cText}`})
   }
@@ -192,6 +192,22 @@ class SendMessage extends React.Component<IProps, IState> {
   render() {
     const {sendMsg} = this.props
     const {getFieldDecorator} = this.props.form
+    const {groupArr = [], msgTemp = [], show} = this.state
+    const opt = groupArr.map(v => {
+      return (
+        <Select.OptGroup label={v} key={v}>
+          {msgTemp.map((el: any, index) => {
+            if (el.msg_group === v) {
+              return (
+                <Select.Option value={el.content} key={index}>
+                  {el.content}
+                </Select.Option>
+              )
+            }
+          })}
+        </Select.OptGroup>
+      )
+    })
     const uploadConfig = {
       action: `/apiv1/upload/image?access_token=${localStorage.getItem('access_token')}`,
       showUploadList: false,
@@ -245,7 +261,7 @@ class SendMessage extends React.Component<IProps, IState> {
               </span>
               </Upload>,
             )}
-            <span>快捷回复</span>
+            <span onClick={() => this.setState({show: true})} className="reply-btn">快捷回复</span>
           </Form.Item>
           <Form.Item>
             <pre contentEditable={true}
@@ -259,6 +275,19 @@ class SendMessage extends React.Component<IProps, IState> {
             <Button htmlType="submit"> 发送</Button>
           </Form.Item>
         </Form>
+        <Modal
+          visible={show}
+          okText="确认"
+          cancelText="取消"
+          onCancel={() => this.setState({show: false})}
+          onOk={() => this.handleSetValue()}
+          destroyOnClose
+        >
+          <Select style={{width: '80%'}} placeholder="请选择回复语句"
+                  onChange={(value: string) => this.setState({cText: value})}>
+            {opt}
+          </Select>
+        </Modal>
       </div>
     )
   }

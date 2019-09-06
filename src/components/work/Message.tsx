@@ -1,5 +1,5 @@
 import React, {FC} from 'react'
-import {Avatar} from 'antd'
+import {Avatar, Icon} from 'antd'
 import {getWechatTime} from "utils/utils"
 import faceList from './faceList'
 import RcViewer from '@hanyk/rc-viewer'
@@ -56,12 +56,34 @@ const ShowPicture: FC<IMessage> = (props) => {
   </RcViewer>
 }
 
+// 展示文件
+const ShowFile: FC<IMessage> = (props) => {
+  const fileType = props.message.substr(props.message.lastIndexOf(".") + 1)
+  return <div className="message-file-panel">
+    <div className={`file-icon ${fileType}`}/>
+    <a href={`${process.env.REACT_APP_PIC_URL}${props.message}`} download><Icon type="cloud-download"/></a>
+  </div>
+}
+// 展示视频
+const ShowVedio: FC<IMessage> = (props) => {
+  return <div className="vedio-file-panel">
+    <video
+      src={`${process.env.REACT_APP_PIC_URL}${props.message}`}
+      controls style={{width: '200px', height: '300px', outline: 'none'}}/>
+  </div>
+}
+
+
 const filterType = (props: IMessage) => {
   switch (props.type) {
     case 0:
       return <ShowText {...props}/>
     case 1:
       return <ShowPicture {...props}/>
+    case 3:
+      return <ShowFile {...props}/>
+    case 4:
+      return <ShowVedio {...props}/>
   }
 }
 
