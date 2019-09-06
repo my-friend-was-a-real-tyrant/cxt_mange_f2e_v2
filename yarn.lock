@@ -924,6 +924,13 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-9.0.1.tgz#c27b391d8457d1e893f1eddeaf5e5412d12ffbb5"
   integrity sha512-6It2EVfGskxZCQhuykrfnALg7oVeiI6KclWSmGDqB0AiInVrTGB9Jp9i4/Ad21u9Jde/voVQz6eFX/eSg/UsPA==
 
+"@hanyk/rc-viewer@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@hanyk/rc-viewer/-/rc-viewer-0.0.3.tgz#f2a97dc12e2a3ba111b3c64002fbe0c3720e2676"
+  integrity sha512-wx8NzxcWuZbW2Dg42W5LELwO6s9RRuEDOX5nkRFmJtdoWYwbwTIB4PG7GpkD5FeUGuVFLYNJEQ31Y1nZWR34zg==
+  dependencies:
+    viewerjs "^1.0.0"
+
 "@hapi/address@2.x.x":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.0.0.tgz#9f05469c88cb2fd3dcd624776b54ee95c312126a"
@@ -10968,6 +10975,11 @@ verror@1.10.0:
     assert-plus "^1.0.0"
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
+
+viewerjs@^1.0.0:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/viewerjs/-/viewerjs-1.3.6.tgz#5b2e68c48623f2ef117da2e2a382059cab147df9"
+  integrity sha512-3SCxFtvFP+mPzudBNexUA0eTI6pjCP+xlJLENs9SyaocWXUq0Jjx5HXWQfKKU0GCpkyPjfFnZefevMtGUmjjNQ==
 
 vm-browserify@^1.0.1:
   version "1.1.0"

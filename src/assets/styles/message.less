@@ -2,11 +2,12 @@
   overflow: hidden;
   margin-bottom: 20px;
   padding: 0 15px;
+
   .text {
     max-width: 100%;
     padding: 9px 13px;
     position: relative;
-    background-color: #F2F2F2 ;
+    background-color: #F2F2F2;
     border-radius: 0 4px 4px 4px;
     color: #333;
 
@@ -22,16 +23,24 @@
       border-style: solid;
     }
   }
+
+  .msg-img {
+    max-width: 200px;
+    max-height: 300px;
+  }
+
   .avatar {
     float: left;
     margin-right: 20px;
   }
+
   .time, .status {
     color: #BBBBBB;
     font-size: 14px;
     font-weight: lighter;
   }
-  .message-container{
+
+  .message-container {
     display: flex;
     flex-flow: column;
     align-items: flex-start;
@@ -48,6 +57,7 @@
     .avatar {
       float: right;
       margin-left: 20px;
+      margin-right: 0;
     }
 
     .text {

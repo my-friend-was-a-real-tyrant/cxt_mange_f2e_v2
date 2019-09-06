@@ -2,6 +2,7 @@ import React, {FC} from 'react'
 import {Avatar} from 'antd'
 import {getWechatTime} from "utils/utils"
 import faceList from './faceList'
+import RcViewer from '@hanyk/rc-viewer'
 import 'assets/styles/message.less'
 
 interface IMessage {
@@ -36,7 +37,7 @@ const ShowAvatar: FC<IAvatar> = (props) => {
   </div>
 }
 
-// 展示头像
+// 展示文本
 const ShowText: FC<IMessage> = (props) => {
   const value = props.message.replace(/\[(.+?)]/gi, (match: any) => {
     if (!faceList.filter(v => `[${v.title}]` === match).length) return match;
@@ -48,10 +49,19 @@ const ShowText: FC<IMessage> = (props) => {
   </div>
 }
 
+// 展示图片
+const ShowPicture: FC<IMessage> = (props) => {
+  return <RcViewer>
+    <img className="msg-img" src={`${process.env.REACT_APP_PIC_URL}${props.message}`} style={{width: '100%'}}/>
+  </RcViewer>
+}
+
 const filterType = (props: IMessage) => {
   switch (props.type) {
     case 0:
       return <ShowText {...props}/>
+    case 1:
+      return <ShowPicture {...props}/>
   }
 }
 

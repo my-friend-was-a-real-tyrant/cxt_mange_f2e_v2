@@ -19,11 +19,12 @@ interface IProps {
   getUserLoading: boolean;
   setCurrentUser: (user: any) => any;
   currentUser: any;
-  asyncGetWechatMessages: () => any
+  asyncGetWechatMessages: () => any;
+  setWechatMessageInfo: (value: any) => any;
 }
 
 const Users = (props: IProps) => {
-  const {setUsersSearch, usersSearch, thunkWorkUsers, workUsers, getUserLoading, currentUser, setCurrentUser, asyncGetWechatMessages} = props
+  const {setUsersSearch, usersSearch, thunkWorkUsers, workUsers, getUserLoading, currentUser, setCurrentUser, asyncGetWechatMessages, setWechatMessageInfo} = props
   const {data, total} = workUsers
 
 
@@ -33,10 +34,11 @@ const Users = (props: IProps) => {
   }
 
   const handleSetCurrentUser = (user: any) => {
+    setWechatMessageInfo({data: [], finished: false, limit: 10, offset: 1})
     setCurrentUser(user)
-    // if (user.server_wx && user.target_wx) {
+    if (user.server_wx && user.target_wx) {
       asyncGetWechatMessages()
-    // }
+    }
   }
 
   const userItem = data.map((v: any) => {
@@ -86,6 +88,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   setUsersSearch: (value: any) => dispatch(actions.setUsersSearch(value)),
   thunkWorkUsers: () => dispatch(actions.thunkWorkUsers()),
   setCurrentUser: (value: any) => dispatch(actions.setCurrentUser(value)),
-  asyncGetWechatMessages: () => dispatch(actions.asyncGetWechatMessages())
+  asyncGetWechatMessages: () => dispatch(actions.asyncGetWechatMessages()),
+  setWechatMessageInfo: (value: any) => dispatch(actions.setWechatMessageInfo(value))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Users)

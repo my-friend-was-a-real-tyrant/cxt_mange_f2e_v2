@@ -15,7 +15,7 @@ const initState = {
     uni_query: '',
     biz_status: '',
     page: 1,
-    pageSize: 1000,
+    pageSize: 40,
   },
   getUserLoading: false,
   currentUser: null,
@@ -23,6 +23,7 @@ const initState = {
     data: [],
     limit: 10,
     offset: 1,
+    finished: false,
   }
 }
 

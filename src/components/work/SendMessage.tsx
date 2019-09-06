@@ -125,9 +125,7 @@ class SendMessage extends React.Component<IProps, IState> {
     // 读取文件后将其显示在网页中
     reader.onload = function (e: any) {
       var img = new Image()
-
       img.src = e.target.result
-
       // document.body.appendChild(img)
       Modal.confirm({
         title: '发送图片?',
@@ -137,7 +135,7 @@ class SendMessage extends React.Component<IProps, IState> {
         onOk: () => {
           const formData = new FormData()
           formData.append('file', file)
-          fetch.post(``, formData).then((res: any) => {
+          fetch.post(`/apiv1/upload/image?access_token=${localStorage.getItem('access_token')}`, formData).then((res: any) => {
             if (res.code === 20000) {
               sendMsg({message: res.data, type: 1, time: new Date().getTime()})
             }
@@ -193,13 +191,24 @@ class SendMessage extends React.Component<IProps, IState> {
 
   render() {
     const {sendMsg} = this.props
-    const { getFieldDecorator} = this.props.form
+    const {getFieldDecorator} = this.props.form
     const uploadConfig = {
-      action: '',
+      action: `/apiv1/upload/image?access_token=${localStorage.getItem('access_token')}`,
       showUploadList: false,
       onChange(info: any) {
         if (info.file.status === 'done') {
           if (info.file.response.code === 20000) {
+            const fileType = info.file.response.data.substr(info.file.response.data.lastIndexOf("."))
+            if (/\.(gif|jpg|jpeg|png|GIF|JPG|PNG|JPEG)$/.test(fileType)) {
+              // 图片
+              sendMsg({message: info.file.response.data, type: 1, time: new Date().getTime()})
+            } else if (/\.(flv|rvmb|mp4|avi|wmv)$/.test(fileType)) {
+              // 视频
+              sendMsg({message: info.file.response.data, type: 4, time: new Date().getTime()})
+            } else {
+              // 文件
+              sendMsg({message: info.file.response.data, type: 3, time: new Date().getTime()})
+            }
           }
         } else if (info.file.status === 'error') {
           message.error('图片上传失败')
@@ -224,7 +233,7 @@ class SendMessage extends React.Component<IProps, IState> {
     </div>
     return (
       <div id="send-message">
-        <Form>
+        <Form onSubmit={this.handleSubmit}>
           <Form.Item className="toolbar">
             <Popover placement="top" content={face} trigger="click">
               <span className="web_wechat_face" title="表情"> </span>
@@ -243,6 +252,7 @@ class SendMessage extends React.Component<IProps, IState> {
                  dangerouslySetInnerHTML={{__html: `${this.state.innerTextValue}`}}
                  onKeyDown={onKeyDown}
                  onChange={(e: any) => this.setState({innerTextValue: e.target.value})}
+                 onPaste={this.onPaste}
                  className="text-area"/>
           </Form.Item>
           <Form.Item style={{marginBottom: '0', textAlign: 'right'}}>

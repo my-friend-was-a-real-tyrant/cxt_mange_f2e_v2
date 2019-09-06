@@ -6,11 +6,14 @@ import WorkLeftPane from './WorkLeftPane'
 import WorkRightPane from './WorkRightPane'
 import WorkCenterPane from './WorkCenterPane'
 import 'assets/styles/work.less'
+import {setWechatMessageInfo} from "store/actions/work"
 
 interface IProps {
   workUsers: any;
   setWorkUsers: (value: any) => any;
   currentUser: any;
+  wechtMessageInfo: any;
+  setWechatMessageInfo: (value: any) => any
 }
 
 interface IState {
@@ -81,9 +84,10 @@ class Work extends React.Component<IProps, IState> {
 
   // ws 消息处理
   handleWechatMessage = (DATA: any) => {
-    const {workUsers, setWorkUsers} = this.props;
+    const {workUsers, setWorkUsers, wechtMessageInfo, currentUser, setWechatMessageInfo} = this.props;
     const {data} = workUsers
-    switch (data.ws_event_type) {
+    const {data: messageList} = wechtMessageInfo
+    switch (DATA.ws_event_type) {
       // 设置微信用户在线离线状态
       case 'client_status_push': {
         data.forEach((v: any) => {
@@ -96,14 +100,28 @@ class Work extends React.Component<IProps, IState> {
       }
       // 聊天内容推送
       case 'resp_wx_msg_log': {
-        const messages = data.messages || []
-        console.log(messages)
+        const messages = DATA.messages || []
+        messages.forEach((m: any) => {
+          console.log(currentUser, m)
+          if (currentUser && currentUser.target_wx === m.targetAccount && currentUser.server_wx === m.serverAccount) {
+            messageList.push(m)
+            setWechatMessageInfo({...wechtMessageInfo, data: [...messageList]})
+          }
+        })
         break
       }
       // 消息发送状态变化通知
       case 'wx_status_push': {
         console.log('发送消息状态变化通知')
-
+        const index = messageList.findIndex((d: any) => d.id === DATA.id)
+        if (index > -1) {
+          delete DATA.ws_event_type
+          messageList[index] = {
+            ...messageList[index],
+            ...DATA,
+          }
+        }
+        setWechatMessageInfo({...wechtMessageInfo, data: [...messageList]})
         break
       }
     }
@@ -118,8 +136,8 @@ class Work extends React.Component<IProps, IState> {
           ws_event_type: 'send_wx_msg',
           message: value.message,
           cid: 'web_' + value.time,
-          serverAccount: currentUser.server_wx || 'qyid_1688851702792344',
-          targetAccount: currentUser.target_wx || 'qyid_7881300573914899',
+          serverAccount: currentUser.server_wx,
+          targetAccount: currentUser.target_wx,
           time: value.time,
           type: value.type,
         }),
@@ -142,9 +160,11 @@ class Work extends React.Component<IProps, IState> {
 
 const mapStateToProps = (state: any) => ({
   workUsers: state.work.workUsers,
-  currentUser: state.work.currentUser
+  currentUser: state.work.currentUser,
+  wechtMessageInfo: state.work.wechtMessageInfo,
 })
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  setWorkUsers: (value: any) => dispatch(actions.setWorkUsers(value))
+  setWorkUsers: (value: any) => dispatch(actions.setWorkUsers(value)),
+  setWechatMessageInfo: (value: any) => dispatch(actions.setWechatMessageInfo(value))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Work)
