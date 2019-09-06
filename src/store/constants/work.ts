@@ -3,6 +3,7 @@ const constants = {
   SET_USERS_SEARCH: 'SET_USERS_SEARCH', // 设置用户搜索条件
   SET_USER_LOADING: 'SET_USER_LOADING', // 设置用户请求loading
   SET_CURRENT_USER: 'SET_CURRENT_USER', // 设置当前选中用户
+  SET_WECHAT_MESSAGE_INFO:'SET_WECHAT_MESSAGE_INFO', //设置微信聊天记录
 }
 
 export default constants

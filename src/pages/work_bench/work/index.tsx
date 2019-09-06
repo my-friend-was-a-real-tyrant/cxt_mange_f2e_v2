@@ -19,6 +19,7 @@ interface IState {
 }
 
 class Work extends React.Component<IProps, IState> {
+  timer: any = null;
   state = {
     socket: null,
     wsState: 'init',
@@ -26,6 +27,7 @@ class Work extends React.Component<IProps, IState> {
 
   componentDidMount() {
     this.createConnect()
+    this.timer = setInterval(() => this.sendWsHeartBeat(), 30000)
   }
 
   // 创建webSocket通讯
@@ -62,6 +64,22 @@ class Work extends React.Component<IProps, IState> {
     }
   }
 
+  // 发送websocket心跳包，因为60s内无数据，nginx会将连接关闭。
+  sendWsHeartBeat = () => {
+    const {wsState, socket} = this.state
+    const socketAny: any = socket
+    if (wsState === 'disconnected') {
+      // 重新建立链接
+      setTimeout(() => this.createConnect(), 1000)
+      return
+    }
+
+    if (wsState === 'ready') {
+      socketAny.send(JSON.stringify({ws_event_type: 'wx_ping'}))
+    }
+  }
+
+  // ws 消息处理
   handleWechatMessage = (DATA: any) => {
     const {workUsers, setWorkUsers} = this.props;
     const {data} = workUsers
@@ -69,14 +87,23 @@ class Work extends React.Component<IProps, IState> {
       // 设置微信用户在线离线状态
       case 'client_status_push': {
         data.forEach((v: any) => {
-          v.online = DATA.status
+          if (v.server_wx === DATA.serverAccount) {
+            v.online = DATA.status
+          }
         })
         setWorkUsers({...workUsers, data: [...data]})
         break
       }
+      // 聊天内容推送
       case 'resp_wx_msg_log': {
         const messages = data.messages || []
         console.log(messages)
+        break
+      }
+      // 消息发送状态变化通知
+      case 'wx_status_push': {
+        console.log('发送消息状态变化通知')
+
         break
       }
     }
@@ -91,8 +118,8 @@ class Work extends React.Component<IProps, IState> {
           ws_event_type: 'send_wx_msg',
           message: value.message,
           cid: 'web_' + value.time,
-          serverAccount: currentUser.server_wx,
-          targetAccount: currentUser.target_wx,
+          serverAccount: currentUser.server_wx || 'qyid_1688851702792344',
+          targetAccount: currentUser.target_wx || 'qyid_7881300573914899',
           time: value.time,
           type: value.type,
         }),

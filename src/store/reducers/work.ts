@@ -18,7 +18,12 @@ const initState = {
     pageSize: 1000,
   },
   getUserLoading: false,
-  currentUser: null
+  currentUser: null,
+  wechtMessageInfo: {
+    data: [],
+    limit: 10,
+    offset: 1,
+  }
 }
 
 interface IActionProps {
@@ -38,6 +43,8 @@ const common = (previousState = initState, action: IActionProps): retunType => {
       return {...previousState, getUserLoading: action.value}
     case constants.SET_CURRENT_USER:
       return {...previousState, currentUser: action.value}
+    case constants.SET_WECHAT_MESSAGE_INFO:
+      return {...previousState, wechtMessageInfo: action.value}
     default:
       return previousState;
   }

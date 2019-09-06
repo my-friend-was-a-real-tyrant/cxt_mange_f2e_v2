@@ -54,3 +54,31 @@ export const setCurrentUser = (value: any) => ({
   type: constants.SET_CURRENT_USER,
   value
 })
+
+/**
+ * @desc 获取聊天记录
+ */
+export const asyncGetWechatMessages = () => (dispatch: Dispatch, getState: any) => {
+  const {currentUser} = getState().work
+  const params = {
+    offset: 1,
+    limit: 14,
+    targetWxId: currentUser.target_wx||'qyid_7881300573914899',
+    originWxId: currentUser.server_wx||'qyid_1688851702792344'
+  }
+  fetch.get(`/apiv1/wx/getWxCommunicateRecords`, {params}).then((res: any) => {
+    if (res.code === 20000) {
+      dispatch(setWechatMessageInfo({data: res.data || [], limit: 10, offset: 1}))
+    } else if (res.code === 20003) {
+    } else {
+    }
+  })
+}
+
+/**
+ * @desc 设置微信聊天记录
+ */
+export const setWechatMessageInfo = (value: any) => ({
+  type: constants.SET_WECHAT_MESSAGE_INFO,
+  value
+})
