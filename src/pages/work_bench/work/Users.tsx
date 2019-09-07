@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Button, Spin, Icon} from 'antd'
+import {Button, Spin, Icon, Empty} from 'antd'
 import {connect} from 'react-redux'
 import SearchUsers from './SearchUsers'
 import {Dispatch} from 'redux'
@@ -60,20 +60,24 @@ const Users = (props: IProps) => {
     <Spin spinning={getUserLoading}>
       <div className="work-left__user-list">
         <SearchUsers/>
-        <ul className="users-title">
-          <li>车牌</li>
-          <li>电话</li>
-          <li>姓名</li>
-          <li>微信</li>
-          <li>时间</li>
-        </ul>
-        <div className="users">
-          {userItem}
-        </div>
-        <div className="loadmore">
-          <span>{data.length}/{total}</span>
-          {data.length === total ? '已全部加载完成' : <Button type="link" onClick={onSearch}>查看更多</Button>}
-        </div>
+        {
+          data.length ? <>
+            <ul className="users-title">
+              <li>车牌</li>
+              <li>电话</li>
+              <li>姓名</li>
+              <li>微信</li>
+              <li>时间</li>
+            </ul>
+            <div className="users">
+              {userItem}
+            </div>
+            <div className="loadmore">
+              <span>{data.length}/{total}</span>
+              {data.length === total ? '已全部加载完成' : <Button type="link" onClick={onSearch}>查看更多</Button>}
+            </div>
+          </> : <Empty/>
+        }
       </div>
     </Spin>
   )

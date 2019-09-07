@@ -26,7 +26,7 @@ export const setWorkUsers = (value: any) => ({
 /**
  * @desc 获取工作台用户列表
  */
-export const thunkWorkUsers = () => async (dispatch: Dispatch, getState: any) => {
+export const thunkWorkUsers = (key?: string) => async (dispatch: Dispatch, getState: any) => {
   const {workUsers, usersSearch} = getState().work
   const params = {
     ...usersSearch,

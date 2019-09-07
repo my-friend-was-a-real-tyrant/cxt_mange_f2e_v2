@@ -41,8 +41,8 @@ const SearchUsers: React.FC<IProps> = (props) => {
         reg_date_e: formatTime(values.regDate)[1],
         create_time_b: formatTime(values.createTime, 'YYYY-MM-DD')[0],
         create_time_e: formatTime(values.createTime, 'YYYY-MM-DD')[1],
-        recent_time_b: formatTime(values.recentTime, 'YYYY-MM-DD')[0],
-        recent_time_e: formatTime(values.recentTime, 'YYYY-MM-DD')[1],
+        next_follow_time_b: formatTime(values.nextTime, 'YYYY-MM-DD')[0],
+        next_follow_time_e: formatTime(values.nextTime, 'YYYY-MM-DD')[1],
       }
       await setWorkUsers({data: [], total: 0})
       await setUsersSearch({...usersSearch, ...params, page: 1})
@@ -62,7 +62,7 @@ const SearchUsers: React.FC<IProps> = (props) => {
           <span className="search-icon" onClick={() => setOpen(!open)}> </span>
         </Form.Item>
         <Form.Item label="预约日期" {...formItemLayout}>
-          {getFieldDecorator('recentTime')(
+          {getFieldDecorator('nextTime')(
             <DatePicker.RangePicker
               format="YYYY-MM-DD"
               suffixIcon=" "
