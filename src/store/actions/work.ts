@@ -7,7 +7,16 @@ import fetch from 'fetch/axios'
 import {Dispatch} from 'redux'
 import constants from "../constants/work"
 
-
+/**
+ * @desc 获取工作安排统计信息
+ */
+export const getWorkCount = () => (dispatch: any) => {
+  fetch.get(`/apiv1/otb/task/findTaskCount?type=287`).then((res: any) => {
+    if (res.code === 20000) {
+      dispatch({type: constants.SET_WORK_COUNT, value: res.data})
+    }
+  })
+}
 /**
  * @desc 设置用户列表搜索条件
  */

@@ -24,6 +24,14 @@ const initState = {
     limit: 10,
     offset: 1,
     finished: false,
+  },
+  workCount: {
+    today_call_1: 0,
+    today_call_2: 0,
+    today_call_3: 0,
+    today_call_4: 0,
+    today_call_5: 0,
+    today_call_6: 0,
   }
 }
 
@@ -46,6 +54,8 @@ const common = (previousState = initState, action: IActionProps): retunType => {
       return {...previousState, currentUser: action.value}
     case constants.SET_WECHAT_MESSAGE_INFO:
       return {...previousState, wechtMessageInfo: action.value}
+    case constants.SET_WORK_COUNT:
+      return {...previousState, workCount: action.value}
     default:
       return previousState;
   }

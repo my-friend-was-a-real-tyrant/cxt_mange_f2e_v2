@@ -6,14 +6,14 @@ import WorkLeftPane from './WorkLeftPane'
 import WorkRightPane from './WorkRightPane'
 import WorkCenterPane from './WorkCenterPane'
 import 'assets/styles/work.less'
-import {setWechatMessageInfo} from "store/actions/work"
 
 interface IProps {
   workUsers: any;
   setWorkUsers: (value: any) => any;
   currentUser: any;
   wechtMessageInfo: any;
-  setWechatMessageInfo: (value: any) => any
+  setWechatMessageInfo: (value: any) => any;
+  getWorkCount: () => void
 }
 
 interface IState {
@@ -29,6 +29,7 @@ class Work extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
+    this.props.getWorkCount()
     this.createConnect()
     this.timer = setInterval(() => this.sendWsHeartBeat(), 30000)
   }
@@ -151,8 +152,9 @@ class Work extends React.Component<IProps, IState> {
       <div className="work">
         <WorkLeftPane/>
         <WorkRightPane/>
-        <WorkCenterPane wsState={this.state.wsState}
-                        sendMsg={this.sendWechatMsg}/>
+        <WorkCenterPane
+          wsState={this.state.wsState}
+          sendMsg={this.sendWechatMsg}/>
       </div>
     )
   }
@@ -165,6 +167,7 @@ const mapStateToProps = (state: any) => ({
 })
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   setWorkUsers: (value: any) => dispatch(actions.setWorkUsers(value)),
-  setWechatMessageInfo: (value: any) => dispatch(actions.setWechatMessageInfo(value))
+  setWechatMessageInfo: (value: any) => dispatch(actions.setWechatMessageInfo(value)),
+  getWorkCount: () => dispatch(actions.getWorkCount())
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Work)

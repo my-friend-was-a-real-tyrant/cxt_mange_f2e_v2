@@ -4,6 +4,7 @@ const constants = {
   SET_USER_LOADING: 'SET_USER_LOADING', // 设置用户请求loading
   SET_CURRENT_USER: 'SET_CURRENT_USER', // 设置当前选中用户
   SET_WECHAT_MESSAGE_INFO:'SET_WECHAT_MESSAGE_INFO', //设置微信聊天记录
+  SET_WORK_COUNT:'SET_WORK_COUNT',// 工作安排
 }
 
 export default constants
