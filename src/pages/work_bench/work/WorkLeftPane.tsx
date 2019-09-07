@@ -6,7 +6,6 @@ import * as actions from 'store/actions/work'
 import Users from './Users'
 import moment from 'moment'
 import 'assets/styles/work.less'
-import {formatTime} from "../../../utils/utils"
 
 interface IWorkUsers {
   data: [],
@@ -17,7 +16,6 @@ interface IProps {
   workUsers: IWorkUsers;
   getWorkUsers: (key?: string) => Dispatch;
   setUsersSearch: (value: any) => any;
-  usersSearch: any;
   setWorkUsers: (value: any) => any
 }
 
@@ -34,7 +32,7 @@ class WorkLeftPane extends React.Component<IProps> {
   }
 
   handleTabsChange = async (key: string) => {
-    const {setUsersSearch, usersSearch, getWorkUsers, setWorkUsers} = this.props;
+    const {setUsersSearch, getWorkUsers, setWorkUsers} = this.props;
     await setWorkUsers({data: [], total: 0})
 
     switch (key) {
@@ -141,8 +139,7 @@ class WorkLeftPane extends React.Component<IProps> {
 }
 
 const mapStateToProps = (state: any) => ({
-  workUsers: state.work.workUsers,
-  usersSearch: state.work.usersSearch
+  workUsers: state.work.workUsers
 })
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   getWorkUsers: (key?: string) => dispatch(actions.thunkWorkUsers(key)),

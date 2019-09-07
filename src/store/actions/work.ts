@@ -26,7 +26,7 @@ export const setWorkUsers = (value: any) => ({
 /**
  * @desc 获取工作台用户列表
  */
-export const thunkWorkUsers = (key?: string) => async (dispatch: Dispatch, getState: any) => {
+export const thunkWorkUsers = (key?: string) => (dispatch: Dispatch, getState: any) => {
   const {workUsers, usersSearch} = getState().work
   const params = {
     ...usersSearch,
@@ -34,11 +34,14 @@ export const thunkWorkUsers = (key?: string) => async (dispatch: Dispatch, getSt
   };
   const {data} = workUsers
   dispatch(setUserLoading(true))
-  await fetch.get(`/apiv1/user-uni-data/list`, {params}).then((res: any) => {
-    dispatch(setUserLoading(false))
-    if (res.code === 20000) {
-      dispatch(setWorkUsers({data: data.concat(res.data || []), total: res.count || 0}))
-    }
+  return new Promise((resolve, reject) => {
+    fetch.get(`/apiv1/user-uni-data/list`, {params}).then((res: any) => {
+      dispatch(setUserLoading(false))
+      if (res.code === 20000) {
+        dispatch(setWorkUsers({data: data.concat(res.data || []), total: res.count || 0}))
+        resolve(data.concat(res.data || []))
+      }
+    })
   })
 }
 
