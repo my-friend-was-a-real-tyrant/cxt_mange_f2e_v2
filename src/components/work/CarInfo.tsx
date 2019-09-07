@@ -31,6 +31,8 @@ const CarInfo: FunctionComponent<IProps> = (props) => {
       fetch.get(`/apiv1/car-info/ins`, {params}).then((res: any) => {
         if (res.code === 20000) {
           setCarInfo(res.data)
+        } else {
+          setCarInfo(null)
         }
       })
     }
@@ -64,6 +66,7 @@ const CarInfo: FunctionComponent<IProps> = (props) => {
         if (res.code === 20000) {
           message.success('修改成功')
           setEdit(false)
+          getCarInfo()
         }
       })
     })
@@ -120,10 +123,17 @@ const CarInfo: FunctionComponent<IProps> = (props) => {
           ) : carInfo && carInfo.displacement}
         </Form.Item>
         <Form.Item label="初登日期" {...formItemLayout}>
-          {edit ? <DatePicker format="YYYY/MM/DD"/> : carInfo && carInfo.srcTime}
+          {edit ? getFieldDecorator('srcTime', {initialValue: carInfo && carInfo.srcTime ? moment(carInfo && carInfo.srcTime) : null})(
+            <DatePicker format="YYYY/MM/DD"/>
+          ) : carInfo && carInfo.srcTime}
         </Form.Item>
         <Form.Item label="保险日期" {...formItemLayout}>
-          {edit ? <Cascader options={RegDateOption} placeholder="请选择日期"/> : carInfo && carInfo.regDate}
+          {edit ? getFieldDecorator('regDate', {
+            initialValue: carInfo && carInfo.regDate && carInfo.regDate.split('-')[0] ? [
+              carInfo && carInfo.regDate && carInfo.regDate.split('-')[0],
+              carInfo && carInfo.regDate && carInfo.regDate.split('-')[1]
+            ] : ''
+          })(<Cascader options={RegDateOption} placeholder="请选择日期"/>) : carInfo && carInfo.regDate}
         </Form.Item>
         <Form.Item label="身份证号" {...formItemLayout}>
           {edit ? getFieldDecorator('cryIdentity', {initialValue: carInfo && carInfo.cryIdentity})(
