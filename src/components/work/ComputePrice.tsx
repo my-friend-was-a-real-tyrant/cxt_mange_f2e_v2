@@ -59,10 +59,10 @@ const ComputePrice: React.FC<IProps> = (props) => {
 
   const {getFieldDecorator} = props.form
   return (
-    <div>
+    <div className="right-panel-container">
       <Form className="car-price-form" labelAlign="left">
         <h4>基本险</h4>
-        <Form.Item label="车辆损失险" {...formItemLayout}>
+        <Form.Item label="车辆损失险" {...formItemLayout} >
           {getFieldDecorator('buJiMianCheSun', {valuePropName: 'checked', initialValue: true,})(
             <Checkbox>不计免赔</Checkbox>)}
           {getFieldDecorator('cheSun', {initialValue: 1})(

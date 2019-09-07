@@ -3,6 +3,7 @@ import {Tabs} from 'antd'
 import UserInfo from 'components/work/UserInfo'
 import CarInfo from 'components/work/CarInfo'
 import ComputePrice from 'components/work/ComputePrice'
+import CarOffer from 'components/work/CarOffer'
 class WorkRightPane extends React.Component {
   render() {
     return (
@@ -18,7 +19,7 @@ class WorkRightPane extends React.Component {
             <ComputePrice/>
           </Tabs.TabPane>
           <Tabs.TabPane key="4" tab="历史报价">
-
+            <CarOffer />
           </Tabs.TabPane>
         </Tabs>
       </div>

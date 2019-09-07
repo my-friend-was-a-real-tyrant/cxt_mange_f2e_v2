@@ -54,7 +54,7 @@ const UserInfo: FunctionComponent<IProps> = (props) => {
 
   const {getFieldDecorator} = props.form;
   return (
-    <div>
+    <div className="right-panel-container">
       <Form className="user-info-form" labelAlign="left">
         <div className="right-panel-title">
           <span className="title">用户信息</span>

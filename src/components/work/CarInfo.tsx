@@ -74,7 +74,7 @@ const CarInfo: FunctionComponent<IProps> = (props) => {
 
   const {getFieldDecorator} = props.form;
   return (
-    <div>
+    <div className="right-panel-container">
       <Form className="car-info-form" labelAlign="left">
         <div className="right-panel-title">
           <span className="title">车辆信息</span>
