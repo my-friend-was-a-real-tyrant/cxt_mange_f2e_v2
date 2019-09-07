@@ -1,8 +1,13 @@
 import React, {FunctionComponent, useState, useEffect} from 'react';
-import {Tabs, Button, Row, Col, message, Modal} from 'antd'
+import {Tabs, Button, Row, Col, message, Modal, Form, Input} from 'antd'
 import {FormComponentProps} from 'antd/lib/form';
 import fetch from 'fetch/axios'
 import BaseTableComponent from 'components/BaseTableComponent'
+
+const formItemLayout = {
+  labelCol: {span: 6},
+  wrapperCol: {span: 14},
+};
 
 enum filterStatus {
   "删除" = -1,
@@ -51,9 +56,7 @@ const ShortMessage: FunctionComponent<FormComponentProps> = (props) => {
 
   // 新增编辑短信模版
   const onSubmitMsgTemplate = (e: any): void => {
-    console.log(editRow, visible)
     e.preventDefault();
-    // if (visible === 'edit' && !editRow) return message.error('出现错误，请刷新重试')
     props.form.validateFields((err: any, values: any) => {
       if (!err) {
         const params: any = {
@@ -65,7 +68,7 @@ const ShortMessage: FunctionComponent<FormComponentProps> = (props) => {
             ...values,
           }
         }
-        fetch[visible === 'edit' ? 'put' : 'post'](`/template/shortmsg`, null, {params: params[visible]}).then((res: any) => {
+        fetch[visible === 'edit' ? 'put' : 'post'](`/apiv1/template/shortmsg`, null, {params: params[visible]}).then((res: any) => {
           if (res.code === 20000) {
             message.success('新增成功')
             setVisible('')
@@ -156,9 +159,15 @@ const ShortMessage: FunctionComponent<FormComponentProps> = (props) => {
       width: 280
     },
   ]
+  const {getFieldDecorator} = props.form;
   return (
     <div style={{padding: '0 10px'}}>
-      <Tabs animated={false}>
+      <Tabs animated={false}
+            tabBarExtraContent={
+              <Button type="primary" onClick={() => setVisible('add')}>
+                新增短信模版
+              </Button>
+            }>
         <Tabs.TabPane key="1" tab="短信模版">
           <BaseTableComponent
             columns={columns}
@@ -168,10 +177,58 @@ const ShortMessage: FunctionComponent<FormComponentProps> = (props) => {
             rowKey="id"
             loading={loading}
             onChange={handleTableChange}/>
+          <Modal title={`${visible === 'edit' ? '编辑' : '新增'}短信模版`}
+                 visible={Boolean(visible)}
+                 onCancel={() => {
+                   setVisible('')
+                   setEditRow(null)
+                 }} footer={null} destroyOnClose>
+            <Form onSubmit={e => onSubmitMsgTemplate(e)}>
+              <Form.Item label="渠道名称" {...formItemLayout} >
+                {getFieldDecorator('channel_name', {
+                  initialValue: editRow && editRow.channelName, rules: [
+                    {
+                      required: true,
+                      message: '请输入渠道名称!',
+                    },
+                  ]
+                })(
+                  <Input placeholder="请输入渠道名称"/>
+                )}
+              </Form.Item>
+              <Form.Item label="短信内容" {...formItemLayout}>
+                {getFieldDecorator('content', {
+                  initialValue: editRow && editRow.content, rules: [
+                    {
+                      required: true,
+                      message: '请输入短信内容!',
+                    },
+                  ]
+                })(
+                  <Input.TextArea rows={4} placeholder="请输入短信内容"/>
+                )}
+              </Form.Item>
+              <Form.Item label="备注" {...formItemLayout}>
+                {getFieldDecorator('description', {
+                  initialValue: editRow && editRow.description, rules: [
+                    {
+                      required: true,
+                      message: '请输入备注!',
+                    },
+                  ]
+                })(
+                  <Input placeholder="请输入备注"/>
+                )}
+              </Form.Item>
+              <Form.Item style={{textAlign: 'right', marginBottom: 0}}>
+                <Button type="primary" htmlType="submit">提交</Button>
+              </Form.Item>
+            </Form>
+          </Modal>
         </Tabs.TabPane>
       </Tabs>
     </div>
   )
 }
 
-export default ShortMessage
+export default Form.create()(ShortMessage)
