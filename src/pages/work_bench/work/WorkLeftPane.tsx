@@ -5,6 +5,7 @@ import {Tabs, Icon} from 'antd'
 import * as actions from 'store/actions/work'
 import Users from './Users'
 import moment from 'moment'
+import AddUser from 'components/work/AddUser'
 import 'assets/styles/work.less'
 
 interface IWorkUsers {
@@ -20,6 +21,10 @@ interface IProps {
 }
 
 class WorkLeftPane extends React.Component<IProps> {
+
+  state = {
+    add: false
+  }
 
   componentDidMount() {
     this.getUsers()
@@ -119,7 +124,10 @@ class WorkLeftPane extends React.Component<IProps> {
         <Tabs animated={false}
               tabBarGutter={0}
               onChange={this.handleTabsChange}
-              tabBarExtraContent={<div className="add-user-btn"><span className="btn"><Icon type="plus"/></span></div>}>
+              tabBarExtraContent={<div className="add-user-btn"
+                                       onClick={() => this.setState({add: true})}>
+                <span className="btn"><Icon type="plus"/></span>
+              </div>}>
           <Tabs.TabPane key="1" tab="全部用户">
             <Users/>
           </Tabs.TabPane>
@@ -133,6 +141,7 @@ class WorkLeftPane extends React.Component<IProps> {
             <Users/>
           </Tabs.TabPane>
         </Tabs>
+        <AddUser addFlag={this.state.add} onClose={() => this.setState({add: false})}/>
       </div>
     )
   }

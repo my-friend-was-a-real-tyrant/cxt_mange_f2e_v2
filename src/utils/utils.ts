@@ -55,3 +55,21 @@ export const getWechatTime = (time: string | number): string => {
     return moment(time).format('MM/DD')
   }
 }
+
+// 检测手机号
+export const checkPhone = (phone: any) => {
+  return /^1[3456789]\d{9}$/.test(phone);
+}
+
+// 校验机动车车牌
+export const checkInsurance = (vehicleNumber: any) => {
+  if (!vehicleNumber) return false;
+  var result = false;
+  if (vehicleNumber.length < 7 || vehicleNumber.length > 8) {
+    return false
+  } else {
+    const express = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-z]{1}[A-z]{1}[A-z0-9]{4||5}[A-z0-9挂学警港澳]{1}$/
+    result = express.test(vehicleNumber)
+    return result
+  }
+}
