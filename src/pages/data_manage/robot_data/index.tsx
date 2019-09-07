@@ -20,7 +20,7 @@ const formItemLayout = {
 const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (props) => {
 
   const [businessList, setBusinessList] = useState<Array<IBusinessItem>>([])
-  const [search, setSearch] = useState({limit: 10, offset: 1})
+  const [search, setSearch] = useState({limit: 5, offset: 1})
   const [fileName, setFileName] = useState('')
   const [show, setShow] = useState<number | boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
@@ -38,6 +38,7 @@ const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (
       starttime: formatTime(time, 'YYYYMMDD')[0],
       endtime: formatTime(time, 'YYYYMMDD')[1],
       business_id: props.form.getFieldValue('business_id') || -1,
+      offset: (search.offset - 1) * search.limit + 1,
     }
     setLoading(true)
     fetch.get(`/apiv1/oper/datasource/getDataSourceBatchListForDGJ`, {params}).then((res: any) => {
@@ -108,6 +109,10 @@ const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (
     props.history.push(`/app/robot_data/${row.business_id}`)
   }
 
+  const handleTableChange = (pagination: any) => {
+    setSearch({offset: pagination.current, limit: pagination.pageSize})
+  }
+
 
   const columns = [
     {title: '业务', dataIndex: 'business_name', key: 'business_name',},
@@ -156,6 +161,8 @@ const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (
           dataSource={result.data}
           total={result.total}
           loading={loading}
+          current={search.offset === 1 ? 1 : undefined}
+          onChange={handleTableChange}
           bordered/>
 
         <Modal visible={Boolean(show)}

@@ -111,6 +111,7 @@ const CallPlan: FunctionComponent = () => {
         dataSource={result.data}
         total={result.total}
         onChange={handleTableChange}
+        current={search.offset === 1 ? 1 : undefined}
         loading={loading}/>
     </div>
   )

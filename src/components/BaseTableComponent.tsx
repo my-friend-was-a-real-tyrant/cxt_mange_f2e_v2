@@ -14,6 +14,7 @@ interface IProps {
   readonly loading?: boolean;
   readonly total?: number;
   readonly offset?: boolean;
+  readonly current?: number;
 
   [propName: string]: any;
 
@@ -39,7 +40,7 @@ const BaseTableComponent: FunctionComponent<IProps> = (props) => {
     onChange && onChange(pagination, order)
   }
 
-  const {dataSource, columns, bordered, loading, size, total} = props;
+  const {dataSource, columns, bordered, loading, size, total, current: pageCurrent} = props;
   console.log(current)
   return (
     <Table {...props}
@@ -54,7 +55,7 @@ const BaseTableComponent: FunctionComponent<IProps> = (props) => {
              showQuickJumper: true,
              showSizeChanger: true,
              total: total,
-             current,
+             current: pageCurrent || current,
              pageSizeOptions: ['10', '20', '50', '100'],
              showTotal: total => `总共 ${total} 条`
            }}/>

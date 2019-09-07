@@ -34,6 +34,7 @@ const AgentDataDetail: FunctionComponent<FormComponentProps & RouteComponentProp
       accountid: props.match.params.id,
       starttime: formatTime(time, 'YYYYMMDD')[0],
       endtime: formatTime(time, 'YYYYMMDD')[1],
+      offset: (search.offset - 1) * search.limit + 1,
     }
     setLoading(true)
     fetch.get(`/apiv1/otb/import/findTaskImportList/expand`, {params}).then((res: any) => {
@@ -118,6 +119,7 @@ const AgentDataDetail: FunctionComponent<FormComponentProps & RouteComponentProp
           dataSource={result.data}
           loading={loading}
           total={result.total}
+          current={search.offset === 1 ? 1 : undefined}
           bordered
           offset
           onChange={handleTableChange}/>

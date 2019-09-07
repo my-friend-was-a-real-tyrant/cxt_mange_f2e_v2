@@ -34,6 +34,7 @@ const RobotDataDetail: FunctionComponent<FormComponentProps & RouteComponentProp
       business_id: props.match.params.id,
       starttime: formatTime(time, 'YYYYMMDD')[0],
       endtime: formatTime(time, 'YYYYMMDD')[1],
+      offset: (search.offset - 1) * search.limit + 1,
     }
     setLoading(true)
     fetch.get(`/apiv1/oper/datasource/getDataSourceBatchListForDGJ/expand`, {params}).then((res: any) => {
@@ -188,7 +189,7 @@ const RobotDataDetail: FunctionComponent<FormComponentProps & RouteComponentProp
           loading={loading}
           total={result.total}
           bordered
-          offset
+          current={search.offset === 1 ? 1 : undefined}
           onChange={handleTableChange}/>
 
         <Modal title={`导入数据`}

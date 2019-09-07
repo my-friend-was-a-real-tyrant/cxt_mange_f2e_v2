@@ -169,9 +169,6 @@ const ShortMessage: FunctionComponent<FormComponentProps> = (props) => {
             loading={loading}
             onChange={handleTableChange}/>
         </Tabs.TabPane>
-        <Tabs.TabPane key="2" tab="已发短信">
-
-        </Tabs.TabPane>
       </Tabs>
     </div>
   )

@@ -369,6 +369,8 @@ const ToBeDistributed: FunctionComponent<IProps> = props => {
       dataSource={result.data}
       size="middle"
       bordered
+      total={result.total}
+      current={search.page}
       onChange={handleTableChange}
       scroll={{x: 1600}}/>
     <Modal title="分配任务" visible={show} footer={null} destroyOnClose onCancel={() => {

@@ -179,7 +179,7 @@ const CallDetail: FunctionComponent<FormComponentProps> = (props) => {
           )}
         </Form.Item>
         <Form.Item>
-          <Button type="primary" onClick={getDetailList}>搜索</Button>
+          <Button type="primary" onClick={() => setSearch({...search, offset: 1})}>搜索</Button>
         </Form.Item>
       </Form>
 
@@ -187,6 +187,7 @@ const CallDetail: FunctionComponent<FormComponentProps> = (props) => {
         columns={columns}
         dataSource={result.data}
         total={result.total}
+        current={search.offset === 1 ? 1 : undefined}
         onChange={handleTableChange}
         loading={loading}/>
     </div>

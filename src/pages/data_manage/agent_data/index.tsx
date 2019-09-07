@@ -29,6 +29,7 @@ const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (
       ...search,
       starttime: formatTime(time, 'YYYYMMDD')[0],
       endtime: formatTime(time, 'YYYYMMDD')[1],
+      offset: (search.offset - 1) * search.limit + 1,
     }
     setLoading(true)
     fetch.get(`/apiv1/otb/import/findTaskImportList`, {params}).then((res: any) => {
@@ -82,7 +83,9 @@ const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (
     onRemove: () => false,
     data: (file: any) => ({name: file.name, chunk: 0, chunks: 1})
   }
-
+  const handleTableChange = (pagination: any) => {
+    setSearch({offset: pagination.current, limit: pagination.pageSize})
+  }
 
   const columns = [
     {title: '账号名称', dataIndex: 'contact', key: 'contact',},
@@ -112,7 +115,6 @@ const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (
               ]
             })(
               <DatePicker.RangePicker
-                style={{width: '180px'}}
                 format="YYYY-MM-DD"
                 suffixIcon=" "
                 placeholder={['开始日期', '结束日期']}
@@ -128,6 +130,8 @@ const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (
           columns={columns}
           dataSource={result.data}
           total={result.total}
+          current={search.offset===1?1:undefined}
+          onChange={handleTableChange}
           loading={loading}
           bordered/>
 

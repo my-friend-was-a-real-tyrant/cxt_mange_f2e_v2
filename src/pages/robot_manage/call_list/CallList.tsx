@@ -19,6 +19,7 @@ const CallList: FunctionComponent<FormComponentProps> = (props) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [search, setSearch] = useState({offset: 1, limit: 10})
 
+
   // 获取业务
   const getBusiness = () => {
     fetch.get(`/apiv1/oper/get_business_by_company_userid`).then((res: any) => {
@@ -40,6 +41,7 @@ const CallList: FunctionComponent<FormComponentProps> = (props) => {
         business_id: values.business_id,
         start_time: formatTime(values.time, 'YYYYMMDD')[0],
         end_time: formatTime(values.time, 'YYYYMMDD')[1],
+        offset: (search.offset - 1) * search.limit + 1,
       }
       fetch.get(`/apiv1/robot/report/find_call_detail_censuslist_customer`, {params}).then((res: any) => {
         setLoading(false)
@@ -49,6 +51,11 @@ const CallList: FunctionComponent<FormComponentProps> = (props) => {
       })
     })
   }
+
+  const handleTableChange = (pagination: any) => {
+    setSearch({offset: pagination.current, limit: pagination.pageSize})
+  }
+
 
   const columns = [
     {title: '日期', dataIndex: 'time_create'},
@@ -94,13 +101,15 @@ const CallList: FunctionComponent<FormComponentProps> = (props) => {
             )}
           </Form.Item>
           <Form.Item>
-            <Button type="primary" onClick={getCallList}>搜索</Button>
+            <Button type="primary" onClick={() => setSearch({...search, offset: 1})}>搜索</Button>
           </Form.Item>
         </Form>
         <BaseTableComponent
           columns={columns}
           dataSource={result.data}
           loading={loading}
+          onChange={handleTableChange}
+          current={search.offset === 1 ? 1 : undefined}
           total={result.total}/>
       </div>
     </Fragment>
