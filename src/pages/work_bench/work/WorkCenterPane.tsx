@@ -5,7 +5,10 @@ import {Dispatch} from 'redux'
 import * as actions from 'store/actions/work'
 import MessageList from "components/work/MessageList"
 import SendMessage from "components/work/SendMessage"
-
+import RobotCallLog from "components/work/RobotCallLog"
+import AgentCallLog from "components/work/AgentCallLog"
+import ShortMessageLog from "components/work/ShortMessageLog"
+import 'assets/styles/phone.less'
 
 interface Iprops {
   wsState: string;
@@ -70,7 +73,11 @@ class WorkCenterPane extends React.Component<Iprops> {
             </div>
           </Tabs.TabPane>
           <Tabs.TabPane key="2" tab="电话/短信">
-
+            <div className="phone-pane">
+              <RobotCallLog/>
+              <AgentCallLog/>
+              <ShortMessageLog/>
+            </div>
           </Tabs.TabPane>
           <Tabs.TabPane key="3" tab="跟进">
 

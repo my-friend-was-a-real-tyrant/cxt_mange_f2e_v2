@@ -1,0 +1,68 @@
+.phone-pane {
+  padding: 0 20px;
+
+  h5 {
+    display: flex;
+    font-size: 16px;
+
+    span {
+      width: 28px;
+      height: 24px;
+      margin-right: 5px;
+    }
+  }
+
+  .log-item {
+    position: relative;
+    display: flex;
+    height: 50px;
+    line-height: 50px;
+    margin-bottom: 10px;
+    padding: 0 20px;
+
+    .time {
+      width: 120px;
+      flex-shrink: 0;
+    }
+
+    .border {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      border-radius: 10px;
+
+    }
+
+    &.robot {
+      background: rgba(74, 178, 255, 0.1);
+
+      .border {
+        border-left: 4px solid #4AB2FF;
+      }
+    }
+
+    &.agent {
+      background: rgba(102, 146, 255, 0.1);
+
+      .border {
+        border-left: 4px solid #6692FF;
+      }
+    }
+
+    &.message {
+      background: rgba(247, 173, 41, 0.1);
+
+      .border {
+        border-left: 4px solid #F7AD29;
+      }
+
+      .content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin: 0 5px;
+      }
+    }
+  }
+}
