@@ -18,6 +18,26 @@ export const getWorkCount = () => (dispatch: any) => {
   })
 }
 /**
+ * @desc 解密手机号
+ * @param phone
+ */
+export const decryptMobile = (phone: string = '') => (dispatch: Dispatch) => {
+  const params = {
+    phone,
+  }
+  return new Promise((resolve) => {
+    fetch.get(`/apiv1/wx/decrypt-mobile`, {params}).then((res: any) => {
+      if (res.code === 20000 || res.code === 20003) {
+        let data = res.data || ''
+        if (data === "null") {
+          data = '';
+        }
+        resolve(data || '')
+      }
+    })
+  })
+}
+/**
  * @desc 设置用户列表搜索条件
  */
 export const setUsersSearch = (value: any) => ({

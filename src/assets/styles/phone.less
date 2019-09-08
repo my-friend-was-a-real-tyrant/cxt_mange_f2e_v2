@@ -1,5 +1,89 @@
-.phone-pane {
+.phone-panel {
   padding: 0 20px;
+
+  &__log {
+    height: calc(100vh - 330px);
+    overflow-y: auto;
+  }
+
+  .call-panel {
+    display: flex;
+    width: 100%;
+    background: #52C9F4;
+    padding: 15px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+
+    .user-info {
+      display: flex;
+      width: 50%;
+
+      img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .user {
+        color: #fff;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+
+        .username {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .call-message {
+      width: 50%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .message, .call {
+        position: relative;
+        width: 100px;
+        height: 36px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.3);
+        color: #fff;
+        text-align: center;
+        line-height: 36px;
+        font-size: 16px;
+        transition: all 0.5s ease;
+
+        .content {
+          width: 70px;
+          text-align: center;
+          float: right;
+        }
+
+        &.active {
+          .icon {
+            left: calc(100% - 36px);
+          }
+
+          .content {
+            float: left;
+          }
+        }
+
+        .icon {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 36px;
+          height: 100%;
+          border-radius: 50%;
+          background: #fff;
+          transition: all 0.5s ease;
+          color: green;
+        }
+      }
+    }
+  }
 
   h5 {
     display: flex;
@@ -65,4 +149,6 @@
       }
     }
   }
+
+
 }

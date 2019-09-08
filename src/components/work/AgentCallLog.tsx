@@ -40,10 +40,10 @@ const AgentCallLog: FunctionComponent<IProps> = (props) => {
   return <div className="robot-call-log">
     <h5 className="title">
       <span className="icon"/>
-      机器人通话记录
+      人工坐席通话记录
     </h5>
     {callLog.map((v: any, index: number) => {
-      return <div className="log-item robot" key={v.id || index}>
+      return <div className="log-item agent" key={v.id || index}>
         <span className="border"/>
         <div className="time">06/31 12/:13</div>
         <div className="user">四川车险</div>

@@ -8,6 +8,7 @@ import SendMessage from "components/work/SendMessage"
 import RobotCallLog from "components/work/RobotCallLog"
 import AgentCallLog from "components/work/AgentCallLog"
 import ShortMessageLog from "components/work/ShortMessageLog"
+import CallPanel from 'components/work/CallPanel'
 import 'assets/styles/phone.less'
 
 interface Iprops {
@@ -73,10 +74,13 @@ class WorkCenterPane extends React.Component<Iprops> {
             </div>
           </Tabs.TabPane>
           <Tabs.TabPane key="2" tab="电话/短信">
-            <div className="phone-pane">
-              <RobotCallLog/>
-              <AgentCallLog/>
-              <ShortMessageLog/>
+            <div className="phone-panel">
+              <CallPanel/>
+              <div className="phone-panel__log">
+                <RobotCallLog/>
+                <AgentCallLog/>
+                <ShortMessageLog/>
+              </div>
             </div>
           </Tabs.TabPane>
           <Tabs.TabPane key="3" tab="跟进">
