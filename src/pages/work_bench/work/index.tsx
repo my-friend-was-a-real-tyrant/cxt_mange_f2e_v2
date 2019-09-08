@@ -2,9 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Dispatch} from 'redux'
 import * as actions from 'store/actions/work'
-import WorkLeftPane from './WorkLeftPane'
-import WorkRightPane from './WorkRightPane'
-import WorkCenterPane from './WorkCenterPane'
+import WorkLeftPane from './WorkLeftPanel'
+import WorkRightPanel from './WorkRightPanel'
+import WorkCenterPane from './WorkCenterPanel'
 import WorkFixed from 'components/work/WorkFixed'
 import 'assets/styles/work.less'
 
@@ -152,7 +152,7 @@ class Work extends React.Component<IProps, IState> {
     return (
       <div className="work">
         <WorkLeftPane/>
-        <WorkRightPane/>
+        <WorkRightPanel/>
         <WorkCenterPane
           wsState={this.state.wsState}
           sendMsg={this.sendWechatMsg}/>

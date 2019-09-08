@@ -43,22 +43,23 @@ const BaseTableComponent: FunctionComponent<IProps> = (props) => {
   const {dataSource, columns, bordered, loading, size, total, current: pageCurrent} = props;
   console.log(current)
   return (
-    <Table {...props}
-           rowKey={(record: any, index: number) => record.id || index}
-           dataSource={dataSource}
-           columns={columns}
-           bordered={bordered}
-           size={size}
-           onChange={handleChange}
-           loading={loading}
-           pagination={{
-             showQuickJumper: true,
-             showSizeChanger: true,
-             total: total,
-             current: pageCurrent || current,
-             pageSizeOptions: ['10', '20', '50', '100'],
-             showTotal: total => `总共 ${total} 条`
-           }}/>
+    <Table
+      rowKey={(record: any, index: number) => record.id || index}
+      {...props}
+      dataSource={dataSource}
+      columns={columns}
+      bordered={bordered}
+      size={size}
+      onChange={handleChange}
+      loading={loading}
+      pagination={{
+        showQuickJumper: true,
+        showSizeChanger: true,
+        total: total,
+        current: pageCurrent || current,
+        pageSizeOptions: ['10', '20', '50', '100'],
+        showTotal: total => `总共 ${total} 条`
+      }}/>
   )
 }
 BaseTableComponent.defaultProps = {

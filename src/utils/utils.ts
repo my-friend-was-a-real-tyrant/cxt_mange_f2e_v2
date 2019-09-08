@@ -73,3 +73,13 @@ export const checkInsurance = (vehicleNumber: any) => {
     return result
   }
 }
+// 序列化对象
+export const qsString = (data:any = {}) => {
+  let kv = '';
+  for (let key in data) {
+    if (data.hasOwnProperty(key)) {
+      kv += `${key}=${data[key]}&`;
+    }
+  }
+  return kv.substring(0, kv.length - 1);
+};

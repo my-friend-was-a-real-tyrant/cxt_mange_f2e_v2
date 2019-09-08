@@ -45,7 +45,7 @@ const AgentCallLog: FunctionComponent<IProps> = (props) => {
     {callLog.map((v: any, index: number) => {
       return <div className="log-item agent" key={v.id || index}>
         <span className="border"/>
-        <div className="time">06/31 12/:13</div>
+        <div className="time">{v.call_time ? moment(v.call_time).format('MM/DD HH:mm:ss') : ''}</div>
         <div className="user">四川车险</div>
         <div className="audio">四川车险</div>
         <div className="duration">四川车险</div>

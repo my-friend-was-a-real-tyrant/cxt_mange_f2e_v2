@@ -4,7 +4,7 @@ import UserInfo from 'components/work/UserInfo'
 import CarInfo from 'components/work/CarInfo'
 import ComputePrice from 'components/work/ComputePrice'
 import CarOffer from 'components/work/CarOffer'
-class WorkRightPane extends React.Component {
+class WorkRightPanel extends React.Component {
   render() {
     return (
       <div className="work-right">
@@ -27,4 +27,4 @@ class WorkRightPane extends React.Component {
   }
 }
 
-export default WorkRightPane
+export default WorkRightPanel

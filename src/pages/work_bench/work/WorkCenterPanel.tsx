@@ -22,7 +22,7 @@ interface Iprops {
   usersSearch: any;
 }
 
-class WorkCenterPane extends React.Component<Iprops> {
+class WorkCenterPanel extends React.Component<Iprops> {
   state = {
     index: -1
   }
@@ -102,4 +102,4 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   setUsersSearch: (value: any) => dispatch(actions.setUsersSearch(value)),
   thunkWorkUsers: () => dispatch(actions.thunkWorkUsers()),
 })
-export default connect(mapStateToProps, mapDispatchToProps)(WorkCenterPane)
+export default connect(mapStateToProps, mapDispatchToProps)(WorkCenterPanel)

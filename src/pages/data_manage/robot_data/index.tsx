@@ -20,7 +20,7 @@ const formItemLayout = {
 const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (props) => {
 
   const [businessList, setBusinessList] = useState<Array<IBusinessItem>>([])
-  const [search, setSearch] = useState({limit: 5, offset: 1})
+  const [search, setSearch] = useState({limit: 10, offset: 1})
   const [fileName, setFileName] = useState('')
   const [show, setShow] = useState<number | boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)

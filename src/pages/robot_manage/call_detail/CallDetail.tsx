@@ -1,7 +1,8 @@
 import React, {useState, useEffect, FunctionComponent} from 'react'
-import {Form, Input, Select, DatePicker, Button, Tag} from 'antd'
+import {Form, Input, Select, DatePicker, Button, Tag, Checkbox, message, Modal} from 'antd'
 import {FormComponentProps} from 'antd/es/form'
-import {formatTime, quickTimeSelect} from "utils/utils"
+import {CheckboxChangeEvent} from 'antd/es/checkbox';
+import {formatTime, quickTimeSelect, qsString} from "utils/utils"
 import fetch from "fetch/axios"
 import BaseTableComponent from 'components/BaseTableComponent'
 
@@ -31,10 +32,15 @@ const resultStatus: any = {
 }
 
 const CallDetail: FunctionComponent<FormComponentProps> = (props) => {
+  const [commentShow, setCommentShow] = useState<boolean>(false)
+  const [row, setRow] = useState<any>(null)
+  const [comment, setComment] = useState<string>('')
   const [businessList, setBusinessList] = useState<Array<IBusinessItem>>([])
+  const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string | number>>([])
   const [result, setResult] = useState({data: [], total: 0})
   const [loading, setLoading] = useState<boolean>(false)
   const [search, setSearch] = useState({offset: 1, limit: 10})
+  const [checkAll, setCheckAll] = useState<boolean>(false)
 
   useEffect(() => getBusiness(), [])
 
@@ -75,6 +81,65 @@ const CallDetail: FunctionComponent<FormComponentProps> = (props) => {
     })
   }
 
+  // 重拨
+  const handleCall = () => {
+    props.form.validateFields((err, values) => {
+      const params = {
+        ...search,
+        offset: (search.offset - 1) * search.limit + 1,
+        start_time: formatTime(values.time, 'YYYYMMDDHHMM')[0],
+        end_time: formatTime(values.time, 'YYYYMMDDHHMM')[1],
+        ...values,
+        is_all: checkAll ? 1 : 0,
+        result_ids: checkAll ? -1 : selectedRowKeys.join(',')
+      }
+      fetch.put(`/apiv1/robot/report/batch_detail/call_again_customer`, null, {params}).then((res: any) => {
+        if (res.code === 20000) {
+          message.success(`重拨设置成功${res.data}条`)
+          getDetailList()
+          setSelectedRowKeys([])
+        }
+      })
+    })
+
+  }
+
+  // 导出数据
+  const handleExportData = () => {
+    props.form.validateFields((err, values) => {
+      const params = {
+        ...search,
+        offset: (search.offset - 1) * search.limit + 1,
+        start_time: formatTime(values.time, 'YYYYMMDDHHMM')[0],
+        end_time: formatTime(values.time, 'YYYYMMDDHHMM')[1],
+        ...values,
+        is_all: checkAll ? 1 : 0,
+        result_ids: checkAll ? -1 : selectedRowKeys.join(',')
+      }
+      window.open(`/apiv1/robot/report/export_excelList_customer?${qsString(params)}&access_token=${localStorage.getItem('access_token')}`)
+    })
+  }
+
+  // 保存备注
+  const handleSaveComment = () => {
+    const params = {
+      comment: comment
+    }
+    fetch.put(`/apiv1/robot/report/updatedialresultcomment/${row.result_id}`, params).then((res: any) => {
+      if (res.code === 20000) {
+        message.success('备注添加成功')
+        getDetailList()
+        setCommentShow(false)
+        setRow(null)
+      }
+    })
+  }
+
+  // 选中操作
+  const onSelectChange = (value: any) => {
+    setSelectedRowKeys(value)
+  }
+
   const handleTableChange = (pagination: any) => {
     setSearch({offset: pagination.current, limit: pagination.pageSize})
   }
@@ -106,8 +171,23 @@ const CallDetail: FunctionComponent<FormComponentProps> = (props) => {
       )
     },
     {title: '备注', dataIndex: 'comment'},
-    {title: '操作'},
+    {
+      title: '操作', width: 210, render: (row: any) => row.show_call_log === 1 ? <>
+        <Button.Group>
+          <Button type="primary" icon="message">通话记录</Button>
+          <Button type="primary" icon="profile" onClick={() => {
+            setRow(row)
+            setCommentShow(true)
+          }}>备注</Button>
+        </Button.Group>
+      </> : <Button disabled>暂无对话记录</Button>
+    },
   ]
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
 
   return (
     <div style={{padding: '10px'}}>
@@ -178,18 +258,56 @@ const CallDetail: FunctionComponent<FormComponentProps> = (props) => {
             </Select>
           )}
         </Form.Item>
+
         <Form.Item>
           <Button type="primary" onClick={() => setSearch({...search, offset: 1})}>搜索</Button>
+        </Form.Item>
+        <Form.Item>
+          <Button.Group>
+            <Button type={checkAll ? "primary" : "dashed"} onClick={() => setCheckAll(!checkAll)}>
+              <Checkbox checked={checkAll} onChange={(e: CheckboxChangeEvent) => setCheckAll(e.target.checked)}/>
+              &nbsp;
+              选择全部
+            </Button>
+            <Button type="default"
+                    icon="clock-circle"
+                    disabled={!selectedRowKeys.length && !checkAll}
+                    onClick={handleCall}>
+              重拨选中
+            </Button>
+            <Button type="primary"
+                    icon="cloud-download"
+                    disabled={!selectedRowKeys.length && !checkAll}
+                    onClick={handleExportData}>
+              导出所选数据
+            </Button>
+          </Button.Group>
         </Form.Item>
       </Form>
 
       <BaseTableComponent
+        rowSelection={rowSelection}
+        rowKey="result_id"
         columns={columns}
         dataSource={result.data}
         total={result.total}
         current={search.offset === 1 ? 1 : undefined}
         onChange={handleTableChange}
         loading={loading}/>
+
+      <Modal visible={commentShow && row}
+             destroyOnClose
+             onCancel={() => {
+               setCommentShow(false)
+               setRow(null)
+             }}
+             onOk={handleSaveComment}
+             title={`添加备注-${row && row.phone}`}>
+        <Input.TextArea rows={4}
+                        defaultValue={row && row.comment}
+                        placeholder={`请对${row && row.phone}通话添加备注`}
+                        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setComment(e.target.value)}/>
+      </Modal>
     </div>
   )
 }

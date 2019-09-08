@@ -20,7 +20,7 @@ interface IProps {
   setWorkUsers: (value: any) => any
 }
 
-class WorkLeftPane extends React.Component<IProps> {
+class WorkLeftPanel extends React.Component<IProps> {
 
   state = {
     add: false
@@ -155,4 +155,4 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   setUsersSearch: (value: any) => dispatch(actions.setUsersSearch(value)),
   setWorkUsers: (value: any) => dispatch(actions.setWorkUsers(value))
 })
-export default connect(mapStateToProps, mapDispatchToProps)(WorkLeftPane)
+export default connect(mapStateToProps, mapDispatchToProps)(WorkLeftPanel)
