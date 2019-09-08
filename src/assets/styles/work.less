@@ -205,18 +205,105 @@
         margin-right: 20px;
       }
     }
-    .wechat-pane{
+
+    .wechat-pane {
       height: calc(100vh - 189px);
     }
   }
 }
 
-.add-user-modal{
-  .ant-modal-body{
-    padding:0 20px;
+.add-user-modal {
+  .ant-modal-body {
+    padding: 0 20px;
   }
-  .ant-form-item{
+
+  .ant-form-item {
     margin-bottom: 10px;
+  }
+}
+
+.work-fixed {
+  position: fixed;
+  right: 0;
+  top: 300px;
+
+  &__task, &__phone {
+    width: 40px;
+    word-wrap: break-word;
+    font-size: 16px;
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px 0 0 4px;
+    text-align: center;
+  }
+
+  &__task {
+    background: linear-gradient(to bottom, rgba(136, 220, 55, 0.79), rgba(35, 199, 162, 1)); /* 标准的语法 */
+    box-shadow: 0 2px 16px 0 rgba(136, 220, 55, 0.4);
+    margin-bottom: 20px;
+  }
+
+  &__phone {
+    background: linear-gradient(to bottom, #9FC4FF, #6692FF); /* 标准的语法 */
+    box-shadow: 0 2px 16px 0 rgb(102, 146, 255, 0.6);
+  }
+
+
+}
+
+.work-info {
+  .ant-card {
+    border-radius: 4px;
+  }
+
+  .fixed-task {
+    &__count, &__today_call, &__today_count {
+      background: #6692FF;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    &__wait {
+      background: #FF7B76;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    &__today_add {
+      background: #39BF7f;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .ant-card-body {
+    padding: 6px;
+
+    .ant-statistic-title {
+      color: #fff;
+    }
+
+    .ant-statistic-content {
+      color: #fff;
+    }
+  }
+
+  h5 {
+    margin-top: 30px;
+  }
+
+  .week {
+    .ant-statistic-title {
+      color: #777777;
+    }
+
+    .ant-statistic-content {
+      width: 40px;
+      height: 40px;
+      color: #6692FF;
+      background: rgba(102, 146, 255, 0.2);
+      text-align: center;
+      line-height: 40px;
+      font-size: 16px;
+      border-radius: 4px;
+    }
   }
 }
 

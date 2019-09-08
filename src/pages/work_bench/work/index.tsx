@@ -5,6 +5,7 @@ import * as actions from 'store/actions/work'
 import WorkLeftPane from './WorkLeftPane'
 import WorkRightPane from './WorkRightPane'
 import WorkCenterPane from './WorkCenterPane'
+import WorkFixed from 'components/work/WorkFixed'
 import 'assets/styles/work.less'
 
 interface IProps {
@@ -155,6 +156,7 @@ class Work extends React.Component<IProps, IState> {
         <WorkCenterPane
           wsState={this.state.wsState}
           sendMsg={this.sendWechatMsg}/>
+        <WorkFixed/>
       </div>
     )
   }
