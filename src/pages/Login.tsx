@@ -62,6 +62,7 @@ const Login: FunctionComponent<IProps & FormComponentProps & RouteComponentProps
     fetch.get(`/apiv1/uac/token`).then(async (res: any) => {
       if (res.code === 20000) {
         localStorage.setItem('mjoys_user_id', res.data.id)
+        localStorage.setItem('mjoys_account_id', res.data.accountId)
         localStorage.setItem('mjoys_user', JSON.stringify(res.data))
         // 在保证获取到menu后跳转到首页
         props.thunkSetMenuList().then(() => props.history.push('/'))

@@ -9,6 +9,7 @@ import RobotCallLog from "components/work/RobotCallLog"
 import AgentCallLog from "components/work/AgentCallLog"
 import ShortMessageLog from "components/work/ShortMessageLog"
 import CallPanel from 'components/work/CallPanel'
+import FollowUp from 'components/work/FollowUp'
 import 'assets/styles/phone.less'
 
 interface Iprops {
@@ -84,7 +85,7 @@ class WorkCenterPanel extends React.Component<Iprops> {
             </div>
           </Tabs.TabPane>
           <Tabs.TabPane key="3" tab="跟进">
-
+            <FollowUp/>
           </Tabs.TabPane>
         </Tabs>
       </div>

@@ -26,6 +26,9 @@ import RobotDataDetail from 'pages/data_manage/robot_data/RobotDataDetail'
 import CallPlan from 'pages/robot_manage/call_plan/CallPlan'
 import CallList from 'pages/robot_manage/call_list/CallList'
 import CallDetail from 'pages/robot_manage/call_detail/CallDetail'
+// 报表管理
+import FollowUp from 'pages/report_form/follow_up/FollowUp'
+
 const PageRouter = () => {
   return <Switch>
     {/* 工作台 */}
@@ -44,6 +47,8 @@ const PageRouter = () => {
     <Route path="/app/phone_task" component={PhoneTask}/>
     <Route path="/app/wechat_manage" component={WechatManage}/>
     <Route path="/app/short_message" component={ShortMessage}/>
+    {/* 报表管理 */}
+    <Route path="/app/follow_up" component={FollowUp}/>
   </Switch>
 }
 
