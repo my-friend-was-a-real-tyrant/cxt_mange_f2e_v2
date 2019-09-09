@@ -15,8 +15,6 @@ import PhoneTask from 'pages/task_manage/phone_task';
 import WechatManage from 'pages/task_manage/wechat_manage';
 import ShortMessage from 'pages/task_manage/short_message';
 
-// 报表管理
-
 // 数据管理
 import RobotDataManage from 'pages/data_manage/robot_data'
 import AgentDataManage from 'pages/data_manage/agent_data'
@@ -28,6 +26,8 @@ import CallList from 'pages/robot_manage/call_list/CallList'
 import CallDetail from 'pages/robot_manage/call_detail/CallDetail'
 // 报表管理
 import FollowUp from 'pages/report_form/follow_up/FollowUp'
+import Outbound from 'pages/report_form/outbound/Outbound'
+import ShortMessageReport from 'pages/report_form/short_message/ShortMessage'
 
 const PageRouter = () => {
   return <Switch>
@@ -49,6 +49,8 @@ const PageRouter = () => {
     <Route path="/app/short_message" component={ShortMessage}/>
     {/* 报表管理 */}
     <Route path="/app/follow_up" component={FollowUp}/>
+    <Route path="/app/outbound" component={Outbound}/>
+    <Route path="/app/short_message_report" component={ShortMessageReport}/>
   </Switch>
 }
 

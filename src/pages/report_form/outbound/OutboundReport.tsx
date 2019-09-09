@@ -4,7 +4,7 @@ import fetch from 'fetch/axios'
 import moment from 'moment'
 import BaseTableComponent from 'components/BaseTableComponent'
 
-const FollowReport: FunctionComponent = () => {
+const OutboundReport: FunctionComponent = () => {
   const [result, setResult] = useState({data: [], total: 0})
   const [loading, setLoading] = useState<boolean>(false)
   const [time, setTime] = useState({startTime: '', endTime: ''})
@@ -23,7 +23,7 @@ const FollowReport: FunctionComponent = () => {
       accountId: localStorage.getItem('mjoys_account_id'),
     }
     setLoading(true)
-    fetch.get(`/apiv1/robot/rpt/followup/report/date?`, {params}).then((res: any) => {
+    fetch.get(`/apiv1/robot/rpt/outbound/report/date?`, {params}).then((res: any) => {
       setLoading(false)
       if (res.code === 20000) {
         const data = res.data || []
@@ -44,7 +44,7 @@ const FollowReport: FunctionComponent = () => {
       endTime: moment(time).clone().set({hour: 23, minute: 59, second: 59, millisecond: 59}).format('YYYYMMDDHHmmss'),
     }
     setLoading(true)
-    fetch.get(`/apiv1/robot/rpt/followup/report/seat`, {params}).then((res: any) => {
+    fetch.get(`/apiv1/robot/rpt/outbound/report/seat`, {params}).then((res: any) => {
       setLoading(false)
       if (res.code === 20000 || res.code === 20003) {
         const data = result.data || []
@@ -73,10 +73,11 @@ const FollowReport: FunctionComponent = () => {
     {title: '日期', dataIndex: 'recordTime'},
     {title: '团队', dataIndex: 'teamName'},
     {title: '坐席', dataIndex: 'seatUsername'},
-    {title: '跟进次数', dataIndex: 'countAll'},
-    {title: '电话跟进次数', dataIndex: 'countMobile'},
-    {title: '微信跟进次数', dataIndex: 'countWechat'},
-    {title: '短信跟进次数', dataIndex: 'countShortMsg'},
+    {title: '分发任务', dataIndex: 'appropriatedCounter'},
+    {title: '完成情况', dataIndex: 'rateOfComplete', render: (rate: number) => rate + '%'},
+    {title: '呼叫次数', dataIndex: 'finishedCounter'},
+    {title: '接通次数', dataIndex: 'getThroughCounter'},
+    {title: '通话总时长', dataIndex: 'durationCounter'},
   ]
 
   return (
@@ -108,4 +109,4 @@ const FollowReport: FunctionComponent = () => {
   )
 }
 
-export default FollowReport
+export default OutboundReport

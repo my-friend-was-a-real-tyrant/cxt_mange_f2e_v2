@@ -6,7 +6,7 @@ import FollowReport from './FollowReport'
 const FollowUp: FunctionComponent = () => {
   return (
     <div>
-      <Tabs>
+      <Tabs animated={false}>
         <Tabs.TabPane key="1" tab="跟进记录">
           <FollowUpList/>
         </Tabs.TabPane>
