@@ -40,7 +40,7 @@ const ShortMessageList: FunctionComponent = () => {
   }
 
   const columns = [
-    // {title: '号码', dataIndex: 'seatUsername'},
+    {title: '电话', dataIndex: 'mobile'},
     {title: '姓名', dataIndex: 'realname'},
     {title: '坐席', dataIndex: 'seatUsername'},
     {title: '车牌', dataIndex: 'licenseNumber'},

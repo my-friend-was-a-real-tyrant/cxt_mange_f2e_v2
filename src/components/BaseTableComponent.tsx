@@ -41,7 +41,7 @@ const BaseTableComponent: FunctionComponent<IProps> = (props) => {
   }
 
   const {dataSource, columns, bordered, loading, size, total, current: pageCurrent} = props;
-  console.log(current)
+  // console.log(current)
   return (
     <Table
       rowKey={(record: any, index: number) => record.id || index}
