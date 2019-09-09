@@ -10,7 +10,12 @@ const formItemLayout = {
   wrapperCol: {span: 14},
 };
 const BaseUserComponent: FunctionComponent<FormComponentProps & RouteComponentProps> = (props) => {
-  const user = JSON.parse(localStorage.getItem('mjoys_user') || '')
+  let user: any
+  try {
+    user = JSON.parse(localStorage.getItem('mjoys_user') || '')
+  } catch (e) {
+    props.history.push('/login')
+  }
 
   const [show, setShow] = useState<boolean>(false)
 
@@ -41,7 +46,7 @@ const BaseUserComponent: FunctionComponent<FormComponentProps & RouteComponentPr
     <div className="user">
       <span>
         <i className="icon icon-user"/>
-        {user.loginUser}
+        {user && user.loginUser}
       </span>
       <span onClick={() => setShow(true)}>
         <i className="icon icon-password"/>

@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom'
-import { Menu, Icon } from 'antd';
+import React, {Fragment} from 'react'
+import {Link} from 'react-router-dom'
+import {Menu, Icon} from 'antd';
 import composeMenu from 'utils/composeMenu'
+
 interface IItemProps {
   code: string;
   id: number;
@@ -13,11 +14,11 @@ interface IItemProps {
 }
 
 const renderMenuItem = <T extends IItemProps>(item: T): React.ReactNode => (
-  <Menu.Item key={item.id || item.code || item.other_url} >
+  <Menu.Item key={item.id || item.code || item.other_url}>
     <Link to={item.other_url || item.url} className="menu-link">
       {
         item.parentId === 0 ? <div className="menu-icon">
-          <Icon type="pie-chart" />
+          <Icon type="pie-chart"/>
         </div> : null
       }
       <span className="nav-text">{item.name}</span>
@@ -27,24 +28,29 @@ const renderMenuItem = <T extends IItemProps>(item: T): React.ReactNode => (
 
 const renderSubMenu = <T extends IItemProps>(item: T): React.ReactNode => (
   <Menu.SubMenu key={item.id || item.code || item.other_url}
-    popupClassName="sub-menu"
-    title={
-      <Fragment>
-        {
-          item.parentId === 0 ? <div className="menu-icon">
-            <Icon type="pie-chart" />
-          </div> : null
-        }
-        <span className="nav-text"> {item.name} </span>
-      </Fragment>
-    }>
+                popupClassName="sub-menu"
+                title={
+                  <Fragment>
+                    {
+                      item.parentId === 0 ? <div className="menu-icon">
+                        <Icon type="pie-chart"/>
+                      </div> : null
+                    }
+                    <span className="nav-text"> {item.name} </span>
+                  </Fragment>
+                }>
     {item.children && item.children.map((item) => renderMenuItem(item))}
   </Menu.SubMenu>
 );
 
 export default () => {
   const menuList: string = localStorage.getItem('cxt_menu_list') || ''
-  const menu = JSON.parse(menuList) || []
+  let menu = []
+  try {
+    menu = JSON.parse(menuList)
+  } catch (e) {
+    menu = []
+  }
   const menus = composeMenu(menu)
   return (
     <Menu mode="horizontal" theme="dark">
