@@ -102,6 +102,7 @@ body {
         padding-right: 40px;
         margin-right: 40px;
         border-right: 2px solid rgba(255, 255, 255, 0.2);
+        white-space: nowrap;
       }
     }
 
@@ -114,7 +115,7 @@ body {
         align-items: center;
         cursor: pointer;
         margin-left: 24px;
-
+        white-space: nowrap;
         &:hover {
           color: #fff;
         }
@@ -125,6 +126,15 @@ body {
           background: rgba(254, 254, 254, 0.2);
           margin-right: 2px;
           border-radius: 50%;
+          &.icon-user{
+            background: url("../images/nav_user_icon.png") no-repeat center/cover;
+          }
+          &.icon-password{
+            background: url("../images/nav_password_icon.png") no-repeat center/cover;
+          }
+          &.icon-logout{
+            background: url("../images/nav_exit_icon.png") no-repeat center/cover;
+          }
         }
       }
     }

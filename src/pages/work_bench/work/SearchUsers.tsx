@@ -25,14 +25,13 @@ interface IProps extends FormComponentProps {
   setUsersSearch: (value: any) => any;
   thunkWorkUsers: () => any;
   usersSearch: any;
-  setWorkUsers: (value: any) => any
 }
 
 const SearchUsers: React.FC<IProps> = (props) => {
   const [open, setOpen] = useState<boolean>(false)
 
   const onSearch = () => {
-    const {usersSearch, setUsersSearch, thunkWorkUsers, setWorkUsers} = props;
+    const {usersSearch, setUsersSearch, thunkWorkUsers} = props;
     props.form.validateFields(async (err, values) => {
       const params = {
         uni_query: values.uni_query,
@@ -44,7 +43,6 @@ const SearchUsers: React.FC<IProps> = (props) => {
         next_follow_time_b: formatTime(values.nextTime, 'YYYY-MM-DD')[0],
         next_follow_time_e: formatTime(values.nextTime, 'YYYY-MM-DD')[1],
       }
-      await setWorkUsers({data: [], total: 0})
       await setUsersSearch({...usersSearch, ...params, page: 1})
       await thunkWorkUsers()
       setOpen(false)
@@ -113,6 +111,5 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   setUsersSearch: (value: any) => dispatch(actions.setUsersSearch(value)),
   thunkWorkUsers: () => dispatch(actions.thunkWorkUsers()),
-  setWorkUsers: (value: any) => dispatch(actions.setWorkUsers(value))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(WrapperSearchUsers)

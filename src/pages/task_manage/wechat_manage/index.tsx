@@ -66,6 +66,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
   // 分配微信给坐席
   const distributeSeats = (userId: number) => {
     if (!selectedRowKeys || selectedRowKeys.length <= 0) return message.warning('请选择操作微信')
+    console.log(selectedRowKeys)
     fetch.put(`/apiv1/wx/updateWxConfigUser`, {
       userId,
       wxConfigIds: selectedRowKeys.join(','),
@@ -99,6 +100,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
             s.status = 0
           }
         })
+        message.success('禁用成功')
         setResult({...result, data: [...newData]})
       }
     })
@@ -115,6 +117,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
             newData.push(s)
           }
         })
+        message.success('解绑成功')
         setResult({...result, data: [...newData]})
       }
     })
@@ -261,7 +264,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
                               total={result.total}
                               loading={result.loading}
                               rowSelection={rowSelection}
-                              rowKey="wxAccountId"
+                              rowKey="id"
                               offset
                               onChange={handleTableChange}
                               bordered/>

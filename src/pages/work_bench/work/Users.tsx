@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Button, Spin, Icon, Empty} from 'antd'
 import {connect} from 'react-redux'
 import SearchUsers from './SearchUsers'
@@ -23,11 +23,21 @@ interface IProps {
   setWechatMessageInfo: (value: any) => any;
 }
 
+
 const Users = (props: IProps) => {
   const {setUsersSearch, usersSearch, thunkWorkUsers, workUsers, getUserLoading, currentUser, setCurrentUser, asyncGetWechatMessages, setWechatMessageInfo} = props
   const {data, total} = workUsers
-
-
+  // 根据最后联系时间排序
+  console.log(data)
+  data.sort((obj1: any, obj2: any) => {
+    if (obj1.recent_time > obj2.recent_time) {
+      return -1
+    } else if (obj1.recent_time < obj2.recent_time) {
+      return 1
+    } else {
+      return 0
+    }
+  })
   const onSearch = async () => {
     await setUsersSearch({...usersSearch, page: usersSearch.page + 1})
     await thunkWorkUsers()
@@ -40,7 +50,6 @@ const Users = (props: IProps) => {
       asyncGetWechatMessages()
     }
   }
-
   const userItem = data.map((v: any) => {
     const wechat: boolean = v.target_wx && v.server_wx
     return <div className={`user-item ${currentUser && currentUser.id === v.id ? 'active' : ''}`} key={v.id}

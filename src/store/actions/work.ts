@@ -67,7 +67,11 @@ export const thunkWorkUsers = (key?: string) => (dispatch: Dispatch, getState: a
     fetch.get(`/apiv1/user-uni-data/list`, {params}).then((res: any) => {
       dispatch(setUserLoading(false))
       if (res.code === 20000) {
-        dispatch(setWorkUsers({data: data.concat(res.data || []), total: res.count || 0}))
+        if (usersSearch.page === 1) {
+          dispatch(setWorkUsers({data: res.data, total: res.count || 0}))
+        } else {
+          dispatch(setWorkUsers({data: data.concat(res.data || []), total: res.count || 0}))
+        }
         resolve(data.concat(res.data || []))
       }
     })

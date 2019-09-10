@@ -1,5 +1,5 @@
 import React, {useState, useEffect, FunctionComponent} from 'react'
-import {Table, Form, Button, DatePicker, Select, Checkbox} from 'antd'
+import {Table, Form, Button, DatePicker, Select, Checkbox, message} from 'antd'
 import fetch from 'fetch/axios';
 import moment from 'moment'
 import {FormComponentProps} from 'antd/lib/form';
@@ -111,12 +111,11 @@ const Allocated: FunctionComponent<IProps> = props => {
       ids: checked ? '' : selectedRowKeys.join(',')
     }
 
-    fetch.put(`otb/task/reAllotInTaskManage`, null, {params}).then((res: any) => {
+    fetch.put(`/apiv1/otb/task/reAllotInTaskManage`, null, {params}).then((res: any) => {
       if (res.code === 20000) {
+        message.success('回收成功')
         setChecked(false)
         getReport()
-      } else {
-
       }
     })
   }
