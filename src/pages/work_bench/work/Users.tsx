@@ -50,6 +50,7 @@ const Users = (props: IProps) => {
       asyncGetWechatMessages()
     }
   }
+
   const userItem = data.map((v: any) => {
     const wechat: boolean = v.target_wx && v.server_wx
     return <div className={`user-item ${currentUser && currentUser.id === v.id ? 'active' : ''}`} key={v.id}
@@ -85,7 +86,7 @@ const Users = (props: IProps) => {
               <span>{data.length}/{total}</span>
               {data.length === total ? '已全部加载完成' : <Button type="link" onClick={onSearch}>查看更多</Button>}
             </div>
-          </> : <Empty/>
+          </> : <Empty image={`https://cxt.mjoys.com/mjoys_cxt_api/1019/2019/9/10/2019091019563595t5cmW.png`}/>
         }
       </div>
     </Spin>

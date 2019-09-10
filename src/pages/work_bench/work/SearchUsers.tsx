@@ -7,8 +7,8 @@ import {FormComponentProps} from 'antd/es/form'
 import {formatTime, quickTimeSelect} from "utils/utils"
 
 const formItemLayout = {
-  labelCol: {span: 4},
-  wrapperCol: {span: 18},
+  labelCol: {span: 5},
+  wrapperCol: {span: 17},
 };
 const businessStatus = [
   {title: '沉默用户', type: 1},
@@ -52,10 +52,11 @@ const SearchUsers: React.FC<IProps> = (props) => {
   const {getFieldDecorator} = props.form
   return (
     <div className={`search-user ${open ? 'open' : ''}`}>
-      <Form>
+      <Form labelAlign="left">
         <Form.Item className="union_item">
           {getFieldDecorator('uni_query')(
-            <Input placeholder="车牌/电话/微信/姓名" addonBefore={<Icon type="search"/>}/>
+            <Input.Search onSearch={onSearch}
+                          placeholder="车牌/电话/微信/姓名"/>
           )}
           <span className="search-icon" onClick={() => setOpen(!open)}> </span>
         </Form.Item>

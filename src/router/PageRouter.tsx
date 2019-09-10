@@ -9,7 +9,7 @@ import {Route, Switch} from 'react-router-dom'
 // 工作台
 import Work from 'pages/work_bench/work'
 import SearchCar from 'pages/work_bench/search_car'
-
+import MyCustomer from 'pages/work_bench/my_customer/MyCustomer'
 // 作业管理
 import PhoneTask from 'pages/task_manage/phone_task';
 import WechatManage from 'pages/task_manage/wechat_manage';
@@ -34,6 +34,7 @@ const PageRouter = () => {
     {/* 工作台 */}
     <Route path="/app/work" component={Work}/>
     <Route path="/app/search_car" component={SearchCar}/>
+    <Route path="/app/my_customer" component={MyCustomer}/>
     {/* 数据管理 */}
     <Route exact path="/app/robot_data" component={RobotDataManage}/>
     <Route exact path="/app/agent_data" component={AgentDataManage}/>

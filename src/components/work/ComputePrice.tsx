@@ -20,7 +20,7 @@ const ComputePrice: React.FC<IProps> = (props) => {
     props.form.validateFields((err, values) => {
       console.log(values)
       const params = {
-        insurance: currentUser.license,
+        insurance: currentUser && currentUser.license,
         // carInfoId: this.state.priceRow.id ? this.state.priceRow.id : '',
         buJiMianCheSun: values.buJiMianCheSun ? 1 : 0,
         buJiMianChengKe: values.buJiMianChengKe ? 1 : 0,
@@ -229,7 +229,7 @@ const ComputePrice: React.FC<IProps> = (props) => {
           )}
         </Form.Item>
         <Form className="Item">
-          <Button type="primary" block onClick={handleOffer}>确定报价</Button>
+          <Button type="primary" block onClick={handleOffer} disabled={!currentUser}>确定报价</Button>
         </Form>
       </Form>
     </div>

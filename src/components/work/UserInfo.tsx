@@ -1,9 +1,11 @@
 import React, {FunctionComponent, useState} from 'react'
-import {Form, Input, Select, DatePicker, Icon, Button, message} from 'antd'
+import {Form, Input, Select, DatePicker, Icon, Button, message, Empty} from 'antd'
 import {connect} from 'react-redux'
 import {FormComponentProps} from 'antd/es/form'
 import fetch from 'fetch/axios'
 import moment from 'moment'
+import {Dispatch} from 'redux'
+import * as actions from 'store/actions/work'
 import 'assets/styles/right-panel.less'
 
 const wxStatus: any = {
@@ -28,12 +30,16 @@ const formItemLayout = {
 
 interface IProps extends FormComponentProps {
   currentUser: any;
+  workUsers: any;
+  setWorkUsers: (value: any) => any;
+  setCurrentUser: (value: any) => any
 }
 
 const UserInfo: FunctionComponent<IProps> = (props) => {
   const currentUser: any = props.currentUser;
   const [edit, setEdit] = useState<boolean>(false)
-
+  const {workUsers, setWorkUsers, setCurrentUser} = props;
+  const {data, total} = workUsers
   const handleChangeUserInfo = () => {
     props.form.validateFields((err, values) => {
       const params = {
@@ -43,10 +49,18 @@ const UserInfo: FunctionComponent<IProps> = (props) => {
         next_follow_time: values.next_follow_time ? moment(values.next_follow_time).format('YYYY-MM-DD') : values.next_follow_time,
         time_create: values.time_create ? moment(values.time_create).format('YYYY-MM-DD') : values.time_create,
       }
-      fetch.post(`/apiv1/user-uni-data/update`, params).then((res: any) => {
+      fetch.post(`/apiv1/user-uni-data/update`, params).then(async (res: any) => {
         if (res.code === 20000) {
           message.success('修改成功')
           setEdit(false)
+          const newData = await data.map((v: any) => {
+            if (v.id === currentUser.id) {
+              setCurrentUser({...v, ...res.data[0]})
+              return {...v, ...res.data[0]}
+            }
+            return v
+          })
+          await setWorkUsers({total, data: [...newData]})
         }
       })
     })
@@ -55,7 +69,7 @@ const UserInfo: FunctionComponent<IProps> = (props) => {
   const {getFieldDecorator} = props.form;
   return (
     <div className="right-panel-container">
-      <Form className="user-info-form" labelAlign="left">
+      {currentUser ? <Form className="user-info-form" labelAlign="left">
         <div className="right-panel-title">
           <span className="title">用户信息</span>
           <span className="btn" onClick={() => setEdit(!edit)}>
@@ -128,12 +142,18 @@ const UserInfo: FunctionComponent<IProps> = (props) => {
         <Form.Item>
           {edit ? <Button type="primary" block onClick={handleChangeUserInfo}>确认</Button> : null}
         </Form.Item>
-      </Form>
+      </Form> : <Empty description="暂无用户信息"
+                       image={`https://cxt.mjoys.com/mjoys_cxt_api/1019/2019/9/10/2019091019563595t5cmW.png`}/>}
+
     </div>
   )
 }
 const mapStateToProps = (state: any) => ({
-  currentUser: state.work.currentUser
+  currentUser: state.work.currentUser,
+  workUsers: state.work.workUsers
 })
-
-export default connect(mapStateToProps)(Form.create()(UserInfo))
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  setWorkUsers: (value: any) => dispatch(actions.setWorkUsers(value)),
+  setCurrentUser: (value: any) => dispatch(actions.setCurrentUser(value))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(UserInfo))

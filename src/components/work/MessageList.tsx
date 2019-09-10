@@ -66,7 +66,7 @@ class MessageList extends React.Component<IProps> {
         {data.length ? <>
           {loadMore}
           {mapMessage()}
-        </> : <Empty/>}
+        </> : <Empty image={`https://cxt.mjoys.com/mjoys_cxt_api/1019/2019/9/10/2019091019563595t5cmW.png`}/>}
       </div>
     )
   }
