@@ -50,12 +50,13 @@ const SeatOfferReport: FunctionComponent = () => {
           })}/>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" onClick={() => setSearch({...search, ...time})}>搜索</Button>
+          <Button type="primary" onClick={() => setSearch({...search, ...time,page:1})}>搜索</Button>
         </Form.Item>
       </Form>
       <BaseTableComponent
         loading={loading}
         columns={columns}
+        current={search.page}
         onChange={handleTableChange}
         dataSource={result.data}
         total={result.total}/>

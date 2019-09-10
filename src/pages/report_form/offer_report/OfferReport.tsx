@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from 'react'
 import {Tabs} from 'antd'
 import SeatOfferReport from './SeatOfferReport'
-import ShortMessageReport from './ShortMessageReport'
+import ChannelOfferReport from './ChannelOfferReport'
 
 const OfferReport: FunctionComponent = () => {
   return (
@@ -11,7 +11,7 @@ const OfferReport: FunctionComponent = () => {
           <SeatOfferReport/>
         </Tabs.TabPane>
         <Tabs.TabPane key="2" tab="渠道报价报表">
-          {/*<ShortMessageReport/>*/}
+          <ChannelOfferReport/>
         </Tabs.TabPane>
       </Tabs>
     </div>

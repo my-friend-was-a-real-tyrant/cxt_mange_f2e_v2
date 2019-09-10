@@ -30,6 +30,7 @@ const ShortMessageList: FunctionComponent = () => {
   const onSearch = (values: any): void => {
     setSearch({
       ...search, ...values,
+      page: 1,
       startTime: formatTime(values.time, 'YYYYMMDDHHmmss')[0],
       endTime: formatTime(values.time, 'YYYYMMDDHHmmss')[1]
     })
@@ -54,6 +55,7 @@ const ShortMessageList: FunctionComponent = () => {
       <BaseTableComponent
         loading={loading}
         columns={columns}
+        current={search.page}
         onChange={handleTableChange}
         dataSource={result.data}
         total={result.total}/>

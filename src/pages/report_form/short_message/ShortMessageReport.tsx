@@ -25,7 +25,7 @@ const ShortMessageReport: FunctionComponent = () => {
     setLoading(true)
     fetch.get(`/apiv1/robot/rpt/shortmsg/report/date?`, {params}).then((res: any) => {
       setLoading(false)
-      if (res.code === 20000) {
+      if (res.code === 20000 || res.code === 20003) {
         const data = res.data || []
         data.forEach((v: any) => {
           v.children = []
@@ -74,9 +74,6 @@ const ShortMessageReport: FunctionComponent = () => {
     {title: '团队', dataIndex: 'teamName'},
     {title: '坐席', dataIndex: 'seatUsername'},
     {title: '短信总量', dataIndex: 'counterAll'},
-    {title: '加微信短信', dataIndex: ''},
-    {title: '报价短信', dataIndex: ''},
-    {title: '支付短信', dataIndex: ''},
   ]
 
   return (
@@ -90,7 +87,7 @@ const ShortMessageReport: FunctionComponent = () => {
             })}/>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" onClick={() => setSearch({...search, ...time})}>搜索</Button>
+          <Button type="primary" onClick={() => setSearch({...search, ...time, page: 1})}>搜索</Button>
         </Form.Item>
       </Form>
       <BaseTableComponent
@@ -102,6 +99,7 @@ const ShortMessageReport: FunctionComponent = () => {
         columns={columns}
         dataSource={result.data}
         loading={loading}
+        current={search.page}
         onChange={handleTableChange}
         total={result.total}/>
     </div>

@@ -25,7 +25,7 @@ const OutboundReport: FunctionComponent = () => {
     setLoading(true)
     fetch.get(`/apiv1/robot/rpt/outbound/report/date?`, {params}).then((res: any) => {
       setLoading(false)
-      if (res.code === 20000) {
+      if (res.code === 20000|| res.code === 20003) {
         const data = res.data || []
         data.forEach((v: any) => {
           v.children = []
@@ -91,7 +91,7 @@ const OutboundReport: FunctionComponent = () => {
             })}/>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" onClick={() => setSearch({...search, ...time})}>搜索</Button>
+          <Button type="primary" onClick={() => setSearch({...search, ...time, page: 1})}>搜索</Button>
         </Form.Item>
       </Form>
       <BaseTableComponent
@@ -103,6 +103,7 @@ const OutboundReport: FunctionComponent = () => {
         columns={columns}
         dataSource={result.data}
         loading={loading}
+        current={search.page}
         onChange={handleTableChange}
         total={result.total}/>
     </div>
