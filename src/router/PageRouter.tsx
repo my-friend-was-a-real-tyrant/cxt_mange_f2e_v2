@@ -29,6 +29,9 @@ import FollowUp from 'pages/report_form/follow_up/FollowUp'
 import Outbound from 'pages/report_form/outbound/Outbound'
 import ShortMessageReport from 'pages/report_form/short_message/ShortMessage'
 import OfferReport from 'pages/report_form/offer_report/OfferReport'
+// 系统管理
+import CompanyInfo from 'pages/system_manage/company_info/CompanyInfo'
+
 const PageRouter = () => {
   return <Switch>
     {/* 工作台 */}
@@ -53,6 +56,8 @@ const PageRouter = () => {
     <Route path="/app/outbound" component={Outbound}/>
     <Route path="/app/short_message_report" component={ShortMessageReport}/>
     <Route path="/app/offer_report" component={OfferReport}/>
+    {/*系统管理*/}
+    <Route path="/app/company_info" component={CompanyInfo}/>
   </Switch>
 }
 

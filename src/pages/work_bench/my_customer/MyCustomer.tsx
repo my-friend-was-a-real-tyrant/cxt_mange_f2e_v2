@@ -4,7 +4,7 @@ import {Form, Input, Select, DatePicker, Button, Modal, message} from 'antd'
 import {FormComponentProps} from 'antd/es/form'
 import BaseTableComponent from 'components/BaseTableComponent'
 import {formatTime, quickTimeSelect} from "utils/utils"
-
+import moment from 'moment'
 const businessStatus = [
   {title: '沉默用户', type: 1},
   {title: '互动用户', type: 2},
@@ -87,8 +87,16 @@ const MyCustomer: FunctionComponent<FormComponentProps> = (props) => {
     {title: '发动机号', dataIndex: 'cry_engine_no'},
     {title: '注册日期', dataIndex: 'src_time'},
     {title: '保险日期', dataIndex: 'reg_date'},
-    {title: '分配日期', dataIndex: 'time_create'},
-    {title: '预约日期', dataIndex: 'next_follow_time'},
+    {
+      title: '下发日期',
+      dataIndex: 'time_create',
+      render: (time: string) => time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''
+    },
+    {
+      title: '预约日期',
+      dataIndex: 'next_follow_time',
+      render: (time: string) => time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''
+    },
     {title: '用户状态', dataIndex: 'biz_status'},
     {title: '操作', render: (row: any) => <Button type="danger" onClick={() => handleDelete(row)}>删除</Button>},
   ]

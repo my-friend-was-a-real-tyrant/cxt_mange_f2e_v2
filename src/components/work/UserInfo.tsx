@@ -49,6 +49,7 @@ const UserInfo: FunctionComponent<IProps> = (props) => {
         next_follow_time: values.next_follow_time ? moment(values.next_follow_time).format('YYYY-MM-DD') : values.next_follow_time,
         time_create: values.time_create ? moment(values.time_create).format('YYYY-MM-DD') : values.time_create,
       }
+      //TODO 查看返回数据extent字段 如果有id,则把列表中相同id数据删除
       fetch.post(`/apiv1/user-uni-data/update`, params).then(async (res: any) => {
         if (res.code === 20000) {
           message.success('修改成功')
