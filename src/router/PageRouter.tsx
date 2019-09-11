@@ -32,6 +32,8 @@ import OfferReport from 'pages/report_form/offer_report/OfferReport'
 // 系统管理
 import CompanyInfo from 'pages/system_manage/company_info/CompanyInfo'
 import AccountManage from 'pages/system_manage/sub_account_manage/AccountManage'
+import AgentFee from 'pages/system_manage/agent_fee/AgentFee'
+
 const PageRouter = () => {
   return <Switch>
     {/* 工作台 */}
@@ -59,6 +61,7 @@ const PageRouter = () => {
     {/*系统管理*/}
     <Route path="/app/company_info" component={CompanyInfo}/>
     <Route path="/app/permission_management" component={AccountManage}/>
+    <Route path="/app/agent_fee" component={AgentFee}/>
   </Switch>
 }
 
