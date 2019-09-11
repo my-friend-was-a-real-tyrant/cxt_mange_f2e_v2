@@ -33,6 +33,7 @@ import OfferReport from 'pages/report_form/offer_report/OfferReport'
 import CompanyInfo from 'pages/system_manage/company_info/CompanyInfo'
 import AccountManage from 'pages/system_manage/sub_account_manage/AccountManage'
 import AgentFee from 'pages/system_manage/agent_fee/AgentFee'
+import RobotFee from 'pages/system_manage/robot_fee/RobotFee'
 
 const PageRouter = () => {
   return <Switch>
@@ -62,6 +63,7 @@ const PageRouter = () => {
     <Route path="/app/company_info" component={CompanyInfo}/>
     <Route path="/app/permission_management" component={AccountManage}/>
     <Route path="/app/agent_fee" component={AgentFee}/>
+    <Route path="/app/robot_fee" component={RobotFee}/>
   </Switch>
 }
 
