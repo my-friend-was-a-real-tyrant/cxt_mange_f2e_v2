@@ -61,6 +61,7 @@ const FollowUpList: FunctionComponent = () => {
     {title: '坐席', dataIndex: 'seatUsername'},
     {title: '车牌', dataIndex: 'license'},
     {title: '电话', dataIndex: 'mobile'},
+    {title: '姓名', dataIndex: 'realname'},
     {title: '微信', dataIndex: 'wechatAccountId'},
     {title: '跟进时间', dataIndex: 'timeOfFollowUp'},
     {title: '跟进方式', dataIndex: 'followUpType', render: (status: number) => followType[status - 1].title},

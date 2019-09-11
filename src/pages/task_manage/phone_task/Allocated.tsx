@@ -54,8 +54,8 @@ const Allocated: FunctionComponent<IProps> = props => {
       serialno_id,
       reg_date_b: formatTime(regDate)[0],
       reg_date_e: formatTime(regDate)[1],
-      time_assign_b: formatTime(timeAssign)[0],
-      time_assign_e: formatTime(timeAssign)[1],
+      assign_time_b: formatTime(timeAssign)[0],
+      assign_time_e: formatTime(timeAssign)[1],
     }
     setLoading(true)
     fetch.get(`/apiv1/otb/task/getTaskManageList`, {params}).then((res: any) => {
@@ -106,8 +106,8 @@ const Allocated: FunctionComponent<IProps> = props => {
       serialno_id,
       reg_date_b: formatTime(regDate)[0],
       reg_date_e: formatTime(regDate)[1],
-      time_assign_b: formatTime(timeAssign)[0],
-      time_assign_e: formatTime(timeAssign)[1],
+      assign_time_b: formatTime(timeAssign)[0],
+      assign_time_e: formatTime(timeAssign)[1],
       ids: checked ? '' : selectedRowKeys.join(',')
     }
 

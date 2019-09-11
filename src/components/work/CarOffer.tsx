@@ -23,7 +23,7 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
         insurance: currentUser.license
       }
       fetch.post(`/apiv1/insurance/offer`, null, {params}).then((res: any) => {
-        if (res.code === 20000) {
+        if (res.code === 20000 || res.code === 20003) {
           setCarOffer(res.data)
         }
       })

@@ -33,10 +33,10 @@ const SearchForm: FunctionComponent<IProps> = (props) => {
     <div>
       <Form layout="inline">
         <Form.Item label="坐席">
-          {getFieldDecorator('userId', {initialValue: ''})(
+          {getFieldDecorator('seatId', {initialValue: ''})(
             <Select style={{width: 200}}>
               <Select.Option value="" key="-1">全部坐席</Select.Option>
-              {company.map((v: any) => <Select.Option key={v.userId} value={v.contact}>{v.contact}</Select.Option>)}
+              {company.map((v: any) => <Select.Option key={v.userId} value={v.userId}>{v.contact}</Select.Option>)}
             </Select>
           )}
         </Form.Item>
