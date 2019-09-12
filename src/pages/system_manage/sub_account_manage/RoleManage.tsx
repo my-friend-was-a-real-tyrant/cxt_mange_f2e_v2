@@ -196,7 +196,7 @@ const RoleManage: FunctionComponent = (props) => {
              onOk={() => show === 'edit' ? handleSave() : handleAdd()}>
         <Input placeholder="请输入名称" value={editRow && editRow.name}
                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditRow({...editRow, name: e.target.value})}/>
-        <Tree showLine checkable checkedKeys={checkedKeys} onCheck={onCheck}>
+        <Tree showLine checkable checkedKeys={checkedKeys} onCheck={onCheck} className="hide-file-icon">
           {renderTreeNodes(treeData)}
         </Tree>
       </Modal>
