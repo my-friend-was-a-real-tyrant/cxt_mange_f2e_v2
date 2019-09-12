@@ -15,15 +15,20 @@ interface IItemProps {
   children: Array<IItemProps>;
 }
 
+// interface IProps {
+//   propsShow: boolean | string;
+//   setPropsShow: (value: boolean) => any;
+// }
+
 const {TreeNode} = Tree;
-const RoleManage: FunctionComponent = () => {
+const RoleManage: FunctionComponent = (props) => {
   const [result, setResult] = useState({data: [], total: 0})
   const [loading, setLoading] = useState<boolean>(false)
   const [search, setSearch] = useState({offset: 1, limit: 10, order: '-timeModified'})
   const [treeData, setTreeData] = useState<Array<IItemProps>>([])
   const [editRow, setEditRow] = useState<any>(null)
   const [checkedKeys, setCheckedKeys] = useState([])
-  const [show, setShow] = useState<boolean>(false)
+  const [show, setShow] = useState<boolean | string>(false)
 
 
   useEffect(() => getRole(), [search])
@@ -44,7 +49,7 @@ const RoleManage: FunctionComponent = () => {
 
   const getUserAuth = () => {
     const params = {
-      roleid: 100
+      roleid: editRow && editRow.id
     }
     fetch.get(`/apiv1/uac/role/pagefunctions`, {params}).then((res: any) => {
       if (res.code === 20000 || res.code === 20003) {
@@ -60,7 +65,9 @@ const RoleManage: FunctionComponent = () => {
       if (res.code === 20000 || res.code === 20003) {
         const data = composeMenu(res.data)
         setTreeData(data)
-        getUserAuth()
+        if (show === 'edit') {
+          getUserAuth()
+        }
       }
     })
   }
@@ -69,23 +76,63 @@ const RoleManage: FunctionComponent = () => {
     setCheckedKeys(checkedKeys)
   }
 
+  const handleDelete = (id: number) => {
+    Modal.confirm({
+      title: '提示',
+      content: '此操作不可恢复，您确定要继续么？',
+      okType: 'danger',
+      onOk() {
+        return fetch.delete(`/apiv1/uac/role/${id}`).then((res: any) => {
+          if (res.code === 20000) {
+            message.success('删除成功')
+            getRole()
+          }
+        })
+      }
+    })
+  }
+
+  const handleAdd = () => {
+    fetch.post(`/apiv1/uac/role/`, {name: editRow.name}).then((res: any) => {
+      if (res.code === 20000) {
+        setShow(false)
+        setEditRow(null)
+        message.success('名称保存成功')
+        setSearch({...search, offset: 1})
+        const params = {
+          pageFuntionId: checkedKeys.map((v: string) => Number(v)),
+          roleid: res.data.id
+        }
+        fetch.post(`/apiv1/uac/role/pagefunctions`, params).then((res: any) => {
+          if (res.code === 20000) {
+            setShow(false)
+            setEditRow(null)
+            message.success('添加成功')
+            getRole()
+          }
+        })
+      }
+    })
+  }
+
   const handleSave = () => {
     const params = {
-      pageFunctionId: checkedKeys.map((v: string) => Number(v)),
+      pageFuntionId: checkedKeys.map((v: string) => Number(v)),
       roleid: editRow && editRow.id
     }
     fetch.post(`/apiv1/uac/role/pagefunctions`, params).then((res: any) => {
       if (res.code === 20000) {
         setShow(false)
         setEditRow(null)
-        message.success('保存成功')
-      }
-    })
-    fetch.put(`/apiv1/uac/role/${editRow && editRow.id}`, {name: editRow.name}).then((res: any) => {
-      if (res.code === 20000) {
-        setShow(false)
-        setEditRow(null)
-        message.success('保存成功')
+        message.success('权限编辑成功')
+        fetch.put(`/apiv1/uac/role/${editRow && editRow.id}`, {name: editRow.name}).then((res: any) => {
+          if (res.code === 20000) {
+            setShow(false)
+            setEditRow(null)
+            message.success('名称保存成功')
+            setSearch({...search, offset: 1})
+          }
+        })
       }
     })
   }
@@ -105,9 +152,9 @@ const RoleManage: FunctionComponent = () => {
         <Button type="primary" icon="edit" onClick={() => {
           setEditRow(row)
           getTree()
-          setShow(true)
+          setShow('edit')
         }}/>
-        <Button type="danger" icon="delete"/>
+        <Button type="danger" icon="delete" onClick={() => handleDelete(row && row.id)}/>
       </Button.Group>
     },
   ]
@@ -125,7 +172,14 @@ const RoleManage: FunctionComponent = () => {
     });
   }
   return (
-    <div>
+    <div style={{padding: '0 20px'}}>
+      <div style={{textAlign: 'right', marginBottom: 20}}>
+        <Button type="primary" onClick={() => {
+          setShow('add')
+          getTree()
+          setCheckedKeys([])
+        }}>添加角色</Button>
+      </div>
       <BaseTableComponent
         columns={columns}
         dataSource={result.data}
@@ -133,13 +187,13 @@ const RoleManage: FunctionComponent = () => {
         onChange={handleTableChange}
         current={search.offset === 1 ? search.offset : undefined}/>
       <Modal title="编辑角色"
-             visible={show}
+             visible={Boolean(show)}
              onCancel={() => {
                setShow(false)
                setEditRow(null)
              }}
              destroyOnClose
-             onOk={() => handleSave()}>
+             onOk={() => show === 'edit' ? handleSave() : handleAdd()}>
         <Input placeholder="请输入名称" value={editRow && editRow.name}
                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditRow({...editRow, name: e.target.value})}/>
         <Tree showLine checkable checkedKeys={checkedKeys} onCheck={onCheck}>
