@@ -8,7 +8,7 @@ import CallFee from './CallFee'
 const RobotFee: FunctionComponent = () => {
   return (
     <div>
-      <Tabs>
+      <Tabs animated={false}>
         <Tabs.TabPane key="1" tab="总费用统计">
           <AllFee/>
         </Tabs.TabPane>

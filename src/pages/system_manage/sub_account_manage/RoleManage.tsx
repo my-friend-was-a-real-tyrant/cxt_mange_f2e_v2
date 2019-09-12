@@ -1,12 +1,29 @@
 import React, {useState, useEffect, FunctionComponent} from 'react'
-import {Button} from 'antd'
+import {Button, Tree, Modal, message, Input} from 'antd'
 import fetch from 'fetch/axios'
+import composeMenu from 'utils/composeMenu'
 import BaseTableComponent from 'components/BaseTableComponent'
 
+interface IItemProps {
+  code: string;
+  id: number;
+  parentId: number;
+  url: string;
+  other_url: string;
+  name: string;
+  status: number;
+  children: Array<IItemProps>;
+}
+
+const {TreeNode} = Tree;
 const RoleManage: FunctionComponent = () => {
   const [result, setResult] = useState({data: [], total: 0})
   const [loading, setLoading] = useState<boolean>(false)
   const [search, setSearch] = useState({offset: 1, limit: 10, order: '-timeModified'})
+  const [treeData, setTreeData] = useState<Array<IItemProps>>([])
+  const [editRow, setEditRow] = useState<any>(null)
+  const [checkedKeys, setCheckedKeys] = useState([])
+  const [show, setShow] = useState<boolean>(false)
 
 
   useEffect(() => getRole(), [search])
@@ -25,6 +42,54 @@ const RoleManage: FunctionComponent = () => {
     })
   }
 
+  const getUserAuth = () => {
+    const params = {
+      roleid: 100
+    }
+    fetch.get(`/apiv1/uac/role/pagefunctions`, {params}).then((res: any) => {
+      if (res.code === 20000 || res.code === 20003) {
+        const data = res.data || []
+        const checkedKeys = data.map((v: any) => v.pageFunctionId).filter((v: number) => v !== null)
+        setCheckedKeys(checkedKeys)
+      }
+    })
+  }
+
+  const getTree = () => {
+    fetch.get(`/apiv1/uac/role/subfuncs`).then((res: any) => {
+      if (res.code === 20000 || res.code === 20003) {
+        const data = composeMenu(res.data)
+        setTreeData(data)
+        getUserAuth()
+      }
+    })
+  }
+
+  const onCheck = (checkedKeys: any) => {
+    setCheckedKeys(checkedKeys)
+  }
+
+  const handleSave = () => {
+    const params = {
+      pageFunctionId: checkedKeys.map((v: string) => Number(v)),
+      roleid: editRow && editRow.id
+    }
+    fetch.post(`/apiv1/uac/role/pagefunctions`, params).then((res: any) => {
+      if (res.code === 20000) {
+        setShow(false)
+        setEditRow(null)
+        message.success('保存成功')
+      }
+    })
+    fetch.put(`/apiv1/uac/role/${editRow && editRow.id}`, {name: editRow.name}).then((res: any) => {
+      if (res.code === 20000) {
+        setShow(false)
+        setEditRow(null)
+        message.success('保存成功')
+      }
+    })
+  }
+
   const handleTableChange = (pagination: any) => {
     setSearch({...search, offset: pagination.current, limit: pagination.pageSize})
   }
@@ -37,11 +102,28 @@ const RoleManage: FunctionComponent = () => {
     {title: '更新时间', dataIndex: 'timeModified'},
     {
       title: '操作', width: 100, render: (row: any) => <Button.Group>
-        <Button type="primary" icon="edit"/>
+        <Button type="primary" icon="edit" onClick={() => {
+          setEditRow(row)
+          getTree()
+          setShow(true)
+        }}/>
         <Button type="danger" icon="delete"/>
       </Button.Group>
     },
   ]
+
+  const renderTreeNodes = (data: any) => {
+    return data.map((item: any) => {
+      if (item.children) {
+        return (
+          <TreeNode title={item.name} key={item.id} dataRef={item}>
+            {renderTreeNodes(item.children)}
+          </TreeNode>
+        );
+      }
+      return <TreeNode key={item.id} title={item.name}/>;
+    });
+  }
   return (
     <div>
       <BaseTableComponent
@@ -50,6 +132,20 @@ const RoleManage: FunctionComponent = () => {
         loading={loading}
         onChange={handleTableChange}
         current={search.offset === 1 ? search.offset : undefined}/>
+      <Modal title="编辑角色"
+             visible={show}
+             onCancel={() => {
+               setShow(false)
+               setEditRow(null)
+             }}
+             destroyOnClose
+             onOk={() => handleSave()}>
+        <Input placeholder="请输入名称" value={editRow && editRow.name}
+               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditRow({...editRow, name: e.target.value})}/>
+        <Tree showLine checkable checkedKeys={checkedKeys} onCheck={onCheck}>
+          {renderTreeNodes(treeData)}
+        </Tree>
+      </Modal>
     </div>
   )
 }
