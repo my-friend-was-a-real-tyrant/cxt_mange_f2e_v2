@@ -153,6 +153,23 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
     })
   }
 
+  // 删除子账号
+  const handleDelete = (id: number) => {
+    Modal.confirm({
+      title: '提示',
+      content: '此操作不可恢复，您确定要继续么？',
+      okType: 'danger',
+      onOk() {
+        return fetch.delete(`/apiv1/uac/manage/user/${id}`).then((res: any) => {
+          if (res.code === 20000) {
+            message.success('删除成功')
+            getList()
+          }
+        })
+      }
+    })
+  }
+
   const handleTableChange = (pagination: any) => {
     setSearch({...search, offset: pagination.current, limit: pagination.pageSize})
   }
@@ -177,10 +194,15 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
           }}/>
         </Tooltip>
         <Tooltip title="编辑权限">
-          <Button icon="edit"/>
+          <Button icon="edit" onClick={() => {
+            setEditRow(row)
+            setShow('setting')
+            getRole(row && row.id)
+            getBusiness(row && row.id)
+          }}/>
         </Tooltip>
         <Tooltip title="删除用户">
-          <Button type="danger" icon="delete"/>
+          <Button type="danger" icon="delete" onClick={() => handleDelete(row && row.id)}/>
         </Tooltip>
       </Button.Group>
     },

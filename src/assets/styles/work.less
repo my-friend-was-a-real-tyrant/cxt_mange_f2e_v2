@@ -307,3 +307,94 @@
   }
 }
 
+.call-phone-mask {
+  .call-phone {
+    input {
+      width: 100%;
+      display: block;
+      border: none;
+      outline: none;
+      font-size: 30px;
+      color: #333;
+      text-align: center;
+
+    }
+
+    input::-webkit-input-placeholder {
+      color: #d4d4d4;
+      font-size: 20px;
+    }
+
+    input::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: #d4d4d4;
+      font-size: 20px;
+    }
+
+    input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: #d4d4d4;
+      font-size: 20px;
+    }
+
+    input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color: #d4d4d4;
+      font-size: 20px;
+    }
+
+    text-align: center;
+
+    .time {
+      display: block;
+      font-size: 20px;
+      color: #333;
+      margin: 20px 0;
+    }
+  }
+
+  .numbers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .number {
+      width: 60px;
+      height: 60px;
+      background: rgba(102, 146, 255, 0.2);
+      color: #6692FF;
+      font-size: 32px;
+      text-align: center;
+      line-height: 60px;
+      margin-right: 40px;
+      margin-bottom: 20px;
+      border-radius: 50%;
+      cursor: pointer;
+
+      &:nth-child(3), &:nth-child(6), &:nth-child(9), &:nth-child(12) {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .btn-wrap {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .call-btn {
+      margin-right: 50px;
+      width: 60px;
+      height: 60px;
+      background: url("../images/call-status.png") no-repeat center/cover;
+      box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .backspace{
+      width: 60px;
+      height: 36px;
+      cursor: pointer;
+      background: url("../images/backspace.png") no-repeat center/cover;
+    }
+  }
+}
+
