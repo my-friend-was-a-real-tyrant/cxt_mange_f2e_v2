@@ -28,7 +28,6 @@ const Users = (props: IProps) => {
   const {setUsersSearch, usersSearch, thunkWorkUsers, workUsers, getUserLoading, currentUser, setCurrentUser, asyncGetWechatMessages, setWechatMessageInfo} = props
   const {data, total} = workUsers
   // 根据最后联系时间排序
-  console.log(data)
   data.sort((obj1: any, obj2: any) => {
     if (obj1.recent_time > obj2.recent_time) {
       return -1

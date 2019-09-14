@@ -6,6 +6,7 @@ import WorkLeftPane from './WorkLeftPanel'
 import WorkRightPanel from './WorkRightPanel'
 import WorkCenterPane from './WorkCenterPanel'
 import WorkFixed from 'components/work/WorkFixed'
+import Verto from 'components/Verto.jsx'
 import 'assets/styles/work.less'
 
 interface IProps {
@@ -157,6 +158,7 @@ class Work extends React.Component<IProps, IState> {
           wsState={this.state.wsState}
           sendMsg={this.sendWechatMsg}/>
         <WorkFixed/>
+        <Verto/>
       </div>
     )
   }

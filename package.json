@@ -37,7 +37,14 @@
     "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "no-unused-vars": "off",
+      "no-array-constructor": "off",
+      "eqeqeq": "off",
+      "no-redeclare": "off",
+      "no-undef": "off"
+    }
   },
   "browserslist": {
     "production": [
