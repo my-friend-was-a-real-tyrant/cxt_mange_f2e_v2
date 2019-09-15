@@ -26,8 +26,10 @@ const SearchForm: FunctionComponent<IProps> = (props) => {
   // 获取业务
   const getBusiness = () => {
     fetch.get(`/apiv1/oper/get_business_by_company_userid`).then((res: any) => {
-      if (res.code === 20000 || res.code === 20003) {
+      if (res.code === 20000) {
         setBusinessList(res.data || [])
+      } else if (res.code === 20003) {
+        setBusinessList([])
       }
     })
   }
@@ -98,7 +100,7 @@ const SearchForm: FunctionComponent<IProps> = (props) => {
             detailIds: checkAll ? -1 : selectedRowKeys.join(',')
           }
           delete params.time
-          return fetch.delete(`/apiv1/phonecallplan/dgj/cancelphoneplan`,{params}).then((res: any) => {
+          return fetch.delete(`/apiv1/phonecallplan/dgj/cancelphoneplan`, {params}).then((res: any) => {
             if (res.code === 20000) {
               message.success(`取消计划成功${res.data}条`)
             }

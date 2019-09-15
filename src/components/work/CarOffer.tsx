@@ -20,7 +20,8 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
   const getOffer = () => {
     if (currentUser) {
       const params = {
-        insurance: currentUser.license
+        insurance: currentUser.license,
+        unionId:currentUser.id,
       }
       fetch.post(`/apiv1/insurance/offer`, null, {params}).then((res: any) => {
         if (res.code === 20000 || res.code === 20003) {

@@ -15,7 +15,7 @@ const initState = {
     uni_query: '',
     biz_status: '',
     page: 1,
-    pageSize: 1500,
+    pageSize: 40,
   },
   getUserLoading: false,
   currentUser: null,

@@ -21,7 +21,7 @@ const ComputePrice: React.FC<IProps> = (props) => {
       console.log(values)
       const params = {
         insurance: currentUser && currentUser.license,
-        // carInfoId: this.state.priceRow.id ? this.state.priceRow.id : '',
+        unionId: currentUser && currentUser.id,
         buJiMianCheSun: values.buJiMianCheSun ? 1 : 0,
         buJiMianChengKe: values.buJiMianChengKe ? 1 : 0,
         buJiMianDaoQiang: values.buJiMianDaoQiang ? 1 : 0,

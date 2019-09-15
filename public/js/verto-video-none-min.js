@@ -3360,7 +3360,7 @@
 	};
 	$.verto.dialog.prototype.handleDisplay = function(params) {
 		var parentW = parent.window;
-		var pmsgOrigin = $.trim($('#postMessage').val())
+		var pmsgOrigin = location.origin
 		parentW.postMessage('calldisplayuuid~'+params.callID, pmsgOrigin);
 		var dialog = this;
 		if (params.display_name) {

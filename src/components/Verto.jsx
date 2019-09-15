@@ -1,9 +1,10 @@
 import React from 'react'
 import fetch from 'fetch/axios'
+/* eslint-disable */
 
 const parentW = window;
+const sipUrl = location.origin
 
-/* eslint-disable */
 class Verto extends React.Component {
   state = {
     sipNumber: '',
@@ -12,6 +13,7 @@ class Verto extends React.Component {
     bindPreNumber: '',
     wsUrl: 'wss://devqianwei.mjoys.com',
     vertoHandler: null,
+    code: '',
   }
 
 
@@ -40,9 +42,7 @@ class Verto extends React.Component {
     var callbacks = {
 
       onMessage: function (verto, dialog, msg, data) {
-
         switch (msg) {
-          // eslint-disable-next-line no-undef
           case $.verto.enum.message.pvtEvent:
             //            console.error("pvtEvent", data.pvtData);
             if (data.pvtData) {
@@ -81,6 +81,8 @@ class Verto extends React.Component {
           case $.verto.enum.state.active:
             break;
           case $.verto.enum.state.hangup:
+            parentW.postMessage('hangup', sipUrl);
+            break;
           case $.verto.enum.state.destroy:
             break;
           case $.verto.enum.state.held:
@@ -129,9 +131,6 @@ class Verto extends React.Component {
           code: res.data.gateWayCode,
           bindPreNumber: res.data.bindPreNumber
         }, () => {
-          // eslint-disable-next-line no-undef
-          console.log($.verto)
-          // eslint-disable-next-line no-undef
           $.verto.init({
             skipPermCheck: false
           }, this.init);
@@ -156,18 +155,18 @@ class Verto extends React.Component {
       clearInterval(this.state.timerId)
       this.setState({buttonText: '拨打', hour: 0, minute: 0, second: 0, millisecond: 0, timerId: 0})
     } else if (__act === 'call') {
-      var caller = __str
-      var callee = msgStr.split('~')[2]
-      this.docall(caller, callee)
+      this.docall(__str)
     }
   }
 
 
-  docall = () => {
-    window.postMessage('trying~' + '6030202250536017606549981', window.sipSDK || window.location.origin);
+  docall = (caller) => {
+    const {code, bindPreNumber} = this.state;
+    const preNumber = `${code}${bindPreNumber}${caller}`
+    window.postMessage(`trying~${preNumber}`, window.sipSDK || window.location.origin);
     console.log(this.state.vertoHandler.newCall)
     this.state.vertoHandler.newCall({
-      destination_number: '6030202250536017606549981',
+      destination_number: preNumber,
       caller_id_name: 'mjoys_' + this.generateSalt(6),
       caller_id_number: '81984',
       outgoingBandwidth: 'default',
@@ -193,7 +192,6 @@ class Verto extends React.Component {
     }
     return r.join('');
   }
-
 
   render() {
     return (

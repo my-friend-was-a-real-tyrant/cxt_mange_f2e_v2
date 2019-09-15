@@ -1,7 +1,8 @@
 import React from 'react'
-import {Modal, Row, Col, Card, Statistic} from 'antd'
+import {Modal, Row, Col, Card, Statistic, message} from 'antd'
 import moment from 'moment'
 import {connect} from 'react-redux'
+import {checkPhone} from "../../utils/utils"
 
 interface IProps {
   workCount: any;
@@ -17,6 +18,13 @@ class WorkFixed extends React.Component<IProps> {
     phone: '',
     workShow: false,
     phoneShow: false,
+    callFlag: false,
+
+    hour: 0,
+    minute: 0,
+    second: 0,
+    timerId: 0,
+    millisecond: 0,
   }
 
   componentDidMount() {
@@ -25,35 +33,60 @@ class WorkFixed extends React.Component<IProps> {
     }
   }
 
+  timer = () => {
+    const {millisecond, hour, minute, second} = this.state;
+    this.setState({millisecond: millisecond + 50})
+    if (millisecond >= 1000) {
+      this.setState({millisecond: 0, second: second + 1})
+    }
+    if (second >= 60) {
+      this.setState({second: 0, minute: minute + 1})
+    }
+
+    if (minute >= 60) {
+      this.setState({minute: 0, hour: minute + 1})
+    }
+  }
+
 
   handleCall = () => {
-    const parentW:any = window
-    parentW.postMessage('call~' + '17606531812', win.sipSDK || window.location.origin)
+    const {phone} = this.state;
+    if (!checkPhone(phone)) return message.error('请输入正确的手机号')
+    const parentW: any = window
+    parentW.postMessage(`call~${phone}`, win.sipSDK || window.location.origin)
+    this.setState({callFlag: true})
+    this.setState({hour: 0, minute: 0, second: 0, millisecond: 0})
   }
 
   handleMessage = (event: any) => {
     const pmsgOrigin = win.sipSDK || window.location.origin
-    // const sipUrl = pmsgOrigin + '/sip'
-    // const mjoysFs: any = document.getElementById('mjoysFs') as HTMLElement;
-    // const iframeWindow = mjoysFs.contentWindow
     event = event || window.event
     if (event.origin != pmsgOrigin) return
     const msgStr = event.data + ''
     const __act = msgStr.split('~')[0]
     const __str = msgStr.split('~')[1]
-    // if (__act === 'calldisplayuuid') {
-    //   this.setState({
-    //     // buttonText: '挂断',
-    //     timerId: setInterval(this.timer, 50)
-    //   })
-    // } else if (__act === 'hangup') {
-    //   clearInterval(this.state.timerId)
-    //   this.setState({ buttonText: '拨打', hour: 0, minute: 0, second: 0, millisecond: 0, timerId: 0 })
-    // }
+    if (__act === 'calldisplayuuid') {
+      message.info('电话接通了')
+      this.setState({
+        timerId: setInterval(this.timer, 50)
+      })
+    } else if (__act === 'hangup') {
+      message.info('电话挂断')
+      clearInterval(this.state.timerId)
+      this.setState({hour: 0, minute: 0, second: 0, millisecond: 0, timerId: 0, callFlag: false})
+    }
+  }
+  onClose = () => {
+    clearInterval(this.state.timerId)
+    this.setState({timerId: 0, phoneShow: false})
+  }
+
+  componentWillUnmount() {
+    this.onClose()
   }
 
   render() {
-    const {workShow, phoneShow, phone} = this.state;
+    const {workShow, phoneShow, phone, callFlag, hour, minute, second,} = this.state;
     const {workCount} = this.props
     return (
       <div className="work-fixed">
@@ -111,7 +144,7 @@ class WorkFixed extends React.Component<IProps> {
 
         <Modal title="电话拨号"
                visible={phoneShow}
-               onCancel={() => this.setState({phoneShow: false})}
+               onCancel={this.onClose}
                footer={null}
                width={350}
                className="call-phone-mask">
@@ -119,7 +152,9 @@ class WorkFixed extends React.Component<IProps> {
             <input type="text" value={phone}
                    placeholder="请输入手机号"
                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({phone: e.target.value})}/>
-            <span className="time">00:00:00</span>
+            <span className="time">
+              {hour <= 9 ? '0' + hour : hour}:{minute <= 9 ? '0' + minute : minute}:{second <= 9 ? '0' + second : second}
+            </span>
           </div>
           <div className="numbers">
             {numbers.map((v: number | string) =>
@@ -127,7 +162,7 @@ class WorkFixed extends React.Component<IProps> {
           </div>
 
           <div className="btn-wrap">
-            <span className="call-btn" onClick={this.handleCall}> </span>
+            <span className={`call-btn ${callFlag ? 'hangup' : 'call'}`} onClick={this.handleCall}> </span>
             <span className="backspace" onClick={() => this.setState({phone: phone.slice(0, -1)})}> </span>
           </div>
         </Modal>

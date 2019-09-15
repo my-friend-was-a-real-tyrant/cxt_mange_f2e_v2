@@ -1,0 +1,47 @@
+.player-wrapper {
+  display: flex;
+  align-items: center;
+
+  .img {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 3px;
+    margin-right: 5px;
+
+    .pause {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      background: url("../images/common_pause_icon.png") no-repeat center/cover;
+    }
+
+    .play {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      background: url("../images/common_start_icon.png") no-repeat center/cover;
+    }
+  }
+
+  .slider {
+    flex: 1;
+    height: 100%;
+  }
+
+  :global(.ant-slider) {
+    flex: 1;
+  }
+
+  :global {
+    .ant-tooltip-inner {
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    .ant-tooltip-placement-top .ant-tooltip-arrow,
+    .ant-tooltip-placement-topLeft .ant-tooltip-arrow,
+    .ant-tooltip-placement-topRight .ant-tooltip-arrow {
+      border-top-color: rgba(0, 0, 0, 0.45);
+    }
+  }
+}

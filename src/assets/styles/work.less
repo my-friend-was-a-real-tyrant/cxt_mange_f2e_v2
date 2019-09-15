@@ -385,12 +385,20 @@
       margin-right: 50px;
       width: 60px;
       height: 60px;
-      background: url("../images/call-status.png") no-repeat center/cover;
       box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1);
       border-radius: 50%;
       cursor: pointer;
+
+      &.call {
+        background: url("../images/call-status.png") no-repeat center/cover;
+      }
+
+      &.hangup {
+        background: url("../images/hangup.png") no-repeat center/cover;
+      }
     }
-    .backspace{
+
+    .backspace {
       width: 60px;
       height: 36px;
       cursor: pointer;
