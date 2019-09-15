@@ -31,6 +31,7 @@ class Work extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
+    this.props.setWorkUsers({data: [], total: 0})
     this.props.getWorkCount()
     this.createConnect()
     this.timer = setInterval(() => this.sendWsHeartBeat(), 30000)

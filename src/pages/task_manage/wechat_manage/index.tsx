@@ -2,6 +2,7 @@ import React, {useState, useEffect, FunctionComponent, Fragment} from 'react';
 import {Tabs, Button, message, Modal, Upload, Icon, Form, Input, Select,} from 'antd'
 import fetch from 'fetch/axios'
 import BaseTableComponent from 'components/BaseTableComponent'
+import {EditableCell, EditableFormRow} from "components/BaseEditCellComponent.js"
 import {FormComponentProps} from 'antd/lib/form';
 import service from 'fetch/service'
 
@@ -9,6 +10,12 @@ interface IResult {
   data: Array<object>[];
   total: any;
   loading: boolean
+}
+
+interface Iupdate {
+  id: number,
+  memo: string,
+  wx_account?: string
 }
 
 const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
@@ -151,6 +158,53 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
     })
   }
 
+  // 修改微信号
+  const updateWxAccount = ({id, memo, wx_account}: Iupdate) => {
+    const params = {
+      id,
+      wx_account,
+    }
+    fetch.post(`/apiv1/wx/updateWxConfig`, null, {params}).then((res: any) => {
+      if (res.code === 20000) {
+        const newData: any = []
+        const {data} = result;
+        data.map((s: any) => {
+          if (s.id === id) {
+            newData.push({...s, wx_account})
+          } else {
+            newData.push(s)
+          }
+        })
+        setResult({...result, data: [...newData]})
+        message.success('编辑成功')
+      } else {
+        message.error(res.message || '编辑失败')
+      }
+    })
+  }
+
+  // 修改微信备注
+  const updateWxMemo = ({id, memo}: Iupdate) => {
+    const params = {memo}
+    fetch.get(`/apiv1/wx/updateWxConfigMemo/${id}`, {params}).then((res: any) => {
+      if (res.code === 20000) {
+        const newData: any = []
+        const {data} = result;
+        data.map((s: any) => {
+          if (s.id === id) {
+            newData.push({...s, memo})
+          } else {
+            newData.push(s)
+          }
+        })
+        message.success('编辑成功')
+        setResult({...result, data: [...newData]})
+      } else {
+        message.error(res.message || '编辑失败')
+      }
+    })
+  }
+
   const handleTableChange = (pagination: any) => {
     setSearch({offset: pagination.current, limit: pagination.pageSize})
   }
@@ -207,6 +261,36 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
     onChange: (selectedRowKeys: Array<number>) => setSelectedRowKeys(selectedRowKeys)
   }
 
+  const components = {
+    body: {
+      row: EditableFormRow,
+      cell: EditableCell
+    }
+  }
+
+  const newColumns = columns.map(col => {
+    if (!col.editable) {
+      return col
+    }
+    return {
+      ...col,
+      onCell: (record: any) => ({
+        record,
+        editable: col.editable,
+        dataIndex: col.dataIndex,
+        title: col.title,
+        handleSave: ({id, memo, wx_account}: Iupdate) => {
+          console.log(id, memo, wx_account)
+          if (memo) {
+            updateWxMemo({id, memo})
+          } else {
+            updateWxAccount({id, memo, wx_account})
+          }
+        }
+      })
+    }
+  })
+
   const {getFieldDecorator} = props.form;
   const mjoysUser = JSON.parse(localStorage.getItem('mjoys_user') || '')
   let users: any[] = companies.filter((v: any) => v.accountId === mjoysUser.accountId)
@@ -259,15 +343,17 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
               </Button.Group>
             </Form.Item>
           </Form>
-          <BaseTableComponent columns={columns}
-                              dataSource={result.data}
-                              total={result.total}
-                              loading={result.loading}
-                              rowSelection={rowSelection}
-                              rowKey="id"
-                              offset
-                              onChange={handleTableChange}
-                              bordered/>
+          <BaseTableComponent
+            columns={newColumns}
+            dataSource={result.data}
+            components={components}
+            total={result.total}
+            loading={result.loading}
+            rowSelection={rowSelection}
+            rowKey="id"
+            offset
+            onChange={handleTableChange}
+            bordered/>
         </Tabs.TabPane>
       </Tabs>
 

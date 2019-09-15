@@ -48,6 +48,41 @@ body {
     justify-content: space-between;
     background: linear-gradient(to bottom, #626B8D, #292F46);
 
+    .ant-menu-submenu-selected, .ant-menu-submenu-active {
+      color: #fff;
+      background-color: rgba(254, 254, 254, 0.25);
+
+      .menu-icon {
+        width: 40px;
+        height: 40px;
+        background: url("../images/app-store.png") no-repeat center/cover;
+
+        &__task_manage {
+          background: url("../images/workset_selected_icon.png") no-repeat center/cover;
+        }
+
+        &__wechat {
+          background: url("../images/workbench_selected_icon.png") no-repeat center/cover;
+        }
+
+        &__report_manage {
+          background: url("../images/robotset_selected_icon.png") no-repeat center/cover;
+        }
+
+        &__datasource {
+          background: url("../images/dataset_selected_icon.png") no-repeat center/cover;
+        }
+
+        &__robot {
+          background: url("../images/robotset_selected_icon.png") no-repeat center/cover;
+        }
+
+        &__company {
+          background: url("../images/systemset_selected_icon.png") no-repeat center/cover;
+        }
+      }
+    }
+
     .menu-icon {
       width: 40px;
       height: 40px;
@@ -57,7 +92,7 @@ body {
         background: url("../images/workset_normal_icon.png") no-repeat center/cover;
       }
 
-      &__wechat{
+      &__wechat {
         background: url("../images/workbench_nomal_icon.png") no-repeat center/cover;
       }
 
@@ -76,11 +111,6 @@ body {
       &__company {
         background: url("../images/systemset_normal_icon.png") no-repeat center/cover;
       }
-    }
-
-    .ant-menu-submenu-selected {
-      color: #fff;
-      background-color: rgba(254, 254, 254, 0.25);
     }
 
     .ant-menu-dark {

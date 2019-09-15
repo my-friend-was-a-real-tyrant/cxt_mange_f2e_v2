@@ -195,7 +195,7 @@ const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (
                 </Upload>
                 &nbsp;
                 &nbsp;
-                <a href={`/assets/download-tpl/human-car-tpl`} download="car-tpl">模版下载</a>
+                <a href={`/assets/download-tpl/human-car-tpl`} download="car-tpl.xlsx">模版下载</a>
               </div>
             </Form.Item>
           </Form>
