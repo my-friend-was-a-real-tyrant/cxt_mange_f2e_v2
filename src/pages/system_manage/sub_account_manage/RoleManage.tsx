@@ -15,11 +15,6 @@ interface IItemProps {
   children: Array<IItemProps>;
 }
 
-// interface IProps {
-//   propsShow: boolean | string;
-//   setPropsShow: (value: boolean) => any;
-// }
-
 const {TreeNode} = Tree;
 const RoleManage: FunctionComponent = (props) => {
   const [result, setResult] = useState({data: [], total: 0})
@@ -47,9 +42,9 @@ const RoleManage: FunctionComponent = (props) => {
     })
   }
 
-  const getUserAuth = () => {
+  const getUserAuth = (row: any) => {
     const params = {
-      roleid: editRow && editRow.id
+      roleid: row.id
     }
     fetch.get(`/apiv1/uac/role/pagefunctions`, {params}).then((res: any) => {
       if (res.code === 20000 || res.code === 20003) {
@@ -61,13 +56,10 @@ const RoleManage: FunctionComponent = (props) => {
   }
 
   const getTree = () => {
-    fetch.get(`/apiv1/uac/role/subfuncs`).then((res: any) => {
+    return fetch.get(`/apiv1/uac/role/subfuncs`).then((res: any) => {
       if (res.code === 20000 || res.code === 20003) {
         const data = composeMenu(res.data)
         setTreeData(data)
-        if (show === 'edit') {
-          getUserAuth()
-        }
       }
     })
   }
@@ -151,8 +143,8 @@ const RoleManage: FunctionComponent = (props) => {
       title: '操作', width: 100, render: (row: any) => <Button.Group>
         <Button type="primary" icon="edit" onClick={() => {
           setEditRow(row)
-          getTree()
           setShow('edit')
+          getTree().then(() => getUserAuth(row))
         }}/>
         <Button type="danger" icon="delete" onClick={() => handleDelete(row && row.id)}/>
       </Button.Group>

@@ -52,8 +52,8 @@ const ToBeDistributed: FunctionComponent<IProps> = props => {
       ...search,
       show_name,
       serialno_id,
-      reg_date_b: formatTime(regDate)[0],
-      reg_date_e: formatTime(regDate)[1],
+      reg_date_b: formatTime(regDate, 'MM-DD')[0],
+      reg_date_e: formatTime(regDate, 'MM-DD')[1],
     }
     setLoading(true)
     fetch.get(`/apiv1/otb/task/getTaskManageList`, {params}).then((res: any) => {
@@ -77,8 +77,8 @@ const ToBeDistributed: FunctionComponent<IProps> = props => {
       ...search,
       show_name,
       serialno_id,
-      reg_date_b: formatTime(regDate)[0],
-      reg_date_e: formatTime(regDate)[1],
+      reg_date_b: formatTime(regDate, 'MM-DD')[0],
+      reg_date_e: formatTime(regDate, 'MM-DD')[1],
     }
   }
 
@@ -195,8 +195,8 @@ const ToBeDistributed: FunctionComponent<IProps> = props => {
     const serialno_id = props.form.getFieldValue('serialno_id') || ''
     setPrevSearch({
       serialno_id,
-      reg_date_b: formatTime(regDate)[0],
-      reg_date_e: formatTime(regDate)[1],
+      reg_date_b: formatTime(regDate, 'MM-DD')[0],
+      reg_date_e: formatTime(regDate, 'MM-DD')[1],
     })
     setSearch({...search, page: 1})
   }

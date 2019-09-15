@@ -78,7 +78,7 @@ const CarInfo: FunctionComponent<IProps> = (props) => {
       {
         currentUser ? <Form className="car-info-form" labelAlign="left">
           <div className="right-panel-title">
-            <span className="title">车辆信息</span>
+            <span className="title"><b className="icon icon-user"/>车辆信息</span>
             <span className="btn" onClick={() => setEdit(!edit)}>
             <b><Icon type="edit"/></b>&nbsp; {edit ? '取消' : '编辑'}
           </span>

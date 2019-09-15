@@ -67,10 +67,14 @@ export const thunkWorkUsers = (key?: string) => (dispatch: Dispatch, getState: a
     fetch.get(`/apiv1/user-uni-data/list`, {params}).then((res: any) => {
       dispatch(setUserLoading(false))
       if (res.code === 20000) {
+        const userList = res.data || []
+        userList.forEach((v: any) => {
+          v.unread = 0;
+        })
         if (usersSearch.page === 1) {
-          dispatch(setWorkUsers({data: res.data, total: res.count || 0}))
+          dispatch(setWorkUsers({data: userList, total: res.count || 0}))
         } else {
-          dispatch(setWorkUsers({data: data.concat(res.data || []), total: res.count || 0}))
+          dispatch(setWorkUsers({data: data.concat(userList), total: res.count || 0}))
         }
         resolve(data.concat(res.data || []))
       }
@@ -97,14 +101,20 @@ export const setCurrentUser = (value: any) => ({
 /**
  * @desc 获取聊天记录
  */
-export const asyncGetWechatMessages = () => (dispatch: Dispatch, getState: any) => {
+export const asyncGetWechatMessages = (server_wx?: string, target_wx?: string) => (dispatch: Dispatch, getState: any) => {
   const {currentUser, wechtMessageInfo} = getState().work
   const {offset, limit, data} = wechtMessageInfo
+
   const params = {
     offset,
     limit,
-    targetWxId: currentUser.target_wx,
-    originWxId: currentUser.server_wx
+    targetWxId: target_wx || currentUser.target_wx,
+    originWxId: server_wx || currentUser.server_wx
+  }
+  if (!params.targetWxId && !params.originWxId) {
+    return dispatch(setWechatMessageInfo({limit, data: [], finished: false, offset: offset + 1}))
+  } else {
+    params.offset = 1
   }
   fetch.get(`/apiv1/wx/getWxCommunicateRecords`, {params}).then((res: any) => {
     let finished = res.data.length < 10

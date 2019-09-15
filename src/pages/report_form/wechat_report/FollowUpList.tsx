@@ -70,7 +70,7 @@ const FollowUpList: FunctionComponent = () => {
     {title: '预约时间', dataIndex: 'timeOfAppoint'},
   ]
   return (
-    <div style={{padding:'0 20px'}}>
+    <div>
       <SearchForm onSearch={(values: any) => onSearch(values)}/>
       <BaseTableComponent
         loading={loading}

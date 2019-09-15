@@ -48,6 +48,36 @@ body {
     justify-content: space-between;
     background: linear-gradient(to bottom, #626B8D, #292F46);
 
+    .menu-icon {
+      width: 40px;
+      height: 40px;
+      background: url("../images/app-store.png") no-repeat center/cover;
+
+      &__task_manage {
+        background: url("../images/workset_normal_icon.png") no-repeat center/cover;
+      }
+
+      &__wechat{
+        background: url("../images/workbench_nomal_icon.png") no-repeat center/cover;
+      }
+
+      &__report_manage {
+        background: url("../images/robotset_normal_icon.png") no-repeat center/cover;
+      }
+
+      &__datasource {
+        background: url("../images/dataset_normal_icon.png") no-repeat center/cover;
+      }
+
+      &__robot {
+        background: url("../images/robotset_normal_icon.png") no-repeat center/cover;
+      }
+
+      &__company {
+        background: url("../images/systemset_normal_icon.png") no-repeat center/cover;
+      }
+    }
+
     .ant-menu-submenu-selected {
       color: #fff;
       background-color: rgba(254, 254, 254, 0.25);
@@ -116,6 +146,7 @@ body {
         cursor: pointer;
         margin-left: 24px;
         white-space: nowrap;
+
         &:hover {
           color: #fff;
         }
@@ -126,13 +157,16 @@ body {
           background: rgba(254, 254, 254, 0.2);
           margin-right: 2px;
           border-radius: 50%;
-          &.icon-user{
+
+          &.icon-user {
             background: url("../images/nav_user_icon.png") no-repeat center/cover;
           }
-          &.icon-password{
+
+          &.icon-password {
             background: url("../images/nav_password_icon.png") no-repeat center/cover;
           }
-          &.icon-logout{
+
+          &.icon-logout {
             background: url("../images/nav_exit_icon.png") no-repeat center/cover;
           }
         }

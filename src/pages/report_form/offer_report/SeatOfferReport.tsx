@@ -3,6 +3,7 @@ import {Form, DatePicker, Button} from 'antd'
 import fetch from 'fetch/axios'
 import moment from 'moment'
 import BaseTableComponent from 'components/BaseTableComponent'
+import {quickTimeSelect} from "utils/utils"
 
 const SeatOfferReport: FunctionComponent = () => {
   const [result, setResult] = useState({data: [], total: 0})
@@ -36,10 +37,12 @@ const SeatOfferReport: FunctionComponent = () => {
     {title: '成功次数', dataIndex: 'successCounter'},
   ]
   return (
-    <div>
+    <div style={{padding:'0 20px'}}>
       <Form layout="inline">
         <Form.Item label="日期">
-          <DatePicker.RangePicker onChange={(date, dateString) => setTime({
+          <DatePicker.RangePicker
+            ranges={quickTimeSelect()}
+            onChange={(date, dateString) => setTime({
             startTime: dateString[0] ? moment(dateString[0]).format('YYYYMMDDHHmmss') : '',
             endTime: dateString[1] ? moment(dateString[1]).clone().set({
               hour: 23,

@@ -52,8 +52,8 @@ const Allocated: FunctionComponent<IProps> = props => {
       show_name,
       user_id,
       serialno_id,
-      reg_date_b: formatTime(regDate)[0],
-      reg_date_e: formatTime(regDate)[1],
+      reg_date_b: formatTime(regDate, 'MM-DD')[0],
+      reg_date_e: formatTime(regDate, 'MM-DD')[1],
       assign_time_b: formatTime(timeAssign)[0],
       assign_time_e: formatTime(timeAssign)[1],
     }
@@ -104,8 +104,8 @@ const Allocated: FunctionComponent<IProps> = props => {
       show_name,
       user_id,
       serialno_id,
-      reg_date_b: formatTime(regDate)[0],
-      reg_date_e: formatTime(regDate)[1],
+      reg_date_b: formatTime(regDate, 'MM-DD')[0],
+      reg_date_e: formatTime(regDate, 'MM-DD')[1],
       assign_time_b: formatTime(timeAssign)[0],
       assign_time_e: formatTime(timeAssign)[1],
       ids: checked ? '' : selectedRowKeys.join(',')

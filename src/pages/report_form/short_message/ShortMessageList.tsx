@@ -50,7 +50,7 @@ const ShortMessageList: FunctionComponent = () => {
     {title: '短信内容', dataIndex: 'content'}
   ]
   return (
-    <div>
+    <div style={{padding:'0 20px'}}>
       <SearchForm onSearch={onSearch}/>
       <BaseTableComponent
         loading={loading}

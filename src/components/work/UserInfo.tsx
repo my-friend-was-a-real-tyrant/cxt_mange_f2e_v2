@@ -72,7 +72,7 @@ const UserInfo: FunctionComponent<IProps> = (props) => {
     <div className="right-panel-container">
       {currentUser ? <Form className="user-info-form" labelAlign="left">
         <div className="right-panel-title">
-          <span className="title">用户信息</span>
+          <span className="title"><b className="icon icon-user"/>用户信息</span>
           <span className="btn" onClick={() => setEdit(!edit)}>
             <b><Icon type="edit"/></b>&nbsp; {edit ? '取消' : '编辑'}
           </span>

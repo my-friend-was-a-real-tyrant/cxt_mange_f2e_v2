@@ -53,7 +53,7 @@ const OutboundList: FunctionComponent = () => {
     {title: '录音'}
   ]
   return (
-    <div>
+    <div  style={{padding:'0 20px'}}>
       <SearchForm onSearch={onSearch}/>
       <BaseTableComponent
         loading={loading}

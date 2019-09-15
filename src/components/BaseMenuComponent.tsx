@@ -17,8 +17,8 @@ const renderMenuItem = <T extends IItemProps>(item: T): React.ReactNode => (
   <Menu.Item key={item.id || item.code || item.other_url}>
     <Link to={item.other_url || item.url} className="menu-link">
       {
-        item.parentId === 0 ? <div className="menu-icon">
-          <Icon type="pie-chart"/>
+        item.parentId === 0 ? <div className={`menu-icon menu-icon__${item.other_url}`}>
+          <img src="" alt=""/>
         </div> : null
       }
       <span className="nav-text">{item.name}</span>
@@ -32,8 +32,7 @@ const renderSubMenu = <T extends IItemProps>(item: T): React.ReactNode => (
                 title={
                   <Fragment>
                     {
-                      item.parentId === 0 ? <div className="menu-icon">
-                        <Icon type="pie-chart"/>
+                      item.parentId === 0 ? <div className={`menu-icon menu-icon__${item.code}`}>
                       </div> : null
                     }
                     <span className="nav-text"> {item.name} </span>

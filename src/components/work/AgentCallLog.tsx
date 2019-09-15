@@ -39,7 +39,7 @@ const AgentCallLog: FunctionComponent<IProps> = (props) => {
 
   return <div className="robot-call-log">
     <h5 className="title">
-      <span className="icon"/>
+      <span className="icon icon-agent"/>
       人工坐席通话记录
     </h5>
     {callLog.map((v: any, index: number) => {

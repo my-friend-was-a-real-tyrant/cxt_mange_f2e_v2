@@ -9,19 +9,22 @@
   .call-panel {
     display: flex;
     width: 100%;
-    background: #52C9F4;
+    height: 140px;
     padding: 15px 20px;
     border-radius: 4px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+    background: #52C9F4 url("../images/wave_img.png") no-repeat left bottom/100%;
 
     .user-info {
       display: flex;
+      align-items: center;
       width: 50%;
 
-      img {
+      .avatar {
         width: 80px;
         height: 80px;
+        background: url("../images/profile_img.png") no-repeat center/cover;
       }
 
       .user {
@@ -48,12 +51,16 @@
         width: 100px;
         height: 36px;
         border-radius: 20px;
-        background: rgba(255, 255, 255, 0.3);
         color: #fff;
         text-align: center;
         line-height: 36px;
         font-size: 16px;
         transition: all 0.5s ease;
+        background: rgba(255, 255, 255, 0.3);
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
 
         .content {
           width: 70px;
@@ -62,8 +69,16 @@
         }
 
         &.active {
+          &.call {
+            background: rgba(255, 128, 128, 0.5);
+          }
+
           .icon {
             left: calc(100% - 36px);
+
+            &-call {
+              background: url("../images/hangup.png") no-repeat center/cover;
+            }
           }
 
           .content {
@@ -78,9 +93,15 @@
           width: 36px;
           height: 100%;
           border-radius: 50%;
-          background: #fff;
           transition: all 0.5s ease;
-          color: green;
+
+          &-short-message {
+            background: url("../images/icon-short-message.png") no-repeat center/cover;
+          }
+
+          &-call {
+            background: url("../images/call-status.png") no-repeat center/cover;
+          }
         }
       }
     }
@@ -91,10 +112,22 @@
     font-size: 16px;
     font-weight: normal;
 
-    span {
+    .icon {
       width: 28px;
-      height: 24px;
+      height: 25px;
       margin-right: 5px;
+
+      &-robot {
+        background: url("../images/icon-center-robot.png") no-repeat center/cover;
+      }
+
+      &-agent {
+        background: url("../images/icon-center-agent.png") no-repeat center/cover;
+      }
+
+      &-message {
+        background: url("../images/icon-center-message.png") no-repeat center/cover;
+      }
     }
   }
 

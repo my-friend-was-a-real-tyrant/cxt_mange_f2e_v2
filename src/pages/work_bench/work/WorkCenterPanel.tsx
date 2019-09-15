@@ -21,6 +21,7 @@ interface Iprops {
   thunkWorkUsers: () => any;
   setUsersSearch: (value: any) => any;
   usersSearch: any;
+  asyncGetWechatMessages: (server: string, target: string) => any
 }
 
 class WorkCenterPanel extends React.Component<Iprops> {
@@ -28,27 +29,34 @@ class WorkCenterPanel extends React.Component<Iprops> {
     index: -1
   }
   handleNextUser = async () => {
-    const {currentUser, workUsers, setCurrentUser, thunkWorkUsers, setUsersSearch, usersSearch} = this.props;
+    const {currentUser, workUsers, setCurrentUser, thunkWorkUsers, setUsersSearch, usersSearch, asyncGetWechatMessages} = this.props;
     const {data: users, total} = workUsers
     const index = users.findIndex((v: any) => v.id === currentUser.id)
     this.setState({index})
+    console.log(index)
     if (index < users.length) {
       if (index + 1 >= users.length && index + 1 < total) {
         await setUsersSearch({...usersSearch, page: usersSearch.page + 1})
         await thunkWorkUsers().then((res: any) => {
           setCurrentUser(res[index + 1])
+          if (res[index + 1]) {
+            asyncGetWechatMessages(res[index + 1].server_wx, res[index + 1].target_wx)
+          }
         })
       } else if (index === total - 1) {
         message.info('已经是最后一条，请选择上一条')
       } else {
-        await setCurrentUser(users[index + 1])
+        setCurrentUser(users[index + 1])
+        if (users[index + 1]) {
+          asyncGetWechatMessages(users[index + 1].server_wx, users[index + 1].target_wx)
+        }
       }
     }
   }
 
-  handlePrevUser = () => {
-    const {currentUser, workUsers, setCurrentUser} = this.props;
-    const {data: users, total} = workUsers
+  handlePrevUser = async () => {
+    const {currentUser, workUsers, setCurrentUser, asyncGetWechatMessages} = this.props;
+    const {data: users} = workUsers
     const index = users.findIndex((v: any) => v.id === currentUser.id)
     this.setState({index})
     if (index === 0) {
@@ -56,6 +64,9 @@ class WorkCenterPanel extends React.Component<Iprops> {
     }
     if (index > 0) {
       setCurrentUser(users[index - 1])
+      if (users[index - 1]) {
+        asyncGetWechatMessages(users[index - 1].server_wx, users[index - 1].target_wx)
+      }
     }
   }
 
@@ -102,5 +113,6 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   setCurrentUser: (value: any) => dispatch(actions.setCurrentUser(value)),
   setUsersSearch: (value: any) => dispatch(actions.setUsersSearch(value)),
   thunkWorkUsers: () => dispatch(actions.thunkWorkUsers()),
+  asyncGetWechatMessages: (server: string, target: string) => dispatch(actions.asyncGetWechatMessages(server, target))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(WorkCenterPanel)

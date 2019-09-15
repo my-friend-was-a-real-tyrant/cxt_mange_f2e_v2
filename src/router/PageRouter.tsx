@@ -29,6 +29,7 @@ import FollowUp from 'pages/report_form/follow_up/FollowUp'
 import Outbound from 'pages/report_form/outbound/Outbound'
 import ShortMessageReport from 'pages/report_form/short_message/ShortMessage'
 import OfferReport from 'pages/report_form/offer_report/OfferReport'
+import WechatReport from 'pages/report_form/wechat_report/WechatReport'
 // 系统管理
 import CompanyInfo from 'pages/system_manage/company_info/CompanyInfo'
 import AccountManage from 'pages/system_manage/sub_account_manage/AccountManage'
@@ -59,6 +60,7 @@ const PageRouter = () => {
     <Route path="/app/outbound" component={Outbound}/>
     <Route path="/app/short_message_report" component={ShortMessageReport}/>
     <Route path="/app/offer_report" component={OfferReport}/>
+    <Route path="/app/wechat_report" component={WechatReport}/>
     {/*系统管理*/}
     <Route path="/app/company_info" component={CompanyInfo}/>
     <Route path="/app/permission_management" component={AccountManage}/>

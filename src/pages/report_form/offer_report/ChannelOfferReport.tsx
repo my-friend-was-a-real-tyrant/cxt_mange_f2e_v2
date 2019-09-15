@@ -43,13 +43,13 @@ const ChannelOfferReport: FunctionComponent = () => {
   ]
 
   return (
-    <div>
+    <div style={{padding:'0 20px'}}>
       <Form layout="inline">
         <Form.Item label="日期">
           <DatePicker.RangePicker
             onChange={(date, dateString) => setTime({
               startTime: dateString[0] ? moment(dateString[0]).format('YYYYMMDDHHmmss') : '',
-              endTime: dateString[1] ? moment(dateString[1]).format('YYYYMMDDHHmmss') : '',
+              endTime: dateString[1] ? moment(dateString[1]).clone().set({hour: 23, minute: 59, second: 59, millisecond: 59}).format('YYYYMMDDHHmmss') : '',
             })}/>
         </Form.Item>
         <Form.Item>

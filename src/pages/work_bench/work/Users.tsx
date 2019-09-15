@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Spin, Icon, Empty} from 'antd'
+import {Button, Spin, Icon, Empty, Badge} from 'antd'
 import {connect} from 'react-redux'
 import SearchUsers from './SearchUsers'
 import {Dispatch} from 'redux'
@@ -53,14 +53,19 @@ const Users = (props: IProps) => {
   const userItem = data.map((v: any) => {
     const wechat: boolean = v.target_wx && v.server_wx
     return <div className={`user-item ${currentUser && currentUser.id === v.id ? 'active' : ''}`} key={v.id}
-                onClick={() => handleSetCurrentUser(v)}>
+                onClick={() => {
+                  v.unread = 0
+                  handleSetCurrentUser(v)
+                }}>
       <span>{v.license ? v.license : '--'}</span>
       <span>{v.mobile ? v.mobile.replace('****', '*') : '--'}</span>
       <span>{v.name ? v.name : '--'}</span>
       <span>
-        <b className={wechat ? v.online ? 'online' : 'no-online' : 'normal'}>
-          <Icon type="wechat"/>
-        </b>
+        <Badge dot={Boolean(v.unread)}>
+          <b className={`${wechat ? v.online ? 'online' : 'no-online' : 'normal'}`}>
+            <Icon type="wechat"/>
+          </b>
+        </Badge>
       </span>
       <span>{getWechatTime(v.recent_time)}</span>
     </div>

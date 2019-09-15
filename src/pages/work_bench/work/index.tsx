@@ -104,12 +104,32 @@ class Work extends React.Component<IProps, IState> {
       // 聊天内容推送
       case 'resp_wx_msg_log': {
         const messages = DATA.messages || []
+        const audio: any = document.getElementById('messageAudio');
+        if (messages.length > 0 && messages[0].flow === 1) {
+          audio.play();
+        }
         messages.forEach((m: any) => {
           console.log(currentUser, m)
           if (currentUser && currentUser.target_wx === m.targetAccount && currentUser.server_wx === m.serverAccount) {
             messageList.push(m)
             setWechatMessageInfo({...wechtMessageInfo, data: [...messageList]})
           }
+
+          const mUser = data.findIndex((v: any) => `${v.server_wx}_${v.target_wx}` === `${m.serverAccount}_${m.targetAccount}`)
+          if (mUser > -1) {
+            let unread;
+            if (currentUser && currentUser.target_wx === m.targetAccount && currentUser.server_wx === m.serverAccount) {
+              unread = 0;
+            } else {
+              unread = m.flow === 1 ? 1 : 0
+            }
+            data[mUser] = {...data[mUser], recent_time: m.timeCreate, unread};
+            setWorkUsers({...workUsers, data: [...data]})
+          } else {
+            // TODO 获取好友来添加到列表中
+            setWorkUsers({...workUsers, data: [{...m, recent_time: m.timeCreate}, ...data]})
+          }
+          console.log(mUser)
         })
         break
       }
@@ -152,6 +172,7 @@ class Work extends React.Component<IProps, IState> {
   render() {
     return (
       <div className="work">
+        <audio src="http://fjdx.sc.chinaz.net/Files/DownLoad/sound1/201703/8400.mp3" id="messageAudio"/>
         <WorkLeftPane/>
         <WorkRightPanel/>
         <WorkCenterPane

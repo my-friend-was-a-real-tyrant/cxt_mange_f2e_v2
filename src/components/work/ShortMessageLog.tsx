@@ -35,7 +35,7 @@ const ShortMessageLog: FunctionComponent<IProps> = (props) => {
 
   return <div className="robot-call-log">
     <h5 className="title">
-      <span className="icon"/>
+      <span className="icon icon-message"/>
       短信发送记录
     </h5>
     {MessageLog.map((v: any, index: number) => {

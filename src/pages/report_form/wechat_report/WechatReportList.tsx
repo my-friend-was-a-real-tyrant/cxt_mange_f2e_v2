@@ -5,7 +5,7 @@ import moment from 'moment'
 import BaseTableComponent from 'components/BaseTableComponent'
 import {quickTimeSelect} from "utils/utils"
 
-const ShortMessageReport: FunctionComponent = () => {
+const WechatReportList: FunctionComponent = () => {
   const [result, setResult] = useState({data: [], total: 0})
   const [loading, setLoading] = useState<boolean>(false)
   const [time, setTime] = useState({startTime: '', endTime: ''})
@@ -24,7 +24,7 @@ const ShortMessageReport: FunctionComponent = () => {
       accountId: localStorage.getItem('mjoys_account_id'),
     }
     setLoading(true)
-    fetch.get(`/apiv1/robot/rpt/shortmsg/report/date?`, {params}).then((res: any) => {
+    fetch.get(`/apiv1/robot/rpt/wechat/friend/report/date?`, {params}).then((res: any) => {
       setLoading(false)
       if (res.code === 20000 || res.code === 20003) {
         const data = res.data || []
@@ -45,7 +45,7 @@ const ShortMessageReport: FunctionComponent = () => {
       endTime: moment(time).clone().set({hour: 23, minute: 59, second: 59, millisecond: 59}).format('YYYYMMDDHHmmss'),
     }
     setLoading(true)
-    fetch.get(`/apiv1/robot/rpt/shortmsg/report/seat`, {params}).then((res: any) => {
+    fetch.get(`/apiv1/robot/rpt/wechat/friend/report/seat`, {params}).then((res: any) => {
       setLoading(false)
       if (res.code === 20000 || res.code === 20003) {
         const data = result.data || []
@@ -74,7 +74,9 @@ const ShortMessageReport: FunctionComponent = () => {
     {title: '日期', dataIndex: 'recordTime'},
     {title: '团队', dataIndex: 'teamName'},
     {title: '坐席', dataIndex: 'seatUsername'},
-    {title: '短信总量', dataIndex: 'counterAll'},
+    {title: '好友总量', dataIndex: 'friendCounter'},
+    {title: '今日互动', dataIndex: 'todayActiveCounter'},
+    {title: '今日新加', dataIndex: 'todayNewCounter'},
   ]
 
   return (
@@ -85,7 +87,12 @@ const ShortMessageReport: FunctionComponent = () => {
             ranges={quickTimeSelect()}
             onChange={(date, dateString) => setTime({
               startTime: dateString[0] ? moment(dateString[0]).format('YYYYMMDDHHmmss') : '',
-              endTime: dateString[1] ? moment(dateString[1]).clone().set({hour: 23, minute: 59, second: 59, millisecond: 59}).format('YYYYMMDDHHmmss') : '',
+              endTime: dateString[1] ? moment(dateString[1]).clone().set({
+                hour: 23,
+                minute: 59,
+                second: 59,
+                millisecond: 59
+              }).format('YYYYMMDDHHmmss') : '',
             })}/>
         </Form.Item>
         <Form.Item>
@@ -108,4 +115,4 @@ const ShortMessageReport: FunctionComponent = () => {
   )
 }
 
-export default ShortMessageReport
+export default WechatReportList

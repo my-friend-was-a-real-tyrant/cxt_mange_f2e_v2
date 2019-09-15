@@ -20,6 +20,7 @@ interface IProps extends FormComponentProps {
 class CallPanel extends React.Component<IProps> {
   state = {
     sendShow: false,
+    callFlag: false,
     msg: {
       total: 0,
       data: []
@@ -121,7 +122,7 @@ class CallPanel extends React.Component<IProps> {
   render() {
     const {getFieldDecorator} = this.props.form
     const {currentUser} = this.props
-    const {sendShow, msg, loading, inputShow, inputRandom, content} = this.state
+    const {sendShow, msg, loading, inputShow, inputRandom, content, callFlag} = this.state
     const columns = [
       {title: '模版内容', dataIndex: 'content'},
       {title: '备注', dataIndex: 'description', width: 150,},
@@ -133,22 +134,24 @@ class CallPanel extends React.Component<IProps> {
     return (
       <div className="call-panel">
         <div className="user-info">
-          <img src="" alt=""/>
+          <div className="avatar"></div>
           <div className="user">
-            <span className="username">{currentUser && currentUser.name}</span>
-            <span className="mobile">{currentUser && currentUser.mobile}</span>
+            <span className="username">{currentUser ? currentUser.name : '暂无选中用户'}</span>
+            <span className="mobile">{currentUser ? currentUser.mobile : '暂无手机号'}</span>
           </div>
         </div>
 
         <div className="call-message">
 
-          <div className={`call ${this.state.sendShow ? 'active' : ''}`}
-               onClick={() => this.setState({sendShow: true})}>
-            <div className={`icon`}>
-              <Icon type="wechat"/>
+          <div className={`call ${callFlag ? 'active' : ''}`} onClick={() => {
+            if (!currentUser) return message.error('请先选中操作用户')
+            this.setState({callFlag: !callFlag})
+          }}>
+            <div className={`icon  icon-call`}>
+
             </div>
             <span className="content">
-              拨打
+              {callFlag ? '挂断' : '拨打'}
             </span>
           </div>
 
@@ -158,8 +161,8 @@ class CallPanel extends React.Component<IProps> {
                  this.setState({sendShow: true})
                  this.getMsgTemp()
                }}>
-            <div className={`icon`}>
-              <Icon type="wechat"/>
+            <div className={`icon icon-short-message`}>
+
             </div>
             <span className="content">
                短信
