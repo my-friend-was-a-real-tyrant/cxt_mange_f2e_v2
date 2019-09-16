@@ -15,7 +15,6 @@ import MyCustomer from 'pages/work_bench/my_customer/MyCustomer'
 import PhoneTask from 'pages/task_manage/phone_task';
 import WechatManage from 'pages/task_manage/wechat_manage';
 import ShortMessage from 'pages/task_manage/short_message';
-
 // 数据管理
 import RobotDataManage from 'pages/data_manage/robot_data'
 import AgentDataManage from 'pages/data_manage/agent_data'
