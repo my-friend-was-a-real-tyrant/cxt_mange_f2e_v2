@@ -45,12 +45,10 @@ const BaseTableComponent: FunctionComponent<IProps> = (props) => {
   return (
     <Table
       rowKey={(record: any, index: number) => record.id || index}
-      {...props}
       dataSource={dataSource}
       columns={columns}
       bordered={bordered}
       size={size}
-      onChange={handleChange}
       loading={loading}
       pagination={{
         showQuickJumper: true,
@@ -59,7 +57,10 @@ const BaseTableComponent: FunctionComponent<IProps> = (props) => {
         current: pageCurrent || current,
         pageSizeOptions: ['10', '20', '50', '100'],
         showTotal: total => `总共 ${total} 条`
-      }}/>
+      }}
+      {...props}
+      onChange={handleChange}
+    />
   )
 }
 BaseTableComponent.defaultProps = {

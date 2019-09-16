@@ -24,15 +24,20 @@ class Verto extends React.Component {
       window.addEventListener('message', this.handleMessage, false)
     }
 
-    $('#login-btn').click(() => {
-      const {sipNumber, sipPasswd, hostName, wsUrl} = this.state;
-      this.state.vertoHandler.loginData({
-        login: sipNumber + '@' + hostName,
-        passwd: sipPasswd,
-      })
-      this.state.vertoHandler.login()
-      parentW.postMessage('login', 'https://cxtv1.mjoys.com');
-    })
+
+
+    parentW.postMessage('ready', location.origin);
+
+
+    // $('#login-btn').click(() => {
+    //   const {sipNumber, sipPasswd, hostName, wsUrl} = this.state;
+    //   this.state.vertoHandler.loginData({
+    //     login: sipNumber + '@' + hostName,
+    //     passwd: sipPasswd,
+    //   })
+    //   this.state.vertoHandler.login()
+    //   parentW.postMessage('login', location.origin);
+    // })
 
   }
 
@@ -42,6 +47,8 @@ class Verto extends React.Component {
     var callbacks = {
 
       onMessage: function (verto, dialog, msg, data) {
+        console.log('wsmessage======'+msg)
+
         switch (msg) {
           case $.verto.enum.message.pvtEvent:
             //            console.error("pvtEvent", data.pvtData);
@@ -71,7 +78,7 @@ class Verto extends React.Component {
       },
 
       onDialogState: function (d) {
-
+        console.log(d.state,$.verto.enum.state.ringing)
         switch (d.state) {
           case $.verto.enum.state.ringing:
             break;
@@ -92,11 +99,11 @@ class Verto extends React.Component {
         }
       },
       onWSLogin: function (v, success) {
-
+        console.log('wslogin======'+v)
 
       },
       onWSClose: function (v, success) {
-
+console.log('wsclose======'+v)
       },
 
       onEvent: function (v, e) {
@@ -118,6 +125,17 @@ class Verto extends React.Component {
           "minFrameRate": 15,
           "vertoBestFrameRate": 30
         },
+        // deviceParams: {
+        //   useCamera: false,
+        //   useMic: 'any',
+        //   useSpeak: 'any'
+        // },
+        // audioParams: {
+        //   googAutoGainControl: false,
+        //   googNoiseSuppression: false,
+        //   googHighpassFilter: false
+        // },
+        // iceServers: true
       }, callbacks)
     })
   }
@@ -131,9 +149,11 @@ class Verto extends React.Component {
           code: res.data.gateWayCode,
           bindPreNumber: res.data.bindPreNumber
         }, () => {
-          $.verto.init({
-            skipPermCheck: false
-          }, this.init);
+          setTimeout(() => {
+            $.verto.init({
+              skipPermCheck: false
+            }, this.init);
+          }, 1000)
         })
       }
     })
@@ -174,7 +194,7 @@ class Verto extends React.Component {
       useVideo: false,
       useStereo: true,
       tag: 'webcam',
-      useCamera: $.verto.genUUID(),
+      useCamera: false,
       useMic: 'any',
       useSpeak: 'any',
       dedEnc: false,

@@ -51,7 +51,7 @@ class WorkFixed extends React.Component<IProps> {
 
   handleCall = () => {
     const {phone} = this.state;
-    if (!checkPhone(phone)) return message.error('请输入正确的手机号')
+    // if (!checkPhone(phone)) return message.error('请输入正确的手机号')
     const parentW: any = window
     parentW.postMessage(`call~${phone}`, win.sipSDK || window.location.origin)
     this.setState({callFlag: true})
