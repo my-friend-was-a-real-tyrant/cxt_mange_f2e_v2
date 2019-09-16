@@ -211,7 +211,7 @@ const ToBeDistributed: FunctionComponent<IProps> = props => {
           ...searchParams(),
           ids: checked ? '' : selectedRowKeys.join(',')
         }
-        fetch.put(`otb/task/deleteInTaskManage`, null, {params}).then((res: any) => {
+        fetch.put(`/apiv1/otb/task/deleteInTaskManage`, null, {params}).then((res: any) => {
           if (res.code === 20000) {
             getReport()
             setChecked(false)

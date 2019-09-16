@@ -66,7 +66,7 @@ export const thunkWorkUsers = (key?: string) => (dispatch: Dispatch, getState: a
   return new Promise((resolve, reject) => {
     fetch.get(`/apiv1/user-uni-data/list`, {params}).then((res: any) => {
       dispatch(setUserLoading(false))
-      if (res.code === 20000) {
+      if (res.code === 20000 || res.code === 20003) {
         const userList = res.data || []
         userList.forEach((v: any) => {
           v.unread = 0;

@@ -231,6 +231,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
     {title: '地区', dataIndex: 'mp_location'},
     {title: '备注', editable: true, dataIndex: 'memo'},
     {title: '分配公司', dataIndex: 'accountName'},
+    {title: '分配坐席', dataIndex: 'userName'},
     {
       title: '微信状态',
       dataIndex: 'online',
@@ -352,6 +353,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
             rowSelection={rowSelection}
             rowKey="id"
             offset
+            scroll={{x:1400}}
             onChange={handleTableChange}
             bordered/>
         </Tabs.TabPane>

@@ -23,6 +23,14 @@ axios.interceptors.request.use((config: AxiosRequestConfig) => {
 
 // 添加响应拦截器
 axios.interceptors.response.use((response: AxiosResponse) => {
+  if (response.data && response.data.code === 10002) {
+    message.error('登录失效，请重新登录')
+    window.location.href = '/login'
+  }
+  if (response.data && response.data.code === 50000 && response.data.message && response.data.message.indexOf('access_token') !== -1) {
+    message.error('登录失效，请重新登录')
+    window.location.href = '/login'
+  }
   if (response.data.code !== 20000 && response.data.code !== 20003) {
     return message.error(response.data.message || '出现错误')
   }

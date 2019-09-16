@@ -6,6 +6,7 @@
 import React from 'react'
 import {Route, Switch} from 'react-router-dom'
 
+import Home from 'pages/Home'
 // 工作台
 import Work from 'pages/work_bench/work'
 import SearchCar from 'pages/work_bench/search_car'
@@ -39,6 +40,7 @@ import RobotFee from 'pages/system_manage/robot_fee/RobotFee'
 const PageRouter = () => {
   return <Switch>
     {/* 工作台 */}
+    <Route exact path="/" component={Home}/>
     <Route path="/app/work" component={Work}/>
     <Route path="/app/search_car" component={SearchCar}/>
     <Route path="/app/my_customer" component={MyCustomer}/>
