@@ -148,6 +148,7 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
         if (res.code === 20000) {
           message.success('添加成功')
           setShow(false)
+          setEditRow(null)
           setSearch({...search, offset: 1})
         }
       })
@@ -166,6 +167,7 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
         if (res.code === 20000) {
           message.success('编辑成功')
           setShow(false)
+          setEditRow(null)
           setSearch({...search, offset: 1})
         }
       })
@@ -374,7 +376,7 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
             {/*  )}*/}
             {/*</Form.Item>*/}
             <Form.Item label="是否坐席"  {...formItemLayout}>
-              {getFieldDecorator('isSip', {initialValue: (editRow && editRow.role_code) ? 1 : 0})(
+              {getFieldDecorator('isSip', {initialValue: (editRow && editRow.role_code)==='0'|| (editRow && !editRow.role_code)? 0 : 1})(
                 <Radio.Group>
                   <Radio value={1}>是</Radio>
                   <Radio value={0}>否</Radio>

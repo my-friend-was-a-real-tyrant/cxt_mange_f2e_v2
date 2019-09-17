@@ -55,9 +55,9 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
   const getWechat = (wechat?: number | string) => {
     const params = {
       // accountId: props.accountId,
-      // userId: props.userId,
+      userId: props.form.getFieldValue('userId'),
       ...search,
-      wechat: wechat || props.form.getFieldValue('wechatId'),
+      wechat: props.form.getFieldValue('wechatId'),
       commond: 0,
     }
     setResult({...result, loading: true})
@@ -79,15 +79,9 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
       wxConfigIds: selectedRowKeys.join(','),
     }).then((res: any) => {
       if (res.code === 20000) {
-        const newData: any[] = [];
-        const {data} = result;
-        data.forEach((s: any) => {
-          if (selectedRowKeys.indexOf(s.id) === -1) {
-            newData.push(s)
-          }
-        })
-        setResult({...result, data: [...newData]})
+        setSearch({...search, offset: 1})
         message.success('分配成功')
+        setSelectedRowKeys([])
       }
     })
   }
@@ -314,20 +308,18 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
           <Form layout="inline">
             <Form.Item>
               {getFieldDecorator('wechat')(
-                <Input.Search
-                  placeholder="微信id/微信昵称"
-                  enterButton="搜索"
-                  onSearch={value => getWechat(value)}/>
+                <Input placeholder="微信id/微信昵称"/>
               )}
             </Form.Item>
             {
               mjoysUser.type === 1 ?
                 <Fragment>
                   <Form.Item>
-                    {getFieldDecorator('userId', {initialValue: ''})(
+                    {getFieldDecorator('userId', {initialValue: '-1'})(
                       <Select style={{width: 200}}>
-                        <Select.Option value="" key="-1">全部坐席</Select.Option>
-                        {user.map((v: any) => <Select.Option key={v.id} value={v.contact}>{v.contact}</Select.Option>)}
+                        <Select.Option value="-1" key="-1">全部坐席</Select.Option>
+                        <Select.Option value="-11" key="-11">未分配</Select.Option>
+                        {user.map((v: any) => <Select.Option key={v.id} value={v.id}>{v.contact}</Select.Option>)}
                       </Select>
                     )}
                   </Form.Item>
@@ -347,9 +339,12 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
                 </Fragment> : null
             }
             <Form.Item>
+              <Button type="primary" onClick={() => setSearch({...search, offset: 1})}>搜索 </Button>
+            </Form.Item>
+            <Form.Item>
               <Button.Group>
-                <Button type="primary" onClick={() => handleDelete()}> 解绑 </Button>
-                <Button type="danger" onClick={() => handleDisabled()}> 禁用 </Button>
+                <Button type="primary" onClick={() => handleDelete()}> 解绑坐席 </Button>
+                <Button type="danger" onClick={() => handleDisabled()}> 禁用微信 </Button>
               </Button.Group>
             </Form.Item>
           </Form>
