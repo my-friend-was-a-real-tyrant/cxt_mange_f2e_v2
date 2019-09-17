@@ -215,6 +215,7 @@ const ToBeDistributed: FunctionComponent<IProps> = props => {
           if (res.code === 20000) {
             getReport()
             setChecked(false)
+            setSelectedRowKeys([])
           } else {
           }
         })
@@ -374,8 +375,10 @@ const ToBeDistributed: FunctionComponent<IProps> = props => {
       onChange={handleTableChange}
       scroll={{x: 1600}}/>
     <Modal title="分配任务" visible={show} footer={null} destroyOnClose onCancel={() => {
+      setSelectedRowKeys2([])
       setShow(false)
       setEditStatus(false)
+      setCompany(company.map((v:any)=>({...v,count:''})))
     }}>
       <Table columns={companyColumns}
              dataSource={company}

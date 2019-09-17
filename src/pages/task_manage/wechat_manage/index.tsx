@@ -95,37 +95,46 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
   // 禁用微信
   const handleDisabled = () => {
     if (!selectedRowKeys || selectedRowKeys.length <= 0) return message.warning('请选择操作微信')
-    const params = {
-      wxConfigIds: selectedRowKeys.join(','),
-      newStatus: 0,
-    }
-    fetch.get(`/apiv1/wx/updateWxConfigStatus`, {params}).then((res: any) => {
-      if (res.code === 20000) {
-        const newData = [...result.data]
-        newData.forEach((s: any) => {
-          if (selectedRowKeys.indexOf(s.id) !== -1) {
-            s.status = 0
+    Modal.confirm({
+      title: '提示',
+      content: '当前操作不可恢复，您确定要继续么？',
+      okType: 'danger',
+      onOk() {
+        const params = {
+          wxConfigIds: selectedRowKeys.join(','),
+          newStatus: 0,
+        }
+        return fetch.get(`/apiv1/wx/updateWxConfigStatus`, {params}).then((res: any) => {
+          if (res.code === 20000) {
+            const newData = [...result.data]
+            newData.forEach((s: any) => {
+              if (selectedRowKeys.indexOf(s.id) !== -1) {
+                s.status = 0
+              }
+            })
+            message.success('禁用成功')
+            setResult({...result, data: [...newData]})
+            setSelectedRowKeys([])
           }
         })
-        message.success('禁用成功')
-        setResult({...result, data: [...newData]})
       }
     })
   }
-  // 删除微信
+  // 解绑微信
   const handleDelete = () => {
     if (!selectedRowKeys || selectedRowKeys.length <= 0) return message.warning('请选择操作微信')
-    fetch.get(`/apiv1/wx/delWxConfigBind`, {params: {wxConfigIds: selectedRowKeys.join(',')}}).then((res: any) => {
-      if (res.code === 20000) {
-        const newData: any[] = [];
-        const {data} = result;
-        data.forEach((s: any) => {
-          if (selectedRowKeys.indexOf(s.id) === -1) {
-            newData.push(s)
+    Modal.confirm({
+      title: '提示',
+      content: '当前操作不可恢复，您确定要继续么？',
+      okType: 'danger',
+      onOk() {
+        return fetch.get(`/apiv1/wx/delWxConfigBindUser`, {params: {wxConfigIds: selectedRowKeys.join(',')}}).then((res: any) => {
+          if (res.code === 20000) {
+            setSelectedRowKeys([])
+            setSearch({...search, offset: 1})
+            message.success('解绑成功')
           }
         })
-        message.success('解绑成功')
-        setResult({...result, data: [...newData]})
       }
     })
   }
@@ -210,8 +219,8 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
   }
 
   const columns = [
-    {title: '微信id', dataIndex: 'wxAccountId',},
-    {title: '微信昵称', dataIndex: 'wxNickname',},
+    {title: '微信id', dataIndex: 'wxAccountId', width: 200},
+    {title: '微信昵称', dataIndex: 'wxNickname', width: 200},
     {title: '微信号', dataIndex: 'wx_account', editable: true,},
     {
       title: '客服二维码',
@@ -231,7 +240,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
     {title: '地区', dataIndex: 'mp_location'},
     {title: '备注', editable: true, dataIndex: 'memo'},
     {title: '分配公司', dataIndex: 'accountName'},
-    {title: '分配坐席', dataIndex: 'userName'},
+    {title: '分配坐席', dataIndex: 'userName', width: 200},
     {
       title: '微信状态',
       dataIndex: 'online',
@@ -353,7 +362,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
             rowSelection={rowSelection}
             rowKey="id"
             offset
-            scroll={{x:1400}}
+            scroll={{x: 1550}}
             onChange={handleTableChange}
             bordered/>
         </Tabs.TabPane>

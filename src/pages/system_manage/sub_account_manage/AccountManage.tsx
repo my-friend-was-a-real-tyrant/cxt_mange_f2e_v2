@@ -1,7 +1,8 @@
 import React, {FunctionComponent, useState} from 'react'
-import {Tabs, Button} from 'antd'
+import {Tabs} from 'antd'
 import RoleManage from './RoleManage'
 import SubAccountManage from './SubAccountManage'
+import TeamMange from "./TeamManage"
 
 const AccountManage: FunctionComponent = () => {
   return (
@@ -12,6 +13,9 @@ const AccountManage: FunctionComponent = () => {
         </Tabs.TabPane>
         <Tabs.TabPane key="2" tab="子账号管理">
           <SubAccountManage/>
+        </Tabs.TabPane>
+        <Tabs.TabPane key="3" tab="团队管理">
+          <TeamMange/>
         </Tabs.TabPane>
       </Tabs>
     </div>

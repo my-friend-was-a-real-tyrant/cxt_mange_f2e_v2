@@ -26,12 +26,36 @@ const initState = {
     finished: false,
   },
   workCount: {
-    today_call_1: 0,
-    today_call_2: 0,
-    today_call_3: 0,
-    today_call_4: 0,
-    today_call_5: 0,
-    today_call_6: 0,
+    "todoDetail": {
+      "phoneTaskCounter": 0,
+      "todayAppointCounter": 0,
+      "todayFollowUpCounter": 0,
+      "todayNewCounter": 0,
+      "untreatedCounter": 0
+    },
+    "todoPre": [
+      {
+        "counter": 0,
+      },
+      {
+        "counter": 0,
+      },
+      {
+        "counter": 0,
+      },
+      {
+        "counter": 0,
+      },
+      {
+        "counter": 0,
+      },
+      {
+        "counter": 0,
+      },
+      {
+        "counter": 0,
+      }
+    ]
   }
 }
 

@@ -88,6 +88,7 @@ class WorkFixed extends React.Component<IProps> {
   render() {
     const {workShow, phoneShow, phone, callFlag, hour, minute, second,} = this.state;
     const {workCount} = this.props
+    const {todoDetail,todoPre} = this.props.workCount
     return (
       <div className="work-fixed">
         <div className="work-fixed__task" onClick={() => this.setState({workShow: true})}>
@@ -101,41 +102,41 @@ class WorkFixed extends React.Component<IProps> {
                visible={workShow}
                onCancel={() => this.setState({workShow: false})}
                footer={null}
-               width={600}
+               width={650}
                className="work-info">
           <Row gutter={24}>
             <Col span={5}>
               <Card className="fixed-task__count" bordered={false}>
-                <Statistic title="总电话任务" value={workCount['count']}/>
+                <Statistic title="电话任务" value={todoDetail['phoneTaskCounter']}/>
               </Card>
             </Col>
             <Col span={5}>
               <Card className="fixed-task__today_call" bordered={false}>
-                <Statistic title="今日待跟进" value={workCount['today_call']}/>
+                <Statistic title="今日预约" value={todoDetail['todayAppointCounter']}/>
               </Card>
             </Col>
             <Col span={5}>
               <Card className="fixed-task__today_count" bordered={false}>
-                <Statistic title="今日已跟进" value={workCount['today_count']}/>
+                <Statistic title="今日跟进" value={todoDetail['todayFollowUpCounter']}/>
               </Card>
             </Col>
             <Col span={5}>
               <Card className="fixed-task__wait" bordered={false}>
-                <Statistic title="待呼叫" value={workCount['wait']}/>
+                <Statistic title="未处理" value={todoDetail['untreatedCounter']}/>
               </Card>
             </Col>
             <Col span={4}>
               <Card className="fixed-task__today_add" bordered={false}>
-                <Statistic title="今日新增" value={workCount['today_add']}/>
+                <Statistic title="今日新增" value={todoDetail['todayNewCounter']}/>
               </Card>
             </Col>
           </Row>
           <h5>未来一周待跟进：</h5>
           <Row gutter={24} className="week">
             {
-              [1, 2, 3, 4, 5, 6].map((v, i) => <Col span={4} key={i}>
+              [1, 2, 3, 4, 5, 6,7].map((v, i) => <Col span={3} key={i}>
                 <Card bordered={false}>
-                  <Statistic title={moment().add(v, 'days').format('MM/DD')} value={workCount[`today_call_${v}`]}/>
+                  <Statistic title={moment().add(v, 'days').format('MM/DD')} value={todoPre[v-1].counter}/>
                 </Card>
               </Col>)
             }

@@ -11,7 +11,11 @@ import constants from "../constants/work"
  * @desc 获取工作安排统计信息
  */
 export const getWorkCount = () => (dispatch: any) => {
-  fetch.get(`/apiv1/otb/task/findTaskCount?type=287`).then((res: any) => {
+  const params={
+    accountId:localStorage.getItem('mjoys_account_id'),
+    seatId:localStorage.getItem('mjoys_user_id'),
+  }
+  fetch.get(`/apiv1/robot/rpt/followup/todo`,{params}).then((res: any) => {
     if (res.code === 20000) {
       dispatch({type: constants.SET_WORK_COUNT, value: res.data})
     }
