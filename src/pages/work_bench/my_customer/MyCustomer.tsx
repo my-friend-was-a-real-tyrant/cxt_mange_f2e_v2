@@ -5,6 +5,7 @@ import {FormComponentProps} from 'antd/es/form'
 import BaseTableComponent from 'components/BaseTableComponent'
 import {formatTime, quickTimeSelect} from "utils/utils"
 import moment from 'moment'
+
 const businessStatus = [
   {title: '沉默用户', type: 1},
   {title: '互动用户', type: 2},
@@ -97,7 +98,7 @@ const MyCustomer: FunctionComponent<FormComponentProps> = (props) => {
       dataIndex: 'next_follow_time',
       render: (time: string) => time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''
     },
-    {title: '用户状态', dataIndex: 'biz_status'},
+    {title: '用户状态', dataIndex: 'biz_status', render: (status: number) => businessStatus[status - 1].title},
     {title: '操作', render: (row: any) => <Button type="danger" onClick={() => handleDelete(row)}>删除</Button>},
   ]
   const {getFieldDecorator} = props.form

@@ -102,8 +102,14 @@ const FollowUp: FunctionComponent<IProps> = (props) => {
     });
   }
 
+  const followUpType: any = {
+    1: '电话',
+    2: '微信',
+    3: '短信'
+  }
+
   const columns = [
-    {title: '跟进方式', dataIndex: 'followUpType', width: 100,},
+    {title: '跟进方式', dataIndex: 'followUpType', width: 100, render: (type: number) => followUpType[type]},
     {
       title: '跟进状态',
       dataIndex: 'followUpStatus',

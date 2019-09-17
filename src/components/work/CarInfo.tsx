@@ -16,6 +16,16 @@ interface IProps extends FormComponentProps {
   currentUser: any;
 }
 
+const filter = (status: any) => {
+  if (status === 1) {
+    return '是'
+  } else if (status === 0) {
+    return '否'
+  } else {
+    return ''
+  }
+}
+
 const CarInfo: FunctionComponent<IProps> = (props) => {
   const currentUser: any = props.currentUser;
   const [edit, setEdit] = useState<boolean>(false)
@@ -153,7 +163,7 @@ const CarInfo: FunctionComponent<IProps> = (props) => {
                 <Select.Option value={1}>是</Select.Option>
                 <Select.Option value={0}>否</Select.Option>
               </Select>
-            ) : carInfo && carInfo.transfer ? '是' : '否'}
+            ) : filter(carInfo && carInfo.transfer)}
           </Form.Item>
           <Form.Item label="过户日期" {...formItemLayout}>
             {edit ? getFieldDecorator('transfer', {initialValue: carInfo && carInfo.transfer_date ? moment(carInfo.transfer_date) : null})(
@@ -166,7 +176,7 @@ const CarInfo: FunctionComponent<IProps> = (props) => {
                 <Select.Option value={1}>是</Select.Option>
                 <Select.Option value={0}>否</Select.Option>
               </Select>
-            ) : carInfo && carInfo.renewal ? '是' : '否'}
+            ) : filter(carInfo && carInfo.renewal)}
           </Form.Item>
           <Form.Item label="上年保司" {...formItemLayout}>
             {edit ? getFieldDecorator('last_ins_comp', {initialValue: carInfo && carInfo.last_ins_comp})(
