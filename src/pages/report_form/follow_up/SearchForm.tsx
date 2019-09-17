@@ -15,7 +15,8 @@ const businessStatus = [
 ]
 
 interface IProps extends FormComponentProps {
-  onSearch: (values: any) => any
+  onSearch: (values: any) => any;
+  user:any
 }
 
 const SearchForm: FunctionComponent<IProps> = (props) => {
@@ -27,12 +28,21 @@ const SearchForm: FunctionComponent<IProps> = (props) => {
     })
   }
 
+
   return (
     <div>
       <Form layout="inline">
         <Form.Item label="号码/姓名/车牌">
           {getFieldDecorator('keyword', {initialValue: ''})(
             <Input placeholder="请输入车牌/电话/姓名"/>
+          )}
+        </Form.Item>
+        <Form.Item label="坐席">
+          {getFieldDecorator('seatId', {initialValue: ''})(
+            <Select style={{width: 200}}>
+              <Select.Option value="" key="-1">全部坐席</Select.Option>
+              {props.user && props.user.map((v: any) => <Select.Option key={v.id} value={v.id}>{v.contact}</Select.Option>)}
+            </Select>
           )}
         </Form.Item>
         <Form.Item label="跟进日期">
@@ -45,9 +55,19 @@ const SearchForm: FunctionComponent<IProps> = (props) => {
             />
           )}
         </Form.Item>
+        <Form.Item label="预约时间">
+          {getFieldDecorator('nextTime')(
+            <DatePicker.RangePicker
+              style={{width: 250}}
+              format="YYYY-MM-DD"
+              placeholder={['开始日期', '结束日期']}
+              ranges={quickTimeSelect()}
+            />
+          )}
+        </Form.Item>
         <Form.Item label="跟进方式">
           {getFieldDecorator('followUpType', {initialValue: -1})(
-            <Select style={{width: 200}}>
+            <Select style={{width: 100}}>
               <Select.Option value={-1}>全部</Select.Option>
               <Select.Option value={1}>电话</Select.Option>
               <Select.Option value={2}>微信</Select.Option>
@@ -57,7 +77,7 @@ const SearchForm: FunctionComponent<IProps> = (props) => {
         </Form.Item>
         <Form.Item label="跟进状态">
           {getFieldDecorator('followUpStatus', {initialValue: -1})(
-            <Select style={{width: 200}}>
+            <Select style={{width: 100}}>
               <Select.Option value={-1} key={-1}>全部</Select.Option>
               {businessStatus.map(m => <Select.Option value={m.type} key={m.type}>{m.title}</Select.Option>)}
             </Select>

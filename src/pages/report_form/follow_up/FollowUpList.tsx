@@ -3,6 +3,7 @@ import fetch from 'fetch/axios'
 import BaseTableComponent from 'components/BaseTableComponent'
 import SearchForm from './SearchForm'
 import {formatTime} from "../../../utils/utils"
+import service from "../../../fetch/service"
 
 const followType = [
   {title: '电话', type: 1},
@@ -23,9 +24,14 @@ const FollowUpList: FunctionComponent = () => {
   const [result, setResult] = useState({data: [], total: 0})
   const [loading, setLoading] = useState<boolean>(false)
   const [search, setSearch] = useState({page: 1, pageSize: 10})
+  const [companies, setCompanies] = useState<Array<object>>([])
+  const [user, setUser] = useState<Array<object>>([])
 
   useEffect(() => {
     getList()
+    service.getUser()
+      .then((res: Array<object>) => setUser(res))
+      .catch(() => setUser([]))
   }, [search])
 
   const getList = () => {
@@ -43,13 +49,25 @@ const FollowUpList: FunctionComponent = () => {
     })
   }
 
+  // 获取菜单栏下的公司及坐席树
+  const getCompanies = () => {
+    fetch.get(`/apiv1/wx/getWxTree`, {params: {commond: 0}}).then((res: any) => {
+      if (res.code === 20000) {
+        const {treeVo} = res.data;
+        setCompanies(treeVo)
+      }
+    })
+  }
+
   const onSearch = (values: any): void => {
     console.log(values)
     setSearch({
       ...search, ...values,
       page: 1,
       startTime: formatTime(values.time, 'YYYYMMDDHHmmss')[0],
-      endTime: formatTime(values.time, 'YYYYMMDDHHmmss')[1]
+      endTime: formatTime(values.time, 'YYYYMMDDHHmmss')[1],
+      appointStartTime: formatTime(values.nextTime, 'YYYYMMDDHHmmss')[0],
+      appointEndTime: formatTime(values.nextTime, 'YYYYMMDDHHmmss')[1],
     })
   }
 
@@ -70,8 +88,8 @@ const FollowUpList: FunctionComponent = () => {
     {title: '预约时间', dataIndex: 'timeOfAppoint'},
   ]
   return (
-    <div style={{padding:'0 20px'}}>
-      <SearchForm onSearch={(values: any) => onSearch(values)}/>
+    <div style={{padding: '0 20px'}}>
+      <SearchForm onSearch={(values: any) => onSearch(values)} user={user}/>
       <BaseTableComponent
         loading={loading}
         columns={columns}
