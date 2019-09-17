@@ -5,10 +5,11 @@ import {Dispatch} from 'redux'
 import * as actions from 'store/actions/work'
 import {connect} from 'react-redux'
 import {checkPhone} from "utils/utils"
+import debounce from 'lodash/debounce';
 
 interface IProps {
   workCount: any;
-  getWorkCount:()=>any
+  getWorkCount: () => any
 }
 
 let win: any = window
@@ -34,6 +35,7 @@ class WorkFixed extends React.Component<IProps> {
     if (window.addEventListener) {
       window.addEventListener('message', this.handleMessage, false)
     }
+    this.handleCall = debounce(this.handleCall, 400)
   }
 
   timer = () => {
@@ -54,10 +56,8 @@ class WorkFixed extends React.Component<IProps> {
 
   handleCall = () => {
     const {phone} = this.state;
-    const win:any = window
-    // var pmsgOrigin = win.sipSDK || window.location.origin
-    // // if (!checkPhone(phone)) return message.error('请输入正确的手机号')
-    // const parentW: any = window
+    const win: any = window
+    if (!checkPhone(phone)) return message.error('请输入正确的手机号')
     win.postMessage(`call~${phone}`, win.sipSDK || window.location.origin)
     this.setState({callFlag: true})
     this.setState({hour: 0, minute: 0, second: 0, millisecond: 0})
@@ -79,6 +79,8 @@ class WorkFixed extends React.Component<IProps> {
       message.info('电话挂断')
       clearInterval(this.state.timerId)
       this.setState({hour: 0, minute: 0, second: 0, millisecond: 0, timerId: 0, callFlag: false})
+    } else if (__act === 'wsloginFalse') {
+      this.setState({callFlag: false})
     }
   }
   onClose = () => {
@@ -86,13 +88,14 @@ class WorkFixed extends React.Component<IProps> {
     this.setState({timerId: 0, phoneShow: false})
   }
 
+
   componentWillUnmount() {
     this.onClose()
   }
 
   render() {
-    const {workShow, phoneShow, phone, callFlag, hour, minute, second,} = this.state;
-    const {todoDetail,todoPre} = this.props.workCount
+    const {workShow, phoneShow, phone, callFlag, hour, minute, second, timerId} = this.state;
+    const {todoDetail, todoPre} = this.props.workCount
     return (
       <div className="work-fixed">
         <div className="work-fixed__task" onClick={() => {
@@ -141,9 +144,9 @@ class WorkFixed extends React.Component<IProps> {
           <h5>未来一周待跟进：</h5>
           <Row gutter={24} className="week">
             {
-              [1, 2, 3, 4, 5, 6,7].map((v, i) => <Col span={3} key={i}>
+              [1, 2, 3, 4, 5, 6, 7].map((v, i) => <Col span={3} key={i}>
                 <Card bordered={false}>
-                  <Statistic title={moment().add(v, 'days').format('MM/DD')} value={todoPre[v-1].counter}/>
+                  <Statistic title={moment().add(v, 'days').format('MM/DD')} value={todoPre[v - 1].counter}/>
                 </Card>
               </Col>)
             }
@@ -160,9 +163,11 @@ class WorkFixed extends React.Component<IProps> {
             <input type="text" value={phone}
                    placeholder="请输入手机号"
                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({phone: e.target.value})}/>
-            <span className="time">
+            {
+              timerId ? <span className="time">
               {hour <= 9 ? '0' + hour : hour}:{minute <= 9 ? '0' + minute : minute}:{second <= 9 ? '0' + second : second}
-            </span>
+            </span> : null
+            }
           </div>
           <div className="numbers">
             {numbers.map((v: number | string) =>
@@ -185,7 +190,7 @@ const mapStateToProps = (state: any) => ({
   workCount: state.work.workCount
 })
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
-  getWorkCount:()=>dispatch(actions.getWorkCount())
+  getWorkCount: () => dispatch(actions.getWorkCount())
 })
 
-export default connect(mapStateToProps,mapDispatchToProps)(WorkFixed)
+export default connect(mapStateToProps, mapDispatchToProps)(WorkFixed)

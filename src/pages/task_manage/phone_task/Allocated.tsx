@@ -116,6 +116,7 @@ const Allocated: FunctionComponent<IProps> = props => {
         message.success('回收成功')
         setChecked(false)
         getReport()
+        setSelectedRowKeys([])
       }
     })
   }

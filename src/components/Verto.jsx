@@ -1,6 +1,7 @@
 import React from 'react'
 import {message} from 'antd'
 import fetch from 'fetch/axios'
+
 /* eslint-disable */
 
 const parentW = window;
@@ -15,6 +16,7 @@ class Verto extends React.Component {
     wsUrl: 'wss://devqianwei.mjoys.com',
     vertoHandler: null,
     code: '',
+    wslogin: false,
   }
 
   currentCall
@@ -32,10 +34,8 @@ class Verto extends React.Component {
   init = () => {
     var callbacks = {
       onMessage: function (verto, dialog, msg, data) {
-        console.log('wsmessage======' + msg)
         switch (msg) {
           case $.verto.enum.message.pvtEvent:
-            // console.error("pvtEvent", data.pvtData);
             if (data.pvtData) {
               switch (data.pvtData.action) {
                 case "conference-liveArray-part":
@@ -46,13 +46,10 @@ class Verto extends React.Component {
             }
             break;
           case $.verto.enum.message.clientReady:
-            //            console.error("clientReady", data);
             break;
           case $.verto.enum.message.info:
-
             break;
           case $.verto.enum.message.display:
-
             break;
           default:
             break;
@@ -60,7 +57,6 @@ class Verto extends React.Component {
       },
 
       onDialogState: function (d) {
-        console.log(d.state, $.verto.enum.state.ringing)
         switch (d.state) {
           case $.verto.enum.state.ringing:
             break;
@@ -80,11 +76,13 @@ class Verto extends React.Component {
             break;
         }
       },
-      onWSLogin: function (v, success) {
+      onWSLogin: (v, success) => {
         console.log('onWSLogin', success)
+        this.setState({wslogin: success})
       },
-      onWSClose: function (v, success) {
+      onWSClose: (v, success) => {
         console.log('wsclose======' + v)
+        this.setState({wslogin: success})
       },
 
       onEvent: function (v, e) {
@@ -136,6 +134,13 @@ class Verto extends React.Component {
             }, this.init);
           }, 1000)
         })
+      } else if (res.code === 20003) {
+        this.setState({
+          sipNumber: '',
+          sipPasswd: '',
+          code: '',
+          bindPreNumber: ''
+        })
       }
     })
   }
@@ -147,7 +152,6 @@ class Verto extends React.Component {
     const msgStr = event.data + ''
     const __act = msgStr.split('~')[0]
     const __str = msgStr.split('~')[1]
-    console.log(__act, __str)
     if (__act === 'calldisplayuuid') {
       message.info('电话接通了')
       this.setState({
@@ -163,27 +167,31 @@ class Verto extends React.Component {
 
 
   docall = (caller) => {
-    const {code, bindPreNumber} = this.state;
+    const {code, bindPreNumber, wslogin, sipNumber} = this.state;
     const preNumber = `${code}${bindPreNumber}${caller}`
-    window.postMessage(`trying~${preNumber}`, window.sipSDK || window.location.origin);
-
-    // 开始拨打
-    this.currentCall = this.state.vertoHandler.newCall({
-      destination_number: preNumber,
-      caller_id_name: 'mjoys_' + this.generateSalt(6),
-      caller_id_number: '81984',
-      outgoingBandwidth: 'default',
-      incomingBandwidth: 'default',
-      // Enable stereo audio.
-      useStereo: true,
-      // Set to false to disable inbound video.
-      useVideo: false,
-      // tag: 'video-container',
-      dedEnc: false,
-      mirrorInput: false,
-      userVariables: {},
-      mute: 'off'
-    })
+    // window.postMessage(`trying~${preNumber}`, window.sipSDK || window.location.origin);
+    console.log(sipNumber, wslogin)
+    if (!wslogin) {
+      window.postMessage(`wsloginFalse~`, location.origin)
+      return message.info('websocket链接不成功，请联系开发人员！')
+    } else {
+      // 开始拨打
+      this.currentCall = this.state.vertoHandler.newCall({
+        destination_number: preNumber,
+        caller_id_name: 'mjoys_' + this.generateSalt(6),
+        caller_id_number: '81984',
+        outgoingBandwidth: 'default',
+        incomingBandwidth: 'default',
+        // Enable stereo audio.
+        useStereo: true,
+        // Set to false to disable inbound video.
+        useVideo: false,
+        // tag: 'video-container',
+        dedEnc: false,
+        mirrorInput: false,
+        userVariables: {},
+      })
+    }
   }
 
   generateSalt = (length) => {
@@ -194,6 +202,14 @@ class Verto extends React.Component {
       r.push(UIDCHARS[Math.floor(Math.random() * UIDCHARS.length)]);
     }
     return r.join('');
+  }
+
+  componentWillUnmount() {
+    window.close();
+    this.currentCall = null
+    this.setState({
+      verHandler: null
+    })
   }
 
   render() {

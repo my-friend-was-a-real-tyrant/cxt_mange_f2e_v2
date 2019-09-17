@@ -376,7 +376,7 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
             {/*  )}*/}
             {/*</Form.Item>*/}
             <Form.Item label="是否坐席"  {...formItemLayout}>
-              {getFieldDecorator('isSip', {initialValue: (editRow && editRow.role_code)==='0'|| (editRow && !editRow.role_code)? 0 : 1})(
+              {getFieldDecorator('isSip', {initialValue: (editRow && editRow.role_code) === '0' || (editRow && !editRow.role_code) ? 0 : 1})(
                 <Radio.Group>
                   <Radio value={1}>是</Radio>
                   <Radio value={0}>否</Radio>
@@ -386,7 +386,7 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
             {
               props.form.getFieldValue('isSip') === 1 ?
                 <Form.Item label="坐席类型"  {...formItemLayout}>
-                  {getFieldDecorator('roleCode', {initialValue: editRow.role_code})(
+                  {getFieldDecorator('roleCode', {initialValue: editRow.role_code === '0' ? '1' : editRow.role_code})(
                     <Select>
                       <Select.Option value={'1'}>普通坐席</Select.Option>
                       <Select.Option value={'2'}>管理员</Select.Option>

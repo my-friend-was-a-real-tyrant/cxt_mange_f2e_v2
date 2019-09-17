@@ -50,6 +50,10 @@ const CarInfo: FunctionComponent<IProps> = (props) => {
 
   const handleChangeCarInfo = () => {
     props.form.validateFields((err, values) => {
+      if (!values.insurance) {
+        setEdit(false)
+        return message.info('该用户无车牌，请先在用户信息中添加车牌')
+      }
       const params = {
         last_ins_comp: values.last_ins_comp,
         cname: values.cryName,
