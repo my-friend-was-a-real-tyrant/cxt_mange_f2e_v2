@@ -5,6 +5,8 @@ import {connect} from 'react-redux'
 import fetch from 'fetch/axios'
 import moment from 'moment'
 import BaseTableComponent from 'components/BaseTableComponent'
+import * as actions from "../../store/actions/work"
+import {Dispatch} from 'redux'
 
 const formItemLayout = {
   labelCol: {span: 6},
@@ -22,11 +24,14 @@ const businessStatus = [
 ]
 
 interface IProps extends FormComponentProps {
-  currentUser: any
+  currentUser: any;
+  workUsers: any;
+  setWorkUsers: (value: any) => any;
+  setCurrentUser: (value: any) => any
 }
 
 const FollowUp: FunctionComponent<IProps> = (props) => {
-  const {currentUser} = props;
+  const {currentUser, setCurrentUser, workUsers, setWorkUsers} = props;
   const {getFieldDecorator} = props.form;
   const [result, setResult] = useState({data: [], total: 0})
   const [loading, setLoading] = useState<boolean>(false)
@@ -64,6 +69,16 @@ const FollowUp: FunctionComponent<IProps> = (props) => {
       }
       fetch.post(`/apiv1/otb/followup/add`, null, {params}).then((res: any) => {
         if (res.code) {
+          const {data} = workUsers
+          const newData = data.map((v: any) => {
+            if (v.id === currentUser.id) {
+              return {...v, biz_status: values.followUpStatus, next_follow_time: values.timeAppoint}
+            } else {
+              return v
+            }
+          })
+          setWorkUsers({...workUsers, data: newData})
+          setCurrentUser({...currentUser, biz_status: values.followUpStatus, next_follow_time: values.timeAppoint})
           message.success('跟进记录添加成功')
           setShow(false)
           getList()
@@ -79,6 +94,7 @@ const FollowUp: FunctionComponent<IProps> = (props) => {
       onOk() {
         return fetch.post(`/apiv1/otb/followup/delete?id=${id}`).then((res: any) => {
           if (res.code === 20000) {
+            getList()
             message.success('删除成功')
           }
         })
@@ -151,6 +167,11 @@ const FollowUp: FunctionComponent<IProps> = (props) => {
   </div>
 }
 const mapStateToProps = (state: any) => ({
-  currentUser: state.work.currentUser
+  currentUser: state.work.currentUser,
+  workUsers: state.work.workUsers
 })
-export default connect(mapStateToProps)(Form.create<IProps>()(FollowUp))
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  setWorkUsers: (value: any) => dispatch(actions.setWorkUsers(value)),
+  setCurrentUser: (value: any) => dispatch(actions.setCurrentUser(value))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create<IProps>()(FollowUp))

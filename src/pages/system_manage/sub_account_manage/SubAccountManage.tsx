@@ -148,7 +148,7 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
         if (res.code === 20000) {
           message.success('添加成功')
           setShow(false)
-          setSearch({...search,offset:1})
+          setSearch({...search, offset: 1})
         }
       })
     })
@@ -158,7 +158,7 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
   const handleChangeAccount = () => {
     props.form.validateFields((err, values) => {
       const params = {
-        email:'',
+        email: '',
         ...values,
         type: 2,
       }
@@ -166,7 +166,7 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
         if (res.code === 20000) {
           message.success('编辑成功')
           setShow(false)
-          setSearch({...search,offset:1})
+          setSearch({...search, offset: 1})
         }
       })
     })
@@ -192,12 +192,17 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
   const handleTableChange = (pagination: any) => {
     setSearch({...search, offset: pagination.current, limit: pagination.pageSize})
   }
+  const codeMap: any = {
+    '1': '普通坐席',
+    '2': '管理员',
+    '3': '超级坐席',
+  }
 
   const columns = [
     {title: '编号', dataIndex: 'id'},
     {title: '登录名', dataIndex: 'login_name'},
     {title: '姓名', dataIndex: 'user_name'},
-    {title: '账号类型', dataIndex: 'role_code'},
+    {title: '账号类型', dataIndex: 'role_code', render: (code: string) => codeMap[code]},
     {title: '角色', dataIndex: 'roles'},
     {title: '业务', dataIndex: 'business'},
     {title: '所属团队', dataIndex: 'team_name'},
@@ -369,7 +374,7 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
             {/*  )}*/}
             {/*</Form.Item>*/}
             <Form.Item label="是否坐席"  {...formItemLayout}>
-              {getFieldDecorator('isSip', {initialValue: (editRow && editRow.role_code) === '1' || (editRow && editRow.role_code) === '3' ? 1 : 0})(
+              {getFieldDecorator('isSip', {initialValue: (editRow && editRow.role_code) ? 1 : 0})(
                 <Radio.Group>
                   <Radio value={1}>是</Radio>
                   <Radio value={0}>否</Radio>
@@ -381,8 +386,9 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
                 <Form.Item label="坐席类型"  {...formItemLayout}>
                   {getFieldDecorator('roleCode', {initialValue: editRow.role_code})(
                     <Select>
-                      <Select.Option value={1}>普通坐席</Select.Option>
-                      <Select.Option value={3}>超级坐席</Select.Option>
+                      <Select.Option value={'1'}>普通坐席</Select.Option>
+                      <Select.Option value={'2'}>管理员</Select.Option>
+                      <Select.Option value={'3'}>超级坐席</Select.Option>
                     </Select>
                   )}
                 </Form.Item> : null

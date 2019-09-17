@@ -1,11 +1,14 @@
 import React from 'react'
 import {Modal, Row, Col, Card, Statistic, message} from 'antd'
 import moment from 'moment'
+import {Dispatch} from 'redux'
+import * as actions from 'store/actions/work'
 import {connect} from 'react-redux'
-import {checkPhone} from "../../utils/utils"
+import {checkPhone} from "utils/utils"
 
 interface IProps {
   workCount: any;
+  getWorkCount:()=>any
 }
 
 let win: any = window
@@ -92,7 +95,10 @@ class WorkFixed extends React.Component<IProps> {
     const {todoDetail,todoPre} = this.props.workCount
     return (
       <div className="work-fixed">
-        <div className="work-fixed__task" onClick={() => this.setState({workShow: true})}>
+        <div className="work-fixed__task" onClick={() => {
+          this.setState({workShow: true})
+          this.props.getWorkCount()
+        }}>
           工作安排
         </div>
         <div className="work-fixed__phone" onClick={() => this.setState({phoneShow: true})}>
@@ -178,4 +184,8 @@ class WorkFixed extends React.Component<IProps> {
 const mapStateToProps = (state: any) => ({
   workCount: state.work.workCount
 })
-export default connect(mapStateToProps)(WorkFixed)
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  getWorkCount:()=>dispatch(actions.getWorkCount())
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(WorkFixed)
