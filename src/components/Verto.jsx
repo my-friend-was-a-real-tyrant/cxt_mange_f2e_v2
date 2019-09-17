@@ -1,4 +1,5 @@
 import React from 'react'
+import {message} from 'antd'
 import fetch from 'fetch/axios'
 /* eslint-disable */
 
@@ -16,6 +17,8 @@ class Verto extends React.Component {
     code: '',
   }
 
+  currentCall
+
 
   componentDidMount() {
     this.getCardSlot()
@@ -23,40 +26,19 @@ class Verto extends React.Component {
     if (window.addEventListener) {
       window.addEventListener('message', this.handleMessage, false)
     }
-
-
-
     parentW.postMessage('ready', location.origin);
-
-
-    // $('#login-btn').click(() => {
-    //   const {sipNumber, sipPasswd, hostName, wsUrl} = this.state;
-    //   this.state.vertoHandler.loginData({
-    //     login: sipNumber + '@' + hostName,
-    //     passwd: sipPasswd,
-    //   })
-    //   this.state.vertoHandler.login()
-    //   parentW.postMessage('login', location.origin);
-    // })
-
   }
 
   init = () => {
-
-
     var callbacks = {
-
       onMessage: function (verto, dialog, msg, data) {
-        console.log('wsmessage======'+msg)
-
+        console.log('wsmessage======' + msg)
         switch (msg) {
           case $.verto.enum.message.pvtEvent:
-            //            console.error("pvtEvent", data.pvtData);
+            // console.error("pvtEvent", data.pvtData);
             if (data.pvtData) {
               switch (data.pvtData.action) {
-
                 case "conference-liveArray-part":
-
                   break;
                 case "conference-liveArray-join":
                   break;
@@ -78,7 +60,7 @@ class Verto extends React.Component {
       },
 
       onDialogState: function (d) {
-        console.log(d.state,$.verto.enum.state.ringing)
+        console.log(d.state, $.verto.enum.state.ringing)
         switch (d.state) {
           case $.verto.enum.state.ringing:
             break;
@@ -99,11 +81,10 @@ class Verto extends React.Component {
         }
       },
       onWSLogin: function (v, success) {
-        console.log('wslogin======'+v)
-
+        console.log('onWSLogin', success)
       },
       onWSClose: function (v, success) {
-console.log('wsclose======'+v)
+        console.log('wsclose======' + v)
       },
 
       onEvent: function (v, e) {
@@ -117,6 +98,7 @@ console.log('wsclose======'+v)
         passwd: sipPasswd,
         socketUrl: wsUrl,
         sessid: $.verto.genUUID(),
+        ringFile: 'sounds/bell_ring2.wav',
         videoParams: {
           "minWidth": 1280,
           "minHeight": 720,
@@ -125,17 +107,16 @@ console.log('wsclose======'+v)
           "minFrameRate": 15,
           "vertoBestFrameRate": 30
         },
-        // deviceParams: {
-        //   useCamera: false,
-        //   useMic: 'any',
-        //   useSpeak: 'any'
-        // },
-        // audioParams: {
-        //   googAutoGainControl: false,
-        //   googNoiseSuppression: false,
-        //   googHighpassFilter: false
-        // },
-        // iceServers: true
+        deviceParams: {
+          // Set to 'none' to disable outbound audio.
+          useMic: 'any',
+          // Set to 'none' to disable inbound audio.
+          useSpeak: 'any',
+          // Set to 'none' to disable outbound video.
+          useCamera: 'any',
+        },
+        tag: 'video-container',
+        iceServers: true
       }, callbacks)
     })
   }
@@ -168,6 +149,7 @@ console.log('wsclose======'+v)
     const __str = msgStr.split('~')[1]
     console.log(__act, __str)
     if (__act === 'calldisplayuuid') {
+      message.info('电话接通了')
       this.setState({
         timerId: setInterval(this.timer, 50)
       })
@@ -184,22 +166,23 @@ console.log('wsclose======'+v)
     const {code, bindPreNumber} = this.state;
     const preNumber = `${code}${bindPreNumber}${caller}`
     window.postMessage(`trying~${preNumber}`, window.sipSDK || window.location.origin);
-    console.log(this.state.vertoHandler.newCall)
-    this.state.vertoHandler.newCall({
+
+    // 开始拨打
+    this.currentCall = this.state.vertoHandler.newCall({
       destination_number: preNumber,
       caller_id_name: 'mjoys_' + this.generateSalt(6),
       caller_id_number: '81984',
       outgoingBandwidth: 'default',
       incomingBandwidth: 'default',
-      useVideo: false,
+      // Enable stereo audio.
       useStereo: true,
-      tag: 'webcam',
-      useCamera: false,
-      useMic: 'any',
-      useSpeak: 'any',
+      // Set to false to disable inbound video.
+      useVideo: false,
+      // tag: 'video-container',
       dedEnc: false,
       mirrorInput: false,
       userVariables: {},
+      mute: 'off'
     })
   }
 
@@ -216,6 +199,11 @@ console.log('wsclose======'+v)
   render() {
     return (
       <div>
+        <video id="video-container" autoPlay="autoplay" style={{display: 'none'}}>
+        </video>
+        <audio id="audio-container" autoPlay="autoPlay">
+
+        </audio>
       </div>
     )
   }

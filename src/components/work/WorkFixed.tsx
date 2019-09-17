@@ -51,9 +51,11 @@ class WorkFixed extends React.Component<IProps> {
 
   handleCall = () => {
     const {phone} = this.state;
-    // if (!checkPhone(phone)) return message.error('请输入正确的手机号')
-    const parentW: any = window
-    parentW.postMessage(`call~${phone}`, win.sipSDK || window.location.origin)
+    const win:any = window
+    // var pmsgOrigin = win.sipSDK || window.location.origin
+    // // if (!checkPhone(phone)) return message.error('请输入正确的手机号')
+    // const parentW: any = window
+    win.postMessage(`call~${phone}`, win.sipSDK || window.location.origin)
     this.setState({callFlag: true})
     this.setState({hour: 0, minute: 0, second: 0, millisecond: 0})
   }
@@ -87,7 +89,6 @@ class WorkFixed extends React.Component<IProps> {
 
   render() {
     const {workShow, phoneShow, phone, callFlag, hour, minute, second,} = this.state;
-    const {workCount} = this.props
     const {todoDetail,todoPre} = this.props.workCount
     return (
       <div className="work-fixed">
