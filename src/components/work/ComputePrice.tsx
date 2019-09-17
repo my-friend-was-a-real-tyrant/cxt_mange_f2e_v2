@@ -3,6 +3,7 @@ import {Form, Select, Checkbox, Button, message} from 'antd'
 import {FormComponentProps} from 'antd/es/form'
 import {connect} from 'react-redux'
 import fetch from 'fetch/axios'
+import {checkInsurance} from "../../utils/utils"
 
 const formItemLayout = {
   labelCol: {span: 11},
@@ -18,7 +19,9 @@ const ComputePrice: React.FC<IProps> = (props) => {
   // 触发车险报价
   const handleOffer = () => {
     props.form.validateFields((err, values) => {
-      console.log(values)
+      if (!checkInsurance(currentUser.license)) {
+        return message.error('请查看当前用户车牌是否正确')
+      }
       const params = {
         insurance: currentUser && currentUser.license,
         unionId: currentUser && currentUser.id,

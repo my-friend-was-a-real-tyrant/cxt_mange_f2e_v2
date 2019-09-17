@@ -68,7 +68,7 @@ export const checkInsurance = (vehicleNumber: any) => {
   if (vehicleNumber.length < 7 || vehicleNumber.length > 8) {
     return false
   } else {
-    const express = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-z]{1}[A-z]{1}[A-z0-9]{4||5}[A-z0-9挂学警港澳]{1}$/
+    const express = /^(([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z](([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳使领]))$/
     result = express.test(vehicleNumber)
     return result
   }
