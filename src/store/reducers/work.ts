@@ -25,6 +25,7 @@ const initState = {
     offset: 1,
     finished: false,
   },
+  sendShow:false,
   workCount: {
     "todoDetail": {
       "phoneTaskCounter": 0,
@@ -80,6 +81,8 @@ const common = (previousState = initState, action: IActionProps): retunType => {
       return {...previousState, wechtMessageInfo: action.value}
     case constants.SET_WORK_COUNT:
       return {...previousState, workCount: action.value}
+    case constants.SET_SEND_SHOW:
+      return {...previousState, sendShow: action.value}
     default:
       return previousState;
   }

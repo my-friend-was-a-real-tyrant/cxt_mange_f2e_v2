@@ -11,11 +11,11 @@ import constants from "../constants/work"
  * @desc 获取工作安排统计信息
  */
 export const getWorkCount = () => (dispatch: any) => {
-  const params={
-    accountId:localStorage.getItem('mjoys_account_id'),
-    seatId:localStorage.getItem('mjoys_user_id'),
+  const params = {
+    accountId: localStorage.getItem('mjoys_account_id'),
+    seatId: localStorage.getItem('mjoys_user_id'),
   }
-  fetch.get(`/apiv1/robot/rpt/followup/todo`,{params}).then((res: any) => {
+  fetch.get(`/apiv1/robot/rpt/followup/todo`, {params}).then((res: any) => {
     if (res.code === 20000) {
       dispatch({type: constants.SET_WORK_COUNT, value: res.data})
     }
@@ -135,5 +135,13 @@ export const asyncGetWechatMessages = (server_wx?: string, target_wx?: string) =
  */
 export const setWechatMessageInfo = (value: any) => ({
   type: constants.SET_WECHAT_MESSAGE_INFO,
+  value
+})
+
+/**
+ * @desc 设置发送短信弹窗状态
+ */
+export const setSendShow = (value: boolean) => ({
+  type: constants.SET_SEND_SHOW,
   value
 })

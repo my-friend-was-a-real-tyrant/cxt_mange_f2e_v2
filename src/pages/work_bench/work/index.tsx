@@ -6,6 +6,7 @@ import WorkLeftPane from './WorkLeftPanel'
 import WorkRightPanel from './WorkRightPanel'
 import WorkCenterPane from './WorkCenterPanel'
 import WorkFixed from 'components/work/WorkFixed'
+import SendShortMessage from 'components/work/SendShortMessage'
 import Verto from 'components/Verto.jsx'
 import 'assets/styles/work.less'
 
@@ -181,6 +182,7 @@ class Work extends React.Component<IProps, IState> {
           sendMsg={this.sendWechatMsg}/>
         <WorkFixed/>
         <Verto/>
+        <SendShortMessage/>
       </div>
     )
   }

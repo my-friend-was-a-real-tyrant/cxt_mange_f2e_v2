@@ -1,7 +1,9 @@
 import React, {useState, useEffect, FunctionComponent} from 'react'
 import {connect} from 'react-redux'
-import {Tabs, Form, Empty} from 'antd'
+import {Tabs, Form, Empty, message} from 'antd'
 import fetch from 'fetch/axios'
+import {Dispatch} from 'redux'
+import * as actions from 'store/actions/work'
 
 const formItemLayout = {
   labelCol: {span: 10},
@@ -10,6 +12,7 @@ const formItemLayout = {
 
 interface IProps {
   currentUser: any;
+  setSendShow: (flag: boolean) => any;
 }
 
 const CarOffer: FunctionComponent<IProps> = (props) => {
@@ -21,7 +24,7 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
     if (currentUser) {
       const params = {
         insurance: currentUser.license,
-        unionId:currentUser.id,
+        unionId: currentUser.id,
       }
       fetch.post(`/apiv1/insurance/offer`, null, {params}).then((res: any) => {
         if (res.code === 20000 || res.code === 20003) {
@@ -29,6 +32,22 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
         }
       })
     }
+  }
+
+  const onSendWechat = () => {
+    const params = {
+      insurance: currentUser.license,
+      unionId: currentUser.id,
+    }
+    fetch.post(`/apiv1/insurance/wxOfferPic`, null, {params}).then((res: any) => {
+      if (res.code === 20000) {
+        message.success('发送成功')
+      }
+    })
+  }
+
+  const onSendMsg = () => {
+    props.setSendShow(true)
   }
 
   return <div className="right-panel-container">
@@ -87,11 +106,28 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
             }
           </Tabs>
       }
+      {!carOffer.length ? null : <div className="send-btn">
+        {
+          currentUser && currentUser.server_wx && currentUser.target_wx ?
+            <div className="send-wechat" onClick={() => onSendWechat()}>
+              发送微信
+            </div>
+            : null
+        }
+        {currentUser && currentUser.mobile ?
+          <div className="send-msg" onClick={() => onSendMsg()}>
+            发送短信
+          </div> : null
+        }
+      </div>}
     </div>
   </div>
 }
 const mapStateToProps = (state: any) => ({
   currentUser: state.work.currentUser
 })
-export default connect(mapStateToProps)(CarOffer)
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  setSendShow: (flag: boolean) => dispatch(actions.setSendShow(flag)),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(CarOffer)
 
