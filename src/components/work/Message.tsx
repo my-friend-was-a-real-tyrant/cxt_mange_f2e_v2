@@ -12,6 +12,8 @@ interface IMessage {
   time: number | null;
   cTime: number | null;
   message: any;
+  shead_picture: string;
+  fhead_picture: string
 }
 
 interface ITime {
@@ -27,13 +29,13 @@ const ShowTime: FC<ITime> = (props) => {
 }
 
 interface IAvatar {
-  url: string | number;
+  url: string;
 }
 
 // 展示头像
 const ShowAvatar: FC<IAvatar> = (props) => {
   return <div className="avatar">
-    <Avatar size={40} icon="user" shape="square"/>
+    <Avatar size={40} src={`${process.env.REACT_APP_PIC_URL}${props.url}`} shape="square"/>
   </div>
 }
 
@@ -91,7 +93,7 @@ const filterType = (props: IMessage) => {
 const Message: FC<IMessage> = (props) => {
   return (
     <div className={`message ${props.isMe ? 'me' : ''}`} id="message">
-      <ShowAvatar url={121212}/>
+      <ShowAvatar url={props.isMe ? props.shead_picture : props.fhead_picture}/>
       <div className="message-container">
         <ShowTime time={props.time} cTime={props.cTime}/>
         {filterType(props)}

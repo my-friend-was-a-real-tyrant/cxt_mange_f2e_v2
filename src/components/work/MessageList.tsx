@@ -10,6 +10,7 @@ import 'assets/styles/wechat.less'
 interface IProps {
   wechtMessageInfo: any;
   asyncGetWechatMessages: () => any;
+  currentUser:any;
 }
 
 class MessageList extends React.Component<IProps> {
@@ -32,7 +33,7 @@ class MessageList extends React.Component<IProps> {
 
 
   render() {
-
+const {currentUser} = this.props;
     const {data, finished} = this.props.wechtMessageInfo
 
     // 发送消息状态()
@@ -48,12 +49,16 @@ class MessageList extends React.Component<IProps> {
 
     const mapMessage = () => {
       return data.map((m: any) => {
+        const fhead_picture = currentUser && currentUser.fhead_picture;
+        const shead_picture = currentUser && currentUser.shead_picture;
         const isMe = parseInt(m.flow) === 0        // 0发送， 1接受
         const status = getMsgStatus(m)
         return <Message key={m.id}
                         type={m.type}
                         message={m.message}
                         status={status}
+                        shead_picture={shead_picture}
+                        fhead_picture={fhead_picture}
                         isMe={isMe}
                         time={m.timeModified}
                         cTime={m.timeCreate}/>
@@ -73,7 +78,8 @@ class MessageList extends React.Component<IProps> {
 }
 
 const mapStateToProps = (state: any) => ({
-  wechtMessageInfo: state.work.wechtMessageInfo
+  wechtMessageInfo: state.work.wechtMessageInfo,
+  currentUser:state.work.currentUser
 })
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   asyncGetWechatMessages: () => dispatch(actions.asyncGetWechatMessages())
