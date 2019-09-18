@@ -60,7 +60,7 @@ class Player extends PureComponent {
   }
 
   componentWillUnmount() {
-    console.log('组件销毁', this)
+    // console.log('组件销毁', this)
     this.setState({
       isPlay: false,
     })

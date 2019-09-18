@@ -71,6 +71,10 @@ class WorkFixed extends React.Component<IProps> {
   handleCall = () => {
     const {phone} = this.state;
     const win: any = window
+    if (sessionStorage.getItem('verto-call-flag') === '0') {
+      message.info('没有可供使用的sip账号，请联系管理员配置')
+      return false
+    }
     if (!checkPhone(phone)) return message.error('请输入正确的手机号')
     if (!this.state.callFlag) {
       sessionStorage.setItem('task_id', '')
@@ -100,8 +104,6 @@ class WorkFixed extends React.Component<IProps> {
       message.info('电话挂断')
       clearInterval(this.state.timerId)
       this.setState({hour: 0, minute: 0, second: 0, millisecond: 0, timerId: 0, callFlag: false})
-    } else if (__act === 'wsloginFalse') {
-      this.setState({callFlag: false})
     }
   }
   onClose = () => {

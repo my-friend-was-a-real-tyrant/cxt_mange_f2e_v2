@@ -19,7 +19,6 @@ class Verto extends React.Component {
     wslogin: false,
     caller: '',//拨打的号码
   }
-
   currentCall
 
 
@@ -83,6 +82,8 @@ class Verto extends React.Component {
       },
       onWSClose: (v, success) => {
         console.log('onWSClose', success)
+        parentW.postMessage('hangup', sipUrl);
+        this.setState({wslogin: success})
       },
 
       onEvent: function (v, e) {
@@ -122,6 +123,7 @@ class Verto extends React.Component {
   getCardSlot = () => {
     fetch.get(`/apiv1/uac/user/getCardSlot`).then((res) => {
       if (res.code === 20000) {
+        sessionStorage.setItem('verto-call-flag', '1')
         this.setState({
           sipNumber: res.data.sipnumber,
           sipPasswd: res.data.sippasswd,
@@ -135,11 +137,13 @@ class Verto extends React.Component {
           }, 1000)
         })
       } else if (res.code === 20003) {
+        sessionStorage.setItem('verto-call-flag', '0')
         this.setState({
           sipNumber: '',
           sipPasswd: '',
           code: '',
-          bindPreNumber: ''
+          bindPreNumber: '',
+          vertoHandler: null
         })
       }
     })
@@ -223,7 +227,13 @@ class Verto extends React.Component {
       if (sessionStorage.getItem('task_id')) {
         this.handleCallTaskId()
       }
-      this.docall(__str)
+      if (!this.state.wslogin) {
+        message.info('socket重连中,暂时不可拨打电话')
+        window.postMessage(`hangup~`, pmsgOrigin)
+        return false
+      } else {
+        this.docall(__str)
+      }
     }
   }
 
@@ -232,28 +242,28 @@ class Verto extends React.Component {
     const {code, bindPreNumber} = this.state;
     const preNumber = `${code}${bindPreNumber}${caller}`
     this.setState({caller})
-    console.log(this.state.vertoHandler)
-    // if (!this.state.vertoHandler) {
-    //   window.postMessage(`wsloginFalse~`, location.origin)
-    //   return message.info('websocket链接不成功，请联系开发人员！')
-    // } else {
-    // 开始拨打
-    this.currentCall = this.state.vertoHandler.newCall({
-      destination_number: preNumber,
-      caller_id_name: 'mjoys_' + this.generateSalt(6),
-      caller_id_number: '81984',
-      outgoingBandwidth: 'default',
-      incomingBandwidth: 'default',
-      // Enable stereo audio.
-      useStereo: true,
-      // Set to false to disable inbound video.
-      useVideo: false,
-      // tag: 'video-container',
-      dedEnc: false,
-      mirrorInput: false,
-      userVariables: {},
-    })
-    // }
+    if (sessionStorage.getItem('verto-call-flag') === '0') {
+      message.info('没有可供使用的sip账号，请联系管理员配置')
+      return false
+    }
+    if (this.state.vertoHandler) {
+      // 开始拨打
+      this.currentCall = this.state.vertoHandler.newCall({
+        destination_number: preNumber,
+        caller_id_name: 'mjoys_' + this.generateSalt(6),
+        caller_id_number: '81984',
+        outgoingBandwidth: 'default',
+        incomingBandwidth: 'default',
+        // Enable stereo audio.
+        useStereo: true,
+        // Set to false to disable inbound video.
+        useVideo: false,
+        // tag: 'video-container',
+        dedEnc: false,
+        mirrorInput: false,
+        userVariables: {},
+      })
+    }
   }
 
   generateSalt = (length) => {
@@ -267,9 +277,9 @@ class Verto extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log()
     if (this.state.vertoHandler) {
       this.state.vertoHandler.rpcClient.closeSocket()
+      window.removeEventListener('message', this.handleMessage)
     }
   }
 

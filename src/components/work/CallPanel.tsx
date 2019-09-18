@@ -52,11 +52,20 @@ class CallPanel extends React.Component<IProps> {
 
   handleCall = async () => {
     const {decryptMobile, currentUser} = this.props;
-    const phone = await decryptMobile(currentUser.auto_add_aes_mobile)
-    console.log(phone, checkPhone(phone))
-    if (!checkPhone(phone)) return message.error('请输入正确的手机号')
+
+    if (sessionStorage.getItem('verto-call-flag') === '0') {
+      message.info('没有可供使用的sip账号，请联系管理员配置')
+      return false
+    }
     const parentW: any = window
-    parentW.postMessage(`call~${phone}`, parentW.sipSDK || window.location.origin)
+    if (!this.state.callFlag) {
+      sessionStorage.setItem('task_id', '')
+      const phone = await decryptMobile(currentUser.auto_add_aes_mobile)
+      if (!checkPhone(phone)) return message.error('请输入正确的手机号')
+      parentW.postMessage(`call~${phone}`, parentW.sipSDK || window.location.origin)
+    } else {
+      parentW.postMessage(`hangup~`, parentW.sipSDK || window.location.origin)
+    }
     this.setState({callFlag: true})
     this.setState({hour: 0, minute: 0, second: 0, millisecond: 0})
   }
