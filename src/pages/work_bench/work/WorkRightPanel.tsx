@@ -4,11 +4,21 @@ import UserInfo from 'components/work/UserInfo'
 import CarInfo from 'components/work/CarInfo'
 import ComputePrice from 'components/work/ComputePrice'
 import CarOffer from 'components/work/CarOffer'
+
 class WorkRightPanel extends React.Component {
+  state = {
+    key: '1'
+  }
+
+  onChange = (key: string) => {
+    this.setState({key})
+  }
+
   render() {
     return (
       <div className="work-right">
-        <Tabs tabBarGutter={0} animated={false}>
+        <Tabs tabBarGutter={0} animated={false}
+              onChange={this.onChange}>
           <Tabs.TabPane key="1" tab="用户信息">
             <UserInfo/>
           </Tabs.TabPane>
@@ -19,7 +29,7 @@ class WorkRightPanel extends React.Component {
             <ComputePrice/>
           </Tabs.TabPane>
           <Tabs.TabPane key="4" tab="历史报价">
-            <CarOffer />
+            <CarOffer key={this.state.key}/>
           </Tabs.TabPane>
         </Tabs>
       </div>

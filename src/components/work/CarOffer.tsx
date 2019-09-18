@@ -4,6 +4,7 @@ import {Tabs, Form, Empty, message, Steps} from 'antd'
 import fetch from 'fetch/axios'
 import {Dispatch} from 'redux'
 import * as actions from 'store/actions/work'
+import moment from 'moment'
 
 const {Step} = Steps;
 const formItemLayout = {
@@ -14,15 +15,18 @@ const formItemLayout = {
 interface IProps {
   currentUser: any;
   setSendShow: (flag: boolean) => any;
+  key: string;
 }
 
 const CarOffer: FunctionComponent<IProps> = (props) => {
-  const {currentUser} = props
+  const {currentUser, key} = props
   const [carOffer, setCarOffer] = useState([])
+  const [offerStatus, setOfferStatus] = useState([])
+
   useEffect(() => {
     getOffer()
     getOfferStatus()
-  }, [currentUser])
+  }, [currentUser, key])
 
   const getOfferStatus = () => {
     if (!currentUser) return false;
@@ -32,7 +36,7 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
     }
     fetch.get(`/apiv1/insurance/offerStatus`, {params}).then((res: any) => {
       if (res.code === 20000) {
-
+        setOfferStatus(res.data || [])
       }
     })
   }
@@ -66,13 +70,19 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
   const onSendMsg = () => {
     props.setSendShow(true)
   }
+
+  const statusMap: any = {
+    0: 'wait',
+    1: 'finish',
+    2: 'error'
+  }
   const wx = currentUser && currentUser.server_wx && currentUser.target_wx;
   const mobile = currentUser && currentUser.mobile && currentUser.auto_add_aes_mobile
   return <div className="right-panel-container">
-    <Steps current={1} progressDot style={{marginTop: 10}} size="small" initial={1}>
-      <Step title="获取车辆信息" description="06/12 12:!2:12"/>
-      <Step title="提交报价请求" description="06/12 12:!2:12"/>
-      <Step title="获取报价结果" description="06/12 12:!2:12"/>
+    <Steps progressDot style={{marginTop: 10}} size="small" initial={1}>
+      {offerStatus.map((v: any) => <Step title={v.msg}
+                                         status={statusMap[v.status]}
+                                         description={v.time ? moment(v.time).format('YY/MM/DD HH:mm') : ''}/>)}
     </Steps>
     <div className="car-offer-form">
       {

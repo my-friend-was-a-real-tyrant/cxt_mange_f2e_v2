@@ -2,6 +2,8 @@ import React, {useState, useEffect, FunctionComponent} from 'react'
 import {Spin} from 'antd'
 import {connect} from 'react-redux'
 import fetch from 'fetch/axios'
+import moment from 'moment'
+import Player from "./Player"
 
 interface IProps {
   currentUser: any;
@@ -42,13 +44,21 @@ const RobotCallLog: FunctionComponent<IProps> = (props) => {
         机器人通话记录
       </h5>
       {callLog.map((v: any, index: number) => {
+        const time = moment(v.dail_time).format('YYYYMMDD');
+        const dial = v.sound_path ? v.sound_path.split('-')[0].substr(-2) : ''
+        const fileUrl = `/sound/${time}/${dial}/${v.sound_path}.oga`
         return <div className="log-item robot" key={v.id || index}>
-          <span className="border"></span>
-          <div className="time">06/31 12/:13</div>
-          <div className="user">四川车险</div>
-          <div className="audio">四川车险</div>
-          <div className="duration">四川车险</div>
-          <div className="download">四川车险</div>
+          <span className="border"/>
+          <div className="time">{v.dail_time ? moment(v.dail_time).format('MM/DD HH:mm:ss') : ''}</div>
+          {/*<div className="user">{v.contact ? v.contact : '--'}</div>*/}
+          <div className="audio">
+            <Player fileUrl={`/sound/${time}/${dial}/${v.sound_path}.oga`}/>
+          </div>
+          <div className="duration">{v.call_time ? v.call_time : 0}s</div>
+          <a href={fileUrl} download={fileUrl} className="download">
+            <span className="icon"/>
+            下载
+          </a>
         </div>
       })}
     </div>

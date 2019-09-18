@@ -48,17 +48,19 @@ const AgentCallLog: FunctionComponent<IProps> = (props) => {
       {callLog.map((v: any, index: number) => {
         const time = moment(v.time_create).format('YYYYMMDD');
         const dial = v.sound_path ? v.sound_path.split('-')[0].substr(-2) : ''
+        const fileUrl = `/sound/${time}/${dial}/${v.sound_path}.oga`
         return <div className="log-item agent" key={v.id || index}>
           <span className="border"/>
           <div className="time">{v.call_time ? moment(v.call_time).format('MM/DD HH:mm:ss') : ''}</div>
           <div className="user">{v.contact ? v.contact : '--'}</div>
           <div className="audio">
-            <Player fileUrl={`/sound/${time}/${dial}/${v.sound_path}.oga`}/>
+            <Player fileUrl={fileUrl}/>
           </div>
           <div className="duration">{v.duration ? v.duration : 0}s</div>
-          <div className="download">
+          <a href={fileUrl} download={fileUrl} className="download">
+            <span className="icon"/>
             下载
-          </div>
+          </a>
         </div>
       })}
     </div>
