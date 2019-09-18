@@ -161,7 +161,10 @@ const RobotDataDetail: FunctionComponent<FormComponentProps & RouteComponentProp
   const {getFieldDecorator} = props.form;
 
   return (
-    <Tabs>
+    <Tabs tabBarExtraContent={<Button
+      type="primary"
+      onClick={() => props.history.push('/app/robot_data')}
+      style={{marginRight: '20px'}}>返回上级列表</Button>}>
       <Tabs.TabPane key="1" tab="机器人数据详情">
         <Form layout="inline">
           <Form.Item label="日期">

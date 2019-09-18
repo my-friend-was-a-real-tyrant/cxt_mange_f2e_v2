@@ -19,6 +19,7 @@ message.config({top: 100, maxCount: 1,});
 ReactDOM.render(
   <ConfigProvider locale={zhCN}>
     <Provider store={store}>
+      <audio src="http://fjdx.sc.chinaz.net/Files/DownLoad/sound1/201703/8400.mp3" id="messageAudio"/>
       <AppRouter/>
     </Provider>
   </ConfigProvider>, document.getElementById('root') as HTMLElement);

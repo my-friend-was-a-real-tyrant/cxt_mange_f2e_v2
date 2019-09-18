@@ -10,6 +10,7 @@ import SendShortMessage from 'components/work/SendShortMessage'
 import Verto from 'components/Verto.jsx'
 import fetch from 'fetch/axios'
 import 'assets/styles/work.less'
+import {setSocket} from "store/actions/work"
 
 interface IProps {
   workUsers: any;
@@ -17,25 +18,29 @@ interface IProps {
   currentUser: any;
   wechtMessageInfo: any;
   setWechatMessageInfo: (value: any) => any;
-  getWorkCount: () => void
+  getWorkCount: () => void;
+  setSocket: (value: any) => any;
+  socket: any;
 }
 
 interface IState {
-  socket: any;
   wsState: string;
 }
 
 class Work extends React.Component<IProps, IState> {
   timer: any = null;
   state = {
-    socket: null,
     wsState: 'init',
   }
 
   componentDidMount() {
     this.props.setWorkUsers({data: [], total: 0})
     this.props.getWorkCount()
-    this.createConnect()
+    if (!this.props.socket) {
+      this.createConnect()
+    } else {
+      this.setState({wsState: 'ready'})
+    }
     this.timer = setInterval(() => this.sendWsHeartBeat(), 30000)
   }
 
@@ -43,7 +48,7 @@ class Work extends React.Component<IProps, IState> {
   createConnect = () => {
     const webUrl = window.location.origin.replace('http', 'ws')
     const socket = new WebSocket(`${webUrl}/ws`)
-    this.setState({socket})
+    this.props.setSocket(socket)
     console.log(localStorage.getItem('access_token'))
     if (socket) {
       socket.onopen = () => {
@@ -69,14 +74,15 @@ class Work extends React.Component<IProps, IState> {
 
     socket.onclose = (e) => {
       console.log('发生websocket关闭事件', e)
-      this.setState({wsState: 'disconnected', socket: null,})
+      this.props.setSocket(null)
+      this.setState({wsState: 'disconnected'})
     }
   }
 
   // 发送websocket心跳包，因为60s内无数据，nginx会将连接关闭。
   sendWsHeartBeat = () => {
-    const {wsState, socket} = this.state
-    const socketAny: any = socket
+    const {wsState} = this.state
+    const socketAny: any = this.props.socket
     if (wsState === 'disconnected') {
       // 重新建立链接
       setTimeout(() => this.createConnect(), 1000)
@@ -171,7 +177,7 @@ class Work extends React.Component<IProps, IState> {
   // 发送微信消息
   sendWechatMsg = (value: any) => {
     const {currentUser} = this.props;
-    const socket: any = this.state.socket
+    const socket: any = this.props.socket
     if (socket) {
       socket.send(JSON.stringify({
           ws_event_type: 'send_wx_msg',
@@ -187,10 +193,16 @@ class Work extends React.Component<IProps, IState> {
   }
 
 
+  // componentWillUnmount() {
+  //   this.setState({
+  //     socket: null
+  //   })
+  // }
+
+
   render() {
     return (
       <div className="work">
-        <audio src="http://fjdx.sc.chinaz.net/Files/DownLoad/sound1/201703/8400.mp3" id="messageAudio"/>
         <WorkLeftPane/>
         <WorkRightPanel/>
         <WorkCenterPane
@@ -208,10 +220,12 @@ const mapStateToProps = (state: any) => ({
   workUsers: state.work.workUsers,
   currentUser: state.work.currentUser,
   wechtMessageInfo: state.work.wechtMessageInfo,
+  socket: state.work.socket,
 })
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   setWorkUsers: (value: any) => dispatch(actions.setWorkUsers(value)),
   setWechatMessageInfo: (value: any) => dispatch(actions.setWechatMessageInfo(value)),
-  getWorkCount: () => dispatch(actions.getWorkCount())
+  getWorkCount: () => dispatch(actions.getWorkCount()),
+  setSocket: (value: any) => dispatch(actions.setSocket(value))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Work)

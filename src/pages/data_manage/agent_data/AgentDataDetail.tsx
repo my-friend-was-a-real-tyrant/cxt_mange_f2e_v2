@@ -92,59 +92,63 @@ const AgentDataDetail: FunctionComponent<FormComponentProps & RouteComponentProp
   const {getFieldDecorator} = props.form;
 
   return (
-    <Tabs>
+    <Tabs
+      tabBarExtraContent={<Button type="primary" onClick={() => props.history.push('/app/agent_data')}
+                                  style={{marginRight: '20px'}}>返回上级列表</Button>}>
       <Tabs.TabPane key="1" tab="人工坐席数据详情">
-        <Form layout="inline">
-          <Form.Item label="日期">
-            {getFieldDecorator('time', {
-              initialValue: [
-                moment().add(-1, 'week').startOf('week'),
-                moment().clone().set({hour: 23, minute: 59, second: 59, millisecond: 59})
-              ]
-            })(
-              <DatePicker.RangePicker
-                format="YYYY-MM-DD"
-                suffixIcon=" "
-                placeholder={['开始日期', '结束日期']}
-                ranges={quickTimeSelect()}
-              />
-            )}
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" onClick={() => setSearch({...search, offset: 1})}>搜索</Button>
-          </Form.Item>
-        </Form>
-        <BaseTableComponent
-          columns={columns}
-          dataSource={result.data}
-          loading={loading}
-          total={result.total}
-          current={search.offset === 1 ? 1 : undefined}
-          bordered
-          offset
-          onChange={handleTableChange}/>
-        <Modal title={`删除数据-${deleteRow.serial_no}`}
-               visible={Boolean(deleteRow.serialno_id)}
-               okText="确认删除"
-               onOk={onSubmit}
-               confirmLoading={confirmLoading}
-               destroyOnClose
-               onCancel={() => setDeleteRow({serial_no: '', serialno_id: 0})}>
-          <Form>
-            <Form.Item label="删除原因" {...formItemLayout}>
-              {getFieldDecorator("memo", {
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入删除原因!',
-                  },
+        <div style={{padding: '0 20px'}}>
+          <Form layout="inline">
+            <Form.Item label="日期">
+              {getFieldDecorator('time', {
+                initialValue: [
+                  moment().add(-1, 'week').startOf('week'),
+                  moment().clone().set({hour: 23, minute: 59, second: 59, millisecond: 59})
                 ]
               })(
-                <Input.TextArea placeholder="请输入删除原因"/>
+                <DatePicker.RangePicker
+                  format="YYYY-MM-DD"
+                  suffixIcon=" "
+                  placeholder={['开始日期', '结束日期']}
+                  ranges={quickTimeSelect()}
+                />
               )}
             </Form.Item>
+            <Form.Item>
+              <Button type="primary" onClick={() => setSearch({...search, offset: 1})}>搜索</Button>
+            </Form.Item>
           </Form>
-        </Modal>
+          <BaseTableComponent
+            columns={columns}
+            dataSource={result.data}
+            loading={loading}
+            total={result.total}
+            current={search.offset === 1 ? 1 : undefined}
+            bordered
+            offset
+            onChange={handleTableChange}/>
+          <Modal title={`删除数据-${deleteRow.serial_no}`}
+                 visible={Boolean(deleteRow.serialno_id)}
+                 okText="确认删除"
+                 onOk={onSubmit}
+                 confirmLoading={confirmLoading}
+                 destroyOnClose
+                 onCancel={() => setDeleteRow({serial_no: '', serialno_id: 0})}>
+            <Form>
+              <Form.Item label="删除原因" {...formItemLayout}>
+                {getFieldDecorator("memo", {
+                  rules: [
+                    {
+                      required: true,
+                      message: '请输入删除原因!',
+                    },
+                  ]
+                })(
+                  <Input.TextArea placeholder="请输入删除原因"/>
+                )}
+              </Form.Item>
+            </Form>
+          </Modal>
+        </div>
       </Tabs.TabPane>
     </Tabs>
   )

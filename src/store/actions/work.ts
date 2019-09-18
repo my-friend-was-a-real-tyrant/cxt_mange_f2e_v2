@@ -145,3 +145,12 @@ export const setSendShow = (value: boolean) => ({
   type: constants.SET_SEND_SHOW,
   value
 })
+
+
+/**
+ * @desc 设置socket
+ */
+export const setSocket = (value: boolean) => ({
+  type: constants.SET_SOCKET,
+  value
+})

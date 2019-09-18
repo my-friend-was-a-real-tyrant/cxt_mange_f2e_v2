@@ -6,6 +6,7 @@ const constants = {
   SET_WECHAT_MESSAGE_INFO:'SET_WECHAT_MESSAGE_INFO', //设置微信聊天记录
   SET_WORK_COUNT:'SET_WORK_COUNT',// 工作安排
   SET_SEND_SHOW:'SET_SEND_SHOW',
+  SET_SOCKET:'SET_SOCKET'
 }
 
 export default constants
