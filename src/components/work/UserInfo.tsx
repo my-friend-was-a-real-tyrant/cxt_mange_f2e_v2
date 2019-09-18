@@ -97,7 +97,7 @@ const UserInfo: FunctionComponent<IProps> = (props) => {
         </Form.Item>
         <div className="line"/>
         <Form.Item label="微信昵称"  {...formItemLayout}>
-          {edit ? <Input placeholder="请输入微信昵称" disabled/> : currentUser && currentUser.wx_nickname}
+          {edit ? <Input placeholder="请输入微信昵称" value={currentUser && currentUser.wx_nickname} disabled/> : currentUser && currentUser.wx_nickname}
         </Form.Item>
         <Form.Item label="微信备注"  {...formItemLayout}>
           {edit ? getFieldDecorator("wx_memo", {initialValue: currentUser && currentUser.wx_memo})(
@@ -105,7 +105,9 @@ const UserInfo: FunctionComponent<IProps> = (props) => {
           ) : currentUser && currentUser.wx_memo}
         </Form.Item>
         <Form.Item label="企业微信"  {...formItemLayout}>
-          {edit ? <Input placeholder="企业微信" disabled/> : currentUser && currentUser.server_wx}
+          {edit ? <Input placeholder="企业微信"
+                         value={currentUser && currentUser.swx_memo ? currentUser.swx_memo : currentUser.swx_nickname}
+                         disabled/> : currentUser && currentUser.swx_memo ? currentUser.swx_memo : currentUser.swx_nickname}
         </Form.Item>
         <Form.Item label="添加日期"  {...formItemLayout}>
           {edit ? getFieldDecorator("wx_add_time", {initialValue: currentUser && currentUser.wx_add_time ? moment(currentUser.wx_add_time) : null})(
