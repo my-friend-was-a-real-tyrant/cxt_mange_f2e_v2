@@ -6,10 +6,11 @@ import * as actions from 'store/actions/work'
 import {connect} from 'react-redux'
 import {checkPhone} from "utils/utils"
 import debounce from 'lodash/debounce';
+import fetch from 'fetch/axios'
 
 interface IProps {
   workCount: any;
-  getWorkCount: () => any
+  getWorkCount: () => any;
 }
 
 let win: any = window
@@ -53,14 +54,30 @@ class WorkFixed extends React.Component<IProps> {
     }
   }
 
+  onSaveTask = (mobile: number | string) => {
+    const params = {
+      mobile
+    }
+    return new Promise((resolve, reject) => {
+      fetch.post(`/apiv1/otb/task/saveSelfAddTask`, null, {params}).then((res: any) => {
+        if (res.code === 20000) {
+          sessionStorage.setItem('task_id', res.data.id)
+          resolve()
+        }
+      })
+    })
+  }
 
   handleCall = () => {
     const {phone} = this.state;
     const win: any = window
     if (!checkPhone(phone)) return message.error('请输入正确的手机号')
-    if(!this.state.callFlag){
-      win.postMessage(`call~${phone}`, win.sipSDK || window.location.origin)
-    }else{
+    if (!this.state.callFlag) {
+      sessionStorage.setItem('task_id', '')
+      this.onSaveTask(phone).then(() => {
+        win.postMessage(`call~${phone}`, win.sipSDK || window.location.origin)
+      })
+    } else {
       win.postMessage(`hangup~${phone}`, win.sipSDK || window.location.origin)
     }
     this.setState({callFlag: !this.state.callFlag})

@@ -88,12 +88,14 @@
 }
 
 .car-offer-form {
-  .ant-form-item-label{
+  .ant-form-item-label {
     line-height: 24px;
   }
-  .ant-form-item-control{
+
+  .ant-form-item-control {
     line-height: 24px;
   }
+
   .car-offer-table {
     display: flex;
     width: 100%;
@@ -135,6 +137,13 @@
   justify-content: space-around;
   padding: 20px 30px;
   user-select: none;
+
+  .send-wechat, .send-msg {
+    &.disabled {
+      background: #cacaca;
+      color: #fff;
+    }
+  }
 
   .send-wechat {
     width: 100px;

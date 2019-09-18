@@ -1,5 +1,5 @@
 import React from 'react'
-import {Form,  message} from 'antd'
+import {Form, message} from 'antd'
 import {FormComponentProps} from 'antd/es/form'
 import {connect} from 'react-redux'
 import {Dispatch} from 'redux'
@@ -89,14 +89,10 @@ class CallPanel extends React.Component<IProps> {
     this.onClose()
   }
 
-  handleTableChange = () => {
-
-  }
-
 
   render() {
-    const {currentUser, sendShow} = this.props
-    const { callFlag} = this.state
+    const {currentUser, sendShow,} = this.props
+    const {callFlag, hour, minute, second, timerId} = this.state
 
     return (
       <div className="call-panel">
@@ -109,13 +105,19 @@ class CallPanel extends React.Component<IProps> {
         </div>
 
         <div className="call-message">
-
+          {
+            timerId ?
+              <div className="call-time">
+                <span className="time">
+                {hour <= 9 ? '0' + hour : hour}:{minute <= 9 ? '0' + minute : minute}:{second <= 9 ? '0' + second : second}
+              </span>
+              </div> : null
+          }
           <div className={`call ${callFlag ? 'active' : ''}`} onClick={() => {
             if (!currentUser) return message.error('请先选中操作用户')
             this.handleCall()
           }}>
             <div className={`icon  icon-call`}>
-
             </div>
             <span className="content">
               {callFlag ? '挂断' : '拨打'}

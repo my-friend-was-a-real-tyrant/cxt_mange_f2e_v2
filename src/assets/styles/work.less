@@ -182,6 +182,11 @@
   }
 
   &-right {
+    &.fixed {
+      position: fixed;
+      right: -400px;
+    }
+
     float: right;
     width: 400px;
     height: 100%;
@@ -227,7 +232,7 @@
   right: 0;
   top: 300px;
 
-  &__task, &__phone {
+  &__task, &__user, &__phone {
     width: 40px;
     word-wrap: break-word;
     font-size: 16px;
@@ -236,6 +241,12 @@
     border-radius: 4px 0 0 4px;
     text-align: center;
     cursor: pointer;
+  }
+
+  &__user {
+    background: linear-gradient(to bottom, #9FC4FF, #6692FF); /* 标准的语法 */
+    box-shadow: 0 2px 16px 0 rgb(102, 146, 255, 0.6);
+    margin-bottom: 20px;
   }
 
   &__task {
@@ -310,6 +321,7 @@
 
 .call-phone-mask {
   user-select: none;
+
   .call-phone {
     input {
       width: 100%;

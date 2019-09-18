@@ -17,6 +17,7 @@ class Verto extends React.Component {
     vertoHandler: null,
     code: '',
     wslogin: false,
+    caller: '',//拨打的号码
   }
 
   currentCall
@@ -144,6 +145,57 @@ class Verto extends React.Component {
     })
   }
 
+  // 无任务id的log
+  callNoTaskUuidLog = (uuid) => {
+    const {caller, bindPreNumber} = this.state;
+    const params = {
+      access_token: localStorage.getItem('access_token'),
+      mobile: caller,
+      uuid: uuid || '',
+      caller: bindPreNumber,
+    }
+    fetch.post(`/apiv1/otb/callRecord/saveCallRecordNoTask`, params, {params}).then(res => {
+      if (res.code === 20000) {
+        console.log('无任务id 传输 uuid')
+      }
+    })
+  }
+
+  // 有任务id的log
+  callUuidLog = (uuid) => {
+    var params = {
+      callStatus: 1,
+      callUuid: uuid || '',
+      caller: this.state.caller,
+    }
+    fetch.post(`/apiv1/otb/callRecord/saveCallRecord/${sessionStorage.getItem('task_id')}`, params, {params}).then(res => {
+      if (res.code === 20000) {
+        console.log('有任务id 传输 uuid')
+      }
+    })
+  }
+
+  // 接通后的uuid
+  callDisplayUuid = (uuid) => {
+    const params = {
+      uuid
+    }
+    fetch.post(`/apiv1/otb/callRecord/updateCallResultOutcome`, params, {params}).then(res => {
+      if (res.code === 20000) {
+        console.log('接通后传输uuid')
+      }
+    })
+  }
+
+  // 进入拨打即调用
+  handleCallTaskId = () => {
+    fetch.post(`/apiv1/otb/callRecord/saveCallLogfq/${sessionStorage.getItem('task_id')}`).then(res => {
+      if (res.code === 20000) {
+        console.log('进入拨打有任务id调用')
+      }
+    })
+  }
+
   handleMessage = (event) => {
     const pmsgOrigin = window.sipSDK || window.location.origin
     event = event || window.event
@@ -153,44 +205,55 @@ class Verto extends React.Component {
     const __str = msgStr.split('~')[1]
     if (__act === 'calldisplayuuid') {
       message.info('电话接通了')
+      this.callDisplayUuid(__str)
       this.setState({
         timerId: setInterval(this.timer, 50)
       })
+    } else if (__act === 'calluuid') {
+      if (sessionStorage.getItem('task_id')) {
+        this.callUuidLog(__str)
+      } else {
+        this.callNoTaskUuidLog(__str)
+      }
     } else if (__act === 'hangup') {
       this.currentCall && this.currentCall.hangup()
       clearInterval(this.state.timerId)
       this.setState({buttonText: '拨打', hour: 0, minute: 0, second: 0, millisecond: 0, timerId: 0})
     } else if (__act === 'call') {
+      if (sessionStorage.getItem('task_id')) {
+        this.handleCallTaskId()
+      }
       this.docall(__str)
     }
   }
 
 
   docall = (caller) => {
-    const {code, bindPreNumber, wslogin, sipNumber} = this.state;
+    const {code, bindPreNumber} = this.state;
     const preNumber = `${code}${bindPreNumber}${caller}`
+    this.setState({caller})
     console.log(this.state.vertoHandler)
-    if (!this.state.vertoHandler) {
-      window.postMessage(`wsloginFalse~`, location.origin)
-      return message.info('websocket链接不成功，请联系开发人员！')
-    } else {
-      // 开始拨打
-      this.currentCall = this.state.vertoHandler.newCall({
-        destination_number: preNumber,
-        caller_id_name: 'mjoys_' + this.generateSalt(6),
-        caller_id_number: '81984',
-        outgoingBandwidth: 'default',
-        incomingBandwidth: 'default',
-        // Enable stereo audio.
-        useStereo: true,
-        // Set to false to disable inbound video.
-        useVideo: false,
-        // tag: 'video-container',
-        dedEnc: false,
-        mirrorInput: false,
-        userVariables: {},
-      })
-    }
+    // if (!this.state.vertoHandler) {
+    //   window.postMessage(`wsloginFalse~`, location.origin)
+    //   return message.info('websocket链接不成功，请联系开发人员！')
+    // } else {
+    // 开始拨打
+    this.currentCall = this.state.vertoHandler.newCall({
+      destination_number: preNumber,
+      caller_id_name: 'mjoys_' + this.generateSalt(6),
+      caller_id_number: '81984',
+      outgoingBandwidth: 'default',
+      incomingBandwidth: 'default',
+      // Enable stereo audio.
+      useStereo: true,
+      // Set to false to disable inbound video.
+      useVideo: false,
+      // tag: 'video-container',
+      dedEnc: false,
+      mirrorInput: false,
+      userVariables: {},
+    })
+    // }
   }
 
   generateSalt = (length) => {

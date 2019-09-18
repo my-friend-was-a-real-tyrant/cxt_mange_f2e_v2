@@ -1,10 +1,11 @@
 import React, {useState, useEffect, FunctionComponent} from 'react'
 import {connect} from 'react-redux'
-import {Tabs, Form, Empty, message} from 'antd'
+import {Tabs, Form, Empty, message, Steps} from 'antd'
 import fetch from 'fetch/axios'
 import {Dispatch} from 'redux'
 import * as actions from 'store/actions/work'
 
+const {Step} = Steps;
 const formItemLayout = {
   labelCol: {span: 10},
   wrapperCol: {span: 14},
@@ -18,7 +19,23 @@ interface IProps {
 const CarOffer: FunctionComponent<IProps> = (props) => {
   const {currentUser} = props
   const [carOffer, setCarOffer] = useState([])
-  useEffect(() => getOffer(), [currentUser])
+  useEffect(() => {
+    getOffer()
+    getOfferStatus()
+  }, [currentUser])
+
+  const getOfferStatus = () => {
+    if (!currentUser) return false;
+    const params = {
+      insurance: currentUser.license,
+      unionId: currentUser.id,
+    }
+    fetch.get(`/apiv1/insurance/offerStatus`, {params}).then((res: any) => {
+      if (res.code === 20000) {
+
+      }
+    })
+  }
 
   const getOffer = () => {
     if (currentUser) {
@@ -49,8 +66,14 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
   const onSendMsg = () => {
     props.setSendShow(true)
   }
-
+  const wx = currentUser && currentUser.server_wx && currentUser.target_wx;
+  const mobile = currentUser && currentUser.mobile && currentUser.auto_add_aes_mobile
   return <div className="right-panel-container">
+    <Steps current={1} progressDot style={{marginTop: 10}} size="small" initial={1}>
+      <Step title="获取车辆信息" description="06/12 12:!2:12"/>
+      <Step title="提交报价请求" description="06/12 12:!2:12"/>
+      <Step title="获取报价结果" description="06/12 12:!2:12"/>
+    </Steps>
     <div className="car-offer-form">
       {
         !carOffer.length ? <Empty description="暂无历史报价"
@@ -106,20 +129,18 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
             }
           </Tabs>
       }
-      {!carOffer.length ? null : <div className="send-btn">
-        {
-          currentUser && currentUser.server_wx && currentUser.target_wx ?
-            <div className="send-wechat" onClick={() => onSendWechat()}>
-              发送微信
-            </div>
-            : null
-        }
-        {currentUser && currentUser.mobile ?
-          <div className="send-msg" onClick={() => onSendMsg()}>
+      {!carOffer.length ? null :
+        <div className="send-btn">
+          <div
+            className={`send-wechat ${wx ? '' : 'disabled'}`}
+            onClick={() => wx ? onSendWechat() : ''}>
+            发送微信
+          </div>
+          <div className={`send-msg ${mobile ? '' : 'disabled'}`}
+               onClick={() => mobile ? onSendMsg() : ''}>
             发送短信
-          </div> : null
-        }
-      </div>}
+          </div>
+        </div>}
     </div>
   </div>
 }

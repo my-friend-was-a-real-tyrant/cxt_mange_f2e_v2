@@ -208,6 +208,8 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
     {title: '角色', dataIndex: 'roles'},
     {title: '业务', dataIndex: 'business'},
     {title: '所属团队', dataIndex: 'team_name'},
+    {title: '手机号', dataIndex: 'mobilephone'},
+    {title: '邮箱', dataIndex: 'email', width: 200,},
     {title: '创建时间', dataIndex: 'time_create'},
     {
       title: '操作', width: 120, render: (row: any) => <Button.Group>
@@ -267,6 +269,7 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
         dataSource={result.data}
         loading={loading}
         onChange={handleTableChange}
+        scroll={{x: 1400}}
         current={search.offset === 1 ? search.offset : undefined}/>
 
 
@@ -328,6 +331,11 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
               <Input placeholder="请输入手机号"/>
             )}
           </Form.Item>
+          <Form.Item label="邮箱"  {...formItemLayout}>
+            {getFieldDecorator('email')(
+              <Input placeholder="请输入手机号"/>
+            )}
+          </Form.Item>
           <Form.Item label="是否坐席"  {...formItemLayout}>
             {getFieldDecorator('isSip', {initialValue: 0})(
               <Radio.Group>
@@ -370,11 +378,16 @@ const SubAccountManage: FunctionComponent<FormComponentProps> = (props) => {
                 <Input placeholder="请输入登录名"/>
               )}
             </Form.Item>
-            {/*<Form.Item label="手机"  {...formItemLayout}>*/}
-            {/*  {getFieldDecorator('mobilephone', {initialValue: editRow && editRow.mobilephone})(*/}
-            {/*    <Input placeholder="请输入手机号"/>*/}
-            {/*  )}*/}
-            {/*</Form.Item>*/}
+            <Form.Item label="手机"  {...formItemLayout}>
+              {getFieldDecorator('mobilephone', {initialValue: editRow && editRow.mobilephone})(
+                <Input placeholder="请输入手机号"/>
+              )}
+            </Form.Item>
+            <Form.Item label="邮箱"  {...formItemLayout}>
+              {getFieldDecorator('email', {initialValue: editRow && editRow.email})(
+                <Input placeholder="请输入邮箱号码"/>
+              )}
+            </Form.Item>
             <Form.Item label="是否坐席"  {...formItemLayout}>
               {getFieldDecorator('isSip', {initialValue: (editRow && editRow.role_code) === '0' || (editRow && !editRow.role_code) ? 0 : 1})(
                 <Radio.Group>
