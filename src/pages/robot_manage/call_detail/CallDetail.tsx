@@ -173,13 +173,13 @@ const CallDetail: FunctionComponent<FormComponentProps> = (props) => {
     {title: '备注', dataIndex: 'comment'},
     {
       title: '操作', width: 210, render: (row: any) => row.show_call_log === 1 ? <>
-        <Button.Group>
-          <Button type="primary" icon="message">通话记录</Button>
+        {/*<Button.Group>*/}
+          {/*<Button type="primary" icon="message">通话记录</Button>*/}
           <Button type="primary" icon="profile" onClick={() => {
             setRow(row)
             setCommentShow(true)
           }}>备注</Button>
-        </Button.Group>
+        {/*</Button.Group>*/}
       </> : <Button disabled>暂无对话记录</Button>
     },
   ]
@@ -295,7 +295,7 @@ const CallDetail: FunctionComponent<FormComponentProps> = (props) => {
         onChange={handleTableChange}
         loading={loading}/>
 
-      <Modal visible={commentShow && row}
+      <Modal visible={Boolean(commentShow && row)}
              destroyOnClose
              onCancel={() => {
                setCommentShow(false)
