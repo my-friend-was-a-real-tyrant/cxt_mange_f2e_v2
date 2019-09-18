@@ -58,8 +58,12 @@ class WorkFixed extends React.Component<IProps> {
     const {phone} = this.state;
     const win: any = window
     if (!checkPhone(phone)) return message.error('请输入正确的手机号')
-    win.postMessage(`call~${phone}`, win.sipSDK || window.location.origin)
-    this.setState({callFlag: true})
+    if(!this.state.callFlag){
+      win.postMessage(`call~${phone}`, win.sipSDK || window.location.origin)
+    }else{
+      win.postMessage(`hangup~${phone}`, win.sipSDK || window.location.origin)
+    }
+    this.setState({callFlag: !this.state.callFlag})
     this.setState({hour: 0, minute: 0, second: 0, millisecond: 0})
   }
 

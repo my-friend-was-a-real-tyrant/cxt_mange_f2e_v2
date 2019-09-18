@@ -81,8 +81,7 @@ class Verto extends React.Component {
         this.setState({wslogin: success})
       },
       onWSClose: (v, success) => {
-        console.log('wsclose======' + v)
-        this.setState({wslogin: success})
+        console.log('onWSClose', success)
       },
 
       onEvent: function (v, e) {
@@ -158,6 +157,7 @@ class Verto extends React.Component {
         timerId: setInterval(this.timer, 50)
       })
     } else if (__act === 'hangup') {
+      this.currentCall && this.currentCall.hangup()
       clearInterval(this.state.timerId)
       this.setState({buttonText: '拨打', hour: 0, minute: 0, second: 0, millisecond: 0, timerId: 0})
     } else if (__act === 'call') {
@@ -169,9 +169,8 @@ class Verto extends React.Component {
   docall = (caller) => {
     const {code, bindPreNumber, wslogin, sipNumber} = this.state;
     const preNumber = `${code}${bindPreNumber}${caller}`
-    // window.postMessage(`trying~${preNumber}`, window.sipSDK || window.location.origin);
-    console.log(sipNumber, wslogin)
-    if (!wslogin) {
+    console.log(this.state.vertoHandler)
+    if (!this.state.vertoHandler) {
       window.postMessage(`wsloginFalse~`, location.origin)
       return message.info('websocket链接不成功，请联系开发人员！')
     } else {
@@ -205,11 +204,10 @@ class Verto extends React.Component {
   }
 
   componentWillUnmount() {
-    window.close();
-    this.currentCall = null
-    this.setState({
-      verHandler: null
-    })
+    console.log()
+    if (this.state.vertoHandler) {
+      this.state.vertoHandler.rpcClient.closeSocket()
+    }
   }
 
   render() {

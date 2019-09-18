@@ -105,6 +105,7 @@ const ToBeDistributed: FunctionComponent<IProps> = props => {
 
   // 数据分配
   const handleDistribution = () => {
+    setCompany(company.map((v: any) => ({...v, count: ''})))
     setShow(true)
   }
 
@@ -378,7 +379,7 @@ const ToBeDistributed: FunctionComponent<IProps> = props => {
       setSelectedRowKeys2([])
       setShow(false)
       setEditStatus(false)
-      setCompany(company.map((v:any)=>({...v,count:''})))
+      setCompany(company.map((v: any) => ({...v, count: ''})))
     }}>
       <Table columns={companyColumns}
              dataSource={company}
