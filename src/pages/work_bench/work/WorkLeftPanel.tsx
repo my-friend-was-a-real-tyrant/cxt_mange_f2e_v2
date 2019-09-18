@@ -131,7 +131,7 @@ class WorkLeftPanel extends React.Component<IProps> {
           <Tabs.TabPane key="1" tab="全部用户">
             <Users/>
           </Tabs.TabPane>
-          <Tabs.TabPane key="2" tab="未 &nbsp;处&nbsp; 理">
+          <Tabs.TabPane key="2" tab="未处理">
             <Users/>
           </Tabs.TabPane>
           <Tabs.TabPane key="3" tab="今日预约">

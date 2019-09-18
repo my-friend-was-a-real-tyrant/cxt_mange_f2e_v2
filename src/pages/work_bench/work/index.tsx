@@ -8,6 +8,7 @@ import WorkCenterPane from './WorkCenterPanel'
 import WorkFixed from 'components/work/WorkFixed'
 import SendShortMessage from 'components/work/SendShortMessage'
 import Verto from 'components/Verto.jsx'
+import fetch from 'fetch/axios'
 import 'assets/styles/work.less'
 
 interface IProps {
@@ -86,6 +87,19 @@ class Work extends React.Component<IProps, IState> {
       socketAny.send(JSON.stringify({ws_event_type: 'wx_ping'}))
     }
   }
+  getFirend = (server_wx: string, target_wx: string) => {
+    return new Promise((resolve, reject) => {
+      const params = {
+        server_wx,
+        target_wx,
+      }
+      fetch.get(`/apiv1/user-uni-data/list`, {params}).then((res: any) => {
+        if (res.code === 20000) {
+          resolve(res.data || [])
+        }
+      })
+    })
+  }
 
   // ws 消息处理
   handleWechatMessage = (DATA: any) => {
@@ -129,7 +143,9 @@ class Work extends React.Component<IProps, IState> {
             setWorkUsers({...workUsers, data: [...data]})
           } else {
             // TODO 获取好友来添加到列表中
-            setWorkUsers({...workUsers, data: [{...m, recent_time: m.timeCreate}, ...data]})
+            this.getFirend(m.serverAccount, m.targetAccount).then((res: any) => {
+              setWorkUsers({...workUsers, data: [...res, ...data]})
+            })
           }
           console.log(mUser)
         })

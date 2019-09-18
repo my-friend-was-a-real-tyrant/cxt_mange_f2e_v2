@@ -256,9 +256,9 @@ class SendMessage extends React.Component<IProps, IState> {
             </Popover>
             {getFieldDecorator('picture')(
               <Upload {...uploadConfig}>
-              <span className="web_wechat_pic webuploader-container" title="图片">
-                <div className="webuploader-pick"/>
-              </span>
+                <span className="web_wechat_pic webuploader-container" title="图片">
+                  <div className="webuploader-pick"/>
+                </span>
               </Upload>,
             )}
             <span onClick={() => this.setState({show: true})} className="reply-btn">快捷回复</span>
