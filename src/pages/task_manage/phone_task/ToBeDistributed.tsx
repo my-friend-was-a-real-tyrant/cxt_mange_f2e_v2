@@ -20,7 +20,8 @@ interface IResult {
 }
 
 interface IProps extends FormComponentProps {
-  serialData: Array<object>
+  serialData: Array<object>;
+  // key: string;
 }
 
 const renderContent = (value: any, row: any, index: number) => {
@@ -85,7 +86,6 @@ const ToBeDistributed: FunctionComponent<IProps> = props => {
   // init
   useEffect(() => {
     getCompany()
-    getReport()
   }, [])
 
   // update

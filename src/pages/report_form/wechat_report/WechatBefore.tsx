@@ -253,6 +253,8 @@ class WechatBefore extends React.Component<FormComponentProps> {
           scroll={{x: 1800}}
         />
         <Modal title="log详情" visible={Boolean(show && logRow)}
+               width={800}
+               onOk={() => this.setState({show: false, logRow: null})}
                onCancel={() => this.setState({show: false, logRow: null})} destroyOnClose>
           <WechatLog logRow={logRow}/>
         </Modal>

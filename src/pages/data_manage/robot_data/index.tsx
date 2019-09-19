@@ -75,6 +75,7 @@ const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (
         if (res.code === 20000) {
           setSearch({...search, offset: 1})
           setShow(false)
+          setFileName('')
           message.success(`上传成功${res.data.success_count}条,重复${res.data.repeat_count}条,失败${res.data.error_count}条`)
         }
       })
@@ -195,7 +196,10 @@ const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (
                 </Upload>
                 &nbsp;
                 &nbsp;
-                <a href={`/assets/download-tpl/human-car-tpl`} download="car-tpl.xlsx">模版下载</a>
+                <a href='/tpl/human-tpl.xlsx' download="human-tpl.xlsx">模版下载</a>
+                &nbsp;
+                &nbsp;
+                <a href='/tpl/human-car-tpl.xlsc' download="human-car-tpl.xlsx">车险模版下载</a>
               </div>
             </Form.Item>
           </Form>
