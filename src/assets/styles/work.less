@@ -87,9 +87,12 @@
           > span {
             width: 80px;
             text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            //display: flex;
+            //align-items: center;
+            //justify-content: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
 
             b {
               display: flex;
@@ -120,11 +123,11 @@
             }
 
             &:first-child {
-              justify-content: flex-start;
+              text-align: left;
             }
 
             &:last-child {
-              justify-content: flex-end;
+              text-align: right;
               width: 50px;
             }
           }
