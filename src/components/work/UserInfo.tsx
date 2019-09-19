@@ -146,7 +146,7 @@ const UserInfo: FunctionComponent<IProps> = (props) => {
           {edit ? <Button type="primary" block onClick={handleChangeUserInfo}>确认</Button> : null}
         </Form.Item>
       </Form> : <Empty description="暂无用户信息"
-                       image={`https://cxt.mjoys.com/mjoys_cxt_api/1019/2019/9/10/2019091019563595t5cmW.png`}/>}
+                       image={`https://cxt.mjoys.com/api/1019/2019/9/10/2019091019563595t5cmW.png`}/>}
 
     </div>
   )

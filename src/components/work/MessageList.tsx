@@ -71,7 +71,7 @@ const {currentUser} = this.props;
         {data.length ? <>
           {loadMore}
           {mapMessage()}
-        </> : <Empty image={`https://cxt.mjoys.com/mjoys_cxt_api/1019/2019/9/10/2019091019563595t5cmW.png`}/>}
+        </> : <Empty image={`https://cxt.mjoys.com/api/1019/2019/9/10/2019091019563595t5cmW.png`}/>}
       </div>
     )
   }

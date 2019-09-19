@@ -87,7 +87,7 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
     <div className="car-offer-form">
       {
         !carOffer.length ? <Empty description="暂无历史报价"
-                                  image={`https://cxt.mjoys.com/mjoys_cxt_api/1019/2019/9/10/2019091019563595t5cmW.png`}/> :
+                                  image={`https://cxt.mjoys.com/api/1019/2019/9/10/2019091019563595t5cmW.png`}/> :
           <Tabs size="small">
             {
               carOffer.map((item: any, index: number) => {
