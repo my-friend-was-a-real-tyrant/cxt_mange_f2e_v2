@@ -57,7 +57,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
       // accountId: props.accountId,
       userId: props.form.getFieldValue('userId'),
       ...search,
-      wechat: props.form.getFieldValue('wechatId'),
+      wechat: props.form.getFieldValue('wechat'),
       commond: 0,
     }
     setResult({...result, loading: true})
