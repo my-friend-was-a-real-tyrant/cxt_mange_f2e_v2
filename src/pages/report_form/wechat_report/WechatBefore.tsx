@@ -3,6 +3,7 @@ import {Popover, Icon, Form, Button, DatePicker, Select} from 'antd'
 import fetch from 'fetch/axios'
 import {FormComponentProps} from 'antd/es/form'
 import BaseTableComponent from 'components/BaseTableComponent'
+import WechatLog from './WechatLog'
 import {quickTimeSelect} from "utils/utils"
 import moment from 'moment'
 
@@ -33,6 +34,7 @@ class WechatBefore extends React.Component<FormComponentProps> {
     contact: '',
     page: 1,
     pageSize: 10,
+    show: false,
   }
 
   componentDidMount() {
