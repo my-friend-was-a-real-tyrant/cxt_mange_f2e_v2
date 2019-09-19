@@ -115,17 +115,17 @@ export const asyncGetWechatMessages = (server_wx?: string, target_wx?: string) =
     targetWxId: target_wx || currentUser.target_wx,
     originWxId: server_wx || currentUser.server_wx
   }
-  if (!params.targetWxId && !params.originWxId) {
-    return dispatch(setWechatMessageInfo({limit, data: [], finished: false, offset: offset + 1}))
-  } else {
+  if (target_wx && server_wx) {
     params.offset = 1
   }
   fetch.get(`/apiv1/wx/getWxCommunicateRecords`, {params}).then((res: any) => {
     let finished = res.data.length < 10
     if (res.code === 20000) {
-      dispatch(setWechatMessageInfo({limit, data: res.data.reverse().concat(data), finished, offset: offset + 1}))
-    } else if (res.code === 20003) {
-    } else {
+      if (params.offset === 1) {
+        dispatch(setWechatMessageInfo({limit, data: res.data.reverse(), finished, offset: offset + 1}))
+      } else {
+        dispatch(setWechatMessageInfo({limit, data: res.data.reverse().concat(data), finished, offset: offset + 1}))
+      }
     }
   })
 }
