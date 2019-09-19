@@ -24,7 +24,6 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
   const [uploadInfo, setUploadInfo] = useState<any>({uploadShow: false, fileContent: {id: '', importfile: ''}})
   const {uploadShow, fileContent} = uploadInfo;
   const [user, setUser] = useState<Array<object>>([])
-  // const [companies, setCompanies] = useState<Array<object>>([])
   const [selectedRowKeys, setSelectedRowKeys] = useState<Array<number | string>>([])
 
 
@@ -39,18 +38,6 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
       .catch(() => setUser([]))
   }, [])
 
-  // 获取菜单栏下的公司及坐席树
-  const getCompanies = () => {
-    fetch.get(`/apiv1/wx/getWxTree`, {params: {commond: 0}}).then((res: any) => {
-      if (res.code === 20000) {
-        const {treeVo} = res.data;
-        // setCompanies(treeVo)
-      } else {
-        message.error(res.message)
-      }
-    })
-  }
-
   // 获取微信列表
   const getWechat = (wechat?: number | string) => {
     const params = {
@@ -59,6 +46,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
       ...search,
       wechat: props.form.getFieldValue('wechat'),
       commond: 0,
+      offset: (search.offset - 1) * search.limit + 1,
     }
     setResult({...result, loading: true})
     fetch.get(`/apiv1/wx/getWxConfigList`, {params}).then((res: any) => {
@@ -328,7 +316,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
                       showSearch
                       optionFilterProp="children"
                       filterOption={(input: any, option: any) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-                      {user.map((u:any)=> <Select.Option value={u.id} key={u.id}>
+                      {user.map((u: any) => <Select.Option value={u.id} key={u.id}>
                         {u.username}
                       </Select.Option>)}
                     </Select>
