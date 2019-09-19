@@ -1,5 +1,5 @@
 import React from 'react'
-import {Popover, Icon, Form, Button, DatePicker, Select} from 'antd'
+import {Popover, Icon, Form, Button, DatePicker, Select, Modal} from 'antd'
 import fetch from 'fetch/axios'
 import {FormComponentProps} from 'antd/es/form'
 import BaseTableComponent from 'components/BaseTableComponent'
@@ -35,6 +35,7 @@ class WechatBefore extends React.Component<FormComponentProps> {
     page: 1,
     pageSize: 10,
     show: false,
+    logRow: null,
   }
 
   componentDidMount() {
@@ -114,7 +115,7 @@ class WechatBefore extends React.Component<FormComponentProps> {
   }
 
   render() {
-    const {data, total, loading, accountList, businessList, page} = this.state
+    const {data, total, loading, accountList, businessList, page, show, logRow} = this.state
     const {getFieldDecorator} = this.props.form
     const question = (content: string, title: string) => <Popover content={content}>
       {title} <Icon type="question-circle" theme="filled" className="question"/>
@@ -192,6 +193,9 @@ class WechatBefore extends React.Component<FormComponentProps> {
         title: 'log',
         dataIndex: '2222',
         width: 50,
+        render: (text:number, row: any) => <Button
+          type="link" style={{padding: '0'}}
+          onClick={() => this.setState({logRow: row, show: true})}>详情</Button>
       },
       {title: '备注', dataIndex: 'memo', width: 200, editable: true},
     ]
@@ -248,6 +252,10 @@ class WechatBefore extends React.Component<FormComponentProps> {
           expandedRowRender={(row: any) => <div style={{padding: '0 20px'}}>{expandedRowRender(row)}</div>}
           scroll={{x: 1800}}
         />
+        <Modal title="log详情" visible={Boolean(show && logRow)}
+               onCancel={() => this.setState({show: false, logRow: null})} destroyOnClose>
+          <WechatLog logRow={logRow}/>
+        </Modal>
       </div>
     )
   }
