@@ -32,14 +32,14 @@ const RobotDataDetail: FunctionComponent<FormComponentProps & RouteComponentProp
     const params = {
       ...search,
       business_id: props.match.params.id,
-      starttime: formatTime(time, 'YYYYMMDD')[0],
-      endtime: formatTime(time, 'YYYYMMDD')[1],
+      start_time: formatTime(time, 'YYYYMMDD')[0],
+      end_time: formatTime(time, 'YYYYMMDD')[1],
       offset: (search.offset - 1) * search.limit + 1,
     }
     setLoading(true)
     fetch.get(`/apiv1/oper/datasource/getDataSourceBatchListForDGJ/expand`, {params}).then((res: any) => {
       setLoading(false)
-      if (res.code === 20000) {
+      if (res.code === 20000 || res.code === 20003) {
         setResult({data: res.data || [], total: res.count || 0})
       }
     })

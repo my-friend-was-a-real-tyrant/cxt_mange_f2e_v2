@@ -24,7 +24,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
   const [uploadInfo, setUploadInfo] = useState<any>({uploadShow: false, fileContent: {id: '', importfile: ''}})
   const {uploadShow, fileContent} = uploadInfo;
   const [user, setUser] = useState<Array<object>>([])
-  const [companies, setCompanies] = useState<Array<object>>([])
+  // const [companies, setCompanies] = useState<Array<object>>([])
   const [selectedRowKeys, setSelectedRowKeys] = useState<Array<number | string>>([])
 
 
@@ -33,7 +33,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
   }, [search])
 
   useEffect(() => {
-    getCompanies()
+    // getCompanies()
     service.getUser()
       .then((res: Array<object>) => setUser(res))
       .catch(() => setUser([]))
@@ -44,7 +44,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
     fetch.get(`/apiv1/wx/getWxTree`, {params: {commond: 0}}).then((res: any) => {
       if (res.code === 20000) {
         const {treeVo} = res.data;
-        setCompanies(treeVo)
+        // setCompanies(treeVo)
       } else {
         message.error(res.message)
       }
@@ -285,11 +285,8 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
         title: col.title,
         handleSave: ({id, memo, wx_account}: Iupdate) => {
           console.log(id, memo, wx_account)
-          if (memo) {
-            updateWxMemo({id, memo})
-          } else {
-            updateWxAccount({id, memo, wx_account})
-          }
+          updateWxMemo({id, memo})
+          updateWxAccount({id, memo, wx_account})
         }
       })
     }
@@ -297,8 +294,8 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
 
   const {getFieldDecorator} = props.form;
   const mjoysUser = JSON.parse(localStorage.getItem('mjoys_user') || '')
-  let users: any[] = companies.filter((v: any) => v.accountId === mjoysUser.accountId)
-  users = users.length ? users[0].users || [] : []
+  // let users: any[] = companies.filter((v: any) => v.accountId === mjoysUser.accountId)
+  // users = users.length ? users[0].users || [] : []
 
 
   return (
@@ -319,7 +316,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
                       <Select style={{width: 200}}>
                         <Select.Option value="-1" key="-1">全部坐席</Select.Option>
                         <Select.Option value="-11" key="-11">未分配</Select.Option>
-                        {user.map((v: any) => <Select.Option key={v.id} value={v.id}>{v.contact}</Select.Option>)}
+                        {user.map((v: any) => <Select.Option key={v.id} value={v.id}>{v.username}</Select.Option>)}
                       </Select>
                     )}
                   </Form.Item>
@@ -331,8 +328,8 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
                       showSearch
                       optionFilterProp="children"
                       filterOption={(input: any, option: any) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-                      {users.map(u => <Select.Option value={u.userId} key={u.userId}>
-                        {u.userName}
+                      {user.map((u:any)=> <Select.Option value={u.id} key={u.id}>
+                        {u.username}
                       </Select.Option>)}
                     </Select>
                   </Form.Item>

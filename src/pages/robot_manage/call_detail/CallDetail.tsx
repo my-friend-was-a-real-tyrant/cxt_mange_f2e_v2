@@ -5,6 +5,7 @@ import {CheckboxChangeEvent} from 'antd/es/checkbox';
 import {formatTime, quickTimeSelect, qsString} from "utils/utils"
 import fetch from "fetch/axios"
 import BaseTableComponent from 'components/BaseTableComponent'
+import CallMsgRecord from './CallMsgRecord'
 
 interface IBusinessItem {
   business_id: number;
@@ -41,6 +42,8 @@ const CallDetail: FunctionComponent<FormComponentProps> = (props) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [search, setSearch] = useState({offset: 1, limit: 10})
   const [checkAll, setCheckAll] = useState<boolean>(false)
+  const [recordRow, setRecordRow] = useState(null)
+  const [show, setShow] = useState<boolean>(false)
 
   useEffect(() => getBusiness(), [])
 
@@ -174,11 +177,14 @@ const CallDetail: FunctionComponent<FormComponentProps> = (props) => {
     {
       title: '操作', width: 210, render: (row: any) => row.show_call_log === 1 ? <>
         {/*<Button.Group>*/}
-          {/*<Button type="primary" icon="message">通话记录</Button>*/}
-          <Button type="primary" icon="profile" onClick={() => {
-            setRow(row)
-            setCommentShow(true)
-          }}>备注</Button>
+        {/*<Button type="primary" icon="message" onClick={() => {*/}
+        {/*  setRecordRow(row)*/}
+        {/*  setShow(true)*/}
+        {/*}}>通话记录</Button>*/}
+        <Button type="primary" icon="profile" onClick={() => {
+          setRow(row)
+          setCommentShow(true)
+        }}>备注</Button>
         {/*</Button.Group>*/}
       </> : <Button disabled>暂无对话记录</Button>
     },
@@ -307,6 +313,13 @@ const CallDetail: FunctionComponent<FormComponentProps> = (props) => {
                         defaultValue={row && row.comment}
                         placeholder={`请对${row && row.phone}通话添加备注`}
                         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setComment(e.target.value)}/>
+      </Modal>
+
+      <Modal title="通话记录" visible={Boolean(recordRow && show)} onCancel={() => {
+        setRecordRow(null)
+        setShow(false)
+      }}>
+        <CallMsgRecord row={recordRow}/>
       </Modal>
     </div>
   )

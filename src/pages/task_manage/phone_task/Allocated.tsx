@@ -74,7 +74,7 @@ const Allocated: FunctionComponent<IProps> = props => {
 
   // 获取坐席
   const getCompany = () => {
-    fetch.get(`/apiv1/otb/seatmanagement/seat/listForSelByAccountId`).then((res: any) => {
+    fetch.get(`/apiv1/otb/taskAllot/findTaskAllotStatus`).then((res: any) => {
       if (res.code === 20000) {
         setCompany(res.data || [])
       } else {
@@ -285,7 +285,7 @@ const Allocated: FunctionComponent<IProps> = props => {
         {getFieldDecorator('user_id', {initialValue: ''})(
           <Select style={{width: 150}} placeholder="请选择坐席">
             <Select.Option key="-1" value={''}>全部</Select.Option>
-            {company.map((v: any) => <Select.Option key={v.id} value={v.id}>{v.contact}</Select.Option>)}
+            {company.map((v: any) => <Select.Option key={v.userId} value={v.userId}>{v.user}</Select.Option>)}
           </Select>
         )}
       </Form.Item>

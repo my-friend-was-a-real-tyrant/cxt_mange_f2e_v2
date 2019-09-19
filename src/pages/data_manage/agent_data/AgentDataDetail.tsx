@@ -39,7 +39,7 @@ const AgentDataDetail: FunctionComponent<FormComponentProps & RouteComponentProp
     setLoading(true)
     fetch.get(`/apiv1/otb/import/findTaskImportList/expand`, {params}).then((res: any) => {
       setLoading(false)
-      if (res.code === 20000) {
+      if (res.code === 20000 || res.code === 20003) {
         setResult({data: res.data || [], total: res.count || 0})
       }
     })
