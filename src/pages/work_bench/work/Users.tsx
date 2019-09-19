@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react'
-import {Button, Spin, Icon, Empty, Badge} from 'antd'
+import {Button, Spin, Icon, Empty, Badge, message, Modal} from 'antd'
 import {connect} from 'react-redux'
 import SearchUsers from './SearchUsers'
 import {Dispatch} from 'redux'
 import * as actions from 'store/actions/work'
+import fetch from 'fetch/axios'
 import {getWechatTime} from 'utils/utils'
 
 interface IWorkUsers {
@@ -21,11 +22,12 @@ interface IProps {
   currentUser: any;
   asyncGetWechatMessages: () => any;
   setWechatMessageInfo: (value: any) => any;
+  setWorkUsers: (value: any) => any
 }
 
 
 const Users = (props: IProps) => {
-  const {setUsersSearch, usersSearch, thunkWorkUsers, workUsers, getUserLoading, currentUser, setCurrentUser, asyncGetWechatMessages, setWechatMessageInfo} = props
+  const {setUsersSearch, usersSearch, thunkWorkUsers, workUsers, getUserLoading, currentUser, setCurrentUser, asyncGetWechatMessages, setWechatMessageInfo, setWorkUsers} = props
   const {data, total} = workUsers
 
 
@@ -42,7 +44,6 @@ const Users = (props: IProps) => {
     })
   }, [workUsers])
 
-  console.log(data)
   const onSearch = async () => {
     await setUsersSearch({...usersSearch, page: usersSearch.page + 1})
     await thunkWorkUsers()
@@ -56,24 +57,51 @@ const Users = (props: IProps) => {
     }
   }
 
+  const handleDeleteUser = (ids: number) => {
+    Modal.confirm({
+      title: '提示',
+      content: '此操作不可恢复，您确定要继续么?',
+      okType: 'danger',
+      onOk() {
+        const params = {
+          ids: ids
+        }
+        return fetch.delete(`/apiv1/user-uni-data/delete`, {params}).then((res: any) => {
+          if (res.code === 20000) {
+            const newData = data.filter((v: any) => v.id !== ids);
+            setWorkUsers({total: total - 1, data: newData})
+            message.success('删除成功')
+          }
+        })
+      }
+    })
+  }
+
   const userItem = data.map((v: any) => {
     const wechat: boolean = v.target_wx && v.server_wx
-    return <div className={`user-item ${currentUser && currentUser.id === v.id ? 'active' : ''}`} key={v.id}
-                onClick={() => {
-                  v.unread = 0
-                  handleSetCurrentUser(v)
-                }}>
-      <span>{v.license ? v.license : '--'}</span>
-      <span>{v.mobile ? v.mobile.replace('****', '*') : '--'}</span>
-      <span>{v.name ? v.name : '--'}</span>
-      <span>
-        <Badge dot={Boolean(v.unread)}>
-          <b className={`${wechat ? v.online ? 'online' : 'no-online' : 'normal'}`}>
-            <Icon type="wechat"/>
-          </b>
-        </Badge>
-      </span>
-      <span>{getWechatTime(v.recent_time)}</span>
+    return <div className="user-wrapper" key={v.id}>
+      <div className={`user-item ${currentUser && currentUser.id === v.id ? 'active' : ''}`} key={v.id}
+           onClick={() => {
+             v.unread = 0
+             handleSetCurrentUser(v)
+           }}>
+        <span>{v.license ? v.license : '--'}</span>
+        <span>{v.mobile ? v.mobile.replace('****', '*') : '--'}</span>
+        <span>{v.name ? v.name : '--'}</span>
+        <span>
+          <Badge dot={Boolean(v.unread)}>
+            <b className={`${wechat ? v.online ? 'online' : 'no-online' : 'normal'}`}>
+              <Icon type="wechat"/>
+            </b>
+          </Badge>
+        </span>
+        <span>
+          {getWechatTime(v.recent_time)}
+        </span>
+      </div>
+      <Button className="del-item" type="danger" onClick={() => handleDeleteUser(v.id)}>
+        <Icon type="delete"/>
+      </Button>
     </div>
   })
   return (
@@ -113,6 +141,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   thunkWorkUsers: () => dispatch(actions.thunkWorkUsers()),
   setCurrentUser: (value: any) => dispatch(actions.setCurrentUser(value)),
   asyncGetWechatMessages: () => dispatch(actions.asyncGetWechatMessages()),
-  setWechatMessageInfo: (value: any) => dispatch(actions.setWechatMessageInfo(value))
+  setWechatMessageInfo: (value: any) => dispatch(actions.setWechatMessageInfo(value)),
+  setWorkUsers: (value: any) => dispatch(actions.setWorkUsers(value))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Users)

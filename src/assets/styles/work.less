@@ -67,6 +67,40 @@
       }
 
       .users {
+        .user-wrapper {
+          position: relative;
+          overflow: hidden;
+
+          &:nth-child(odd) {
+            background-color: #F7F7F7;
+          }
+
+          &:nth-child(even) {
+            background-color: #FFFFFF;
+          }
+
+          .del-item {
+            position: absolute;
+            right: -52px;
+            top: 0;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font-size: 20px;
+          }
+
+          &:hover {
+            background: rgba(73, 119, 240, 0.2) !important;
+
+            .del-item {
+              position: absolute;
+              right: 0;
+              top: 0;
+              z-index: 88;
+            }
+          }
+        }
+
         .user-item {
           display: flex;
           justify-content: space-between;
@@ -75,21 +109,20 @@
           color: #686D7F;
           cursor: pointer;
           padding: 0 10px;
+          background-color: transparent;
 
           &.active {
             background: rgba(73, 119, 240, 0.2) !important;
           }
 
-          &:hover {
-            background: rgba(73, 119, 240, 0.2) !important;
-          }
+          //
+          //&:hover {
+          //  background: rgba(73, 119, 240, 0.2) !important;
+          //}
 
           > span {
             width: 80px;
             text-align: center;
-            //display: flex;
-            //align-items: center;
-            //justify-content: center;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -132,13 +165,7 @@
             }
           }
 
-          &:nth-child(odd) {
-            background-color: #F7F7F7;
-          }
 
-          &:nth-child(even) {
-            background-color: #FFFFFF;
-          }
         }
       }
     }

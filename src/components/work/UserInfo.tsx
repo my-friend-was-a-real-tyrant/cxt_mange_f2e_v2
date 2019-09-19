@@ -97,12 +97,13 @@ const UserInfo: FunctionComponent<IProps> = (props) => {
         </Form.Item>
         <div className="line"/>
         <Form.Item label="微信昵称"  {...formItemLayout}>
-          {edit ? <Input placeholder="请输入微信昵称" value={currentUser && currentUser.wx_nickname} disabled/> : currentUser && currentUser.wx_nickname}
+          {edit ? <Input placeholder="请输入微信昵称" value={currentUser && currentUser.wx_nickname}
+                         disabled/> : currentUser && currentUser.wx_nickname}
         </Form.Item>
         <Form.Item label="微信备注"  {...formItemLayout}>
-          {edit ? getFieldDecorator("wx_memo", {initialValue: currentUser && currentUser.wx_memo})(
+          {edit ? getFieldDecorator("wx_memo", {initialValue: currentUser && currentUser.memo})(
             <Input placeholder="请输入微信备注"/>
-          ) : currentUser && currentUser.wx_memo}
+          ) : currentUser && currentUser.memo}
         </Form.Item>
         <Form.Item label="企业微信"  {...formItemLayout}>
           {edit ? <Input placeholder="企业微信"

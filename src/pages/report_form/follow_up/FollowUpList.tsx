@@ -2,8 +2,8 @@ import React, {useState, useEffect, FunctionComponent} from 'react'
 import fetch from 'fetch/axios'
 import BaseTableComponent from 'components/BaseTableComponent'
 import SearchForm from './SearchForm'
-import {formatTime} from "../../../utils/utils"
-import service from "../../../fetch/service"
+import {formatTime} from "utils/utils"
+import service from "fetch/service"
 
 const followType = [
   {title: '电话', type: 1},
@@ -45,16 +45,6 @@ const FollowUpList: FunctionComponent = () => {
       setLoading(false)
       if (res.code === 20000 || res.code === 20003) {
         setResult({data: res.data || [], total: res.count})
-      }
-    })
-  }
-
-  // 获取菜单栏下的公司及坐席树
-  const getCompanies = () => {
-    fetch.get(`/apiv1/wx/getWxTree`, {params: {commond: 0}}).then((res: any) => {
-      if (res.code === 20000) {
-        const {treeVo} = res.data;
-        setCompanies(treeVo)
       }
     })
   }
