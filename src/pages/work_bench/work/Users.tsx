@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Button, Spin, Icon, Empty, Badge} from 'antd'
 import {connect} from 'react-redux'
 import SearchUsers from './SearchUsers'
@@ -27,16 +27,21 @@ interface IProps {
 const Users = (props: IProps) => {
   const {setUsersSearch, usersSearch, thunkWorkUsers, workUsers, getUserLoading, currentUser, setCurrentUser, asyncGetWechatMessages, setWechatMessageInfo} = props
   const {data, total} = workUsers
-  // 根据最后联系时间排序
-  data.sort((obj1: any, obj2: any) => {
-    if (obj1.recent_time > obj2.recent_time) {
-      return -1
-    } else if (obj1.recent_time < obj2.recent_time) {
-      return 1
-    } else {
-      return 0
-    }
-  })
+
+  useEffect(() => {
+    // 根据最后联系时间排序
+    data.sort((obj1: any, obj2: any) => {
+      if (obj1.recent_time > obj2.recent_time) {
+        return -1
+      } else if (obj1.recent_time < obj2.recent_time) {
+        return 1
+      } else {
+        return 0
+      }
+    })
+  }, [workUsers])
+
+  console.log(data)
   const onSearch = async () => {
     await setUsersSearch({...usersSearch, page: usersSearch.page + 1})
     await thunkWorkUsers()
