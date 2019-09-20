@@ -64,7 +64,7 @@ const SearchCar: FunctionComponent<FormComponentProps> = (props) => {
             </Col>
             <Col span={8}>
               <Form.Item {...formItemLayout} label="手机号码">
-                {carInfo && carInfo.mobile}
+                {carInfo && carInfo.cry_mobile}
               </Form.Item>
             </Col>
           </Row>
