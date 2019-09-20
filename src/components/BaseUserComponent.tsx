@@ -4,12 +4,21 @@ import {FormComponentProps} from 'antd/lib/form'
 import fetch from 'fetch/axios'
 import CryptoJS from "crypto-js";
 import {withRouter, RouteComponentProps} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {Dispatch} from 'redux'
+import * as actions from 'store/actions/work'
+import InitState from './InitState'
 
 const formItemLayout = {
   labelCol: {span: 6},
   wrapperCol: {span: 14},
 };
-const BaseUserComponent: FunctionComponent<FormComponentProps & RouteComponentProps> = (props) => {
+
+interface IProps extends RouteComponentProps {
+  setInitState: (value: any) => any
+}
+
+const BaseUserComponent: FunctionComponent<FormComponentProps & IProps> = (props) => {
   let user: any
   try {
     user = JSON.parse(localStorage.getItem('mjoys_user') || '')
@@ -37,6 +46,7 @@ const BaseUserComponent: FunctionComponent<FormComponentProps & RouteComponentPr
   }
 
   const logout = () => {
+    props.setInitState(InitState)
     localStorage.clear()
     props.history.push('/login')
   }
@@ -107,5 +117,8 @@ const BaseUserComponent: FunctionComponent<FormComponentProps & RouteComponentPr
     </div>
   )
 }
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  setInitState: (value: any) => dispatch(actions.setInitState(value))
+})
 const WrapperBaseUser = Form.create<FormComponentProps & RouteComponentProps>()(BaseUserComponent)
-export default withRouter(WrapperBaseUser)
+export default withRouter(connect(null, mapDispatchToProps)(WrapperBaseUser))

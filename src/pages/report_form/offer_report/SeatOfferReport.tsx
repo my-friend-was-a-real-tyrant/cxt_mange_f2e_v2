@@ -8,7 +8,10 @@ import {quickTimeSelect} from "utils/utils"
 const SeatOfferReport: FunctionComponent = () => {
   const [result, setResult] = useState({data: [], total: 0})
   const [loading, setLoading] = useState<boolean>(false)
-  const [time, setTime] = useState({startTime: '', endTime: ''})
+  const [time, setTime] = useState({
+    startTime: moment().add(-1, 'week').startOf('week').format('YYYYMMDDHHmmss'),
+    endTime: moment().clone().set({hour: 23, minute: 59, second: 59, millisecond: 59}).format('YYYYMMDDHHmmss'),
+  })
   const [search, setSearch] = useState({page: 1, pageSize: 10, startTime: '', endTime: ''})
 
   useEffect(() => {
@@ -16,8 +19,12 @@ const SeatOfferReport: FunctionComponent = () => {
   }, [search])
 
   const getList = (): void => {
+    const params = {
+      ...search,
+      ...time,
+    }
     setLoading(true)
-    fetch.get(`/apiv1/robot/rpt/insurance/offer/record`, {params: search}).then((res: any) => {
+    fetch.get(`/apiv1/robot/rpt/insurance/offer/record`, {params}).then((res: any) => {
       setLoading(false)
       if (res.code === 20000 || res.code === 20003) {
         setResult({data: res.data || [], total: res.count})
@@ -37,23 +44,29 @@ const SeatOfferReport: FunctionComponent = () => {
     {title: '成功次数', dataIndex: 'successCounter'},
   ]
   return (
-    <div style={{padding:'0 20px'}}>
+    <div style={{padding: '0 20px'}}>
       <Form layout="inline">
         <Form.Item label="日期">
           <DatePicker.RangePicker
             ranges={quickTimeSelect()}
+            defaultValue={
+              [
+                moment().add(-1, 'week').startOf('week'),
+                moment().clone().set({hour: 23, minute: 59, second: 59, millisecond: 59}),
+              ]
+            }
             onChange={(date, dateString) => setTime({
-            startTime: dateString[0] ? moment(dateString[0]).format('YYYYMMDDHHmmss') : '',
-            endTime: dateString[1] ? moment(dateString[1]).clone().set({
-              hour: 23,
-              minute: 59,
-              second: 59,
-              millisecond: 59
-            }).format('YYYYMMDDHHmmss') : '',
-          })}/>
+              startTime: dateString[0] ? moment(dateString[0]).format('YYYYMMDDHHmmss') : '',
+              endTime: dateString[1] ? moment(dateString[1]).clone().set({
+                hour: 23,
+                minute: 59,
+                second: 59,
+                millisecond: 59
+              }).format('YYYYMMDDHHmmss') : '',
+            })}/>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" onClick={() => setSearch({...search, ...time,page:1})}>搜索</Button>
+          <Button type="primary" onClick={() => setSearch({...search, ...time, page: 1})}>搜索</Button>
         </Form.Item>
       </Form>
       <BaseTableComponent

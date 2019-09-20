@@ -8,7 +8,10 @@ import {quickTimeSelect} from "utils/utils"
 const WechatReportList: FunctionComponent = () => {
   const [result, setResult] = useState({data: [], total: 0})
   const [loading, setLoading] = useState<boolean>(false)
-  const [time, setTime] = useState({startTime: '', endTime: ''})
+  const [time, setTime] = useState({
+    startTime: moment().add(-1, 'week').startOf('week').format('YYYYMMDDHHmmss'),
+    endTime: moment().clone().set({hour: 23, minute: 59, second: 59, millisecond: 59}).format('YYYYMMDDHHmmss'),
+  })
   const [search, setSearch] = useState({page: 1, pageSize: 10})
   const [expandedRow, setExpandedRow] = useState<Array<string>>([])
 
@@ -21,6 +24,7 @@ const WechatReportList: FunctionComponent = () => {
   const getReport = () => {
     const params = {
       ...search,
+      ...time,
       accountId: localStorage.getItem('mjoys_account_id'),
     }
     setLoading(true)
@@ -85,6 +89,12 @@ const WechatReportList: FunctionComponent = () => {
         <Form.Item label="日期">
           <DatePicker.RangePicker
             ranges={quickTimeSelect()}
+            defaultValue={
+              [
+                moment().add(-1, 'week').startOf('week'),
+                moment().clone().set({hour: 23, minute: 59, second: 59, millisecond: 59}),
+              ]
+            }
             onChange={(date, dateString) => setTime({
               startTime: dateString[0] ? moment(dateString[0]).format('YYYYMMDDHHmmss') : '',
               endTime: dateString[1] ? moment(dateString[1]).clone().set({

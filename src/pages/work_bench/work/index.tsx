@@ -10,7 +10,6 @@ import SendShortMessage from 'components/work/SendShortMessage'
 import Verto from 'components/Verto.jsx'
 import fetch from 'fetch/axios'
 import 'assets/styles/work.less'
-import {setSocket} from "store/actions/work"
 
 interface IProps {
   workUsers: any;

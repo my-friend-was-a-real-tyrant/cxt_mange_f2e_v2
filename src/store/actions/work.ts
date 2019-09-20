@@ -7,6 +7,10 @@ import fetch from 'fetch/axios'
 import {Dispatch} from 'redux'
 import constants from "../constants/work"
 
+export const setInitState = (value: any) => ({
+  type: constants.SET_INIT_STATE,
+  value
+})
 /**
  * @desc 获取工作安排统计信息
  */

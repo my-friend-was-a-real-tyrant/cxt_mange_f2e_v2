@@ -24,7 +24,6 @@ const FollowUpList: FunctionComponent = () => {
   const [result, setResult] = useState({data: [], total: 0})
   const [loading, setLoading] = useState<boolean>(false)
   const [search, setSearch] = useState({page: 1, pageSize: 10})
-  const [companies, setCompanies] = useState<Array<object>>([])
   const [user, setUser] = useState<Array<object>>([])
 
   useEffect(() => {

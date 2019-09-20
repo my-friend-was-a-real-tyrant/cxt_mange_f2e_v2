@@ -7,7 +7,10 @@ import BaseTableComponent from 'components/BaseTableComponent'
 const ChannelOfferReport: FunctionComponent = () => {
   const [result, setResult] = useState({data: [], total: 0})
   const [loading, setLoading] = useState<boolean>(false)
-  const [time, setTime] = useState({startTime: '', endTime: ''})
+  const [time, setTime] = useState({
+    startTime: moment().add(-1, 'week').startOf('week').format('YYYYMMDDHHmmss'),
+    endTime: moment().clone().set({hour: 23, minute: 59, second: 59, millisecond: 59}).format('YYYYMMDDHHmmss'),
+  })
   const [search, setSearch] = useState({page: 1, pageSize: 10})
 
   useEffect(() => {
@@ -18,6 +21,7 @@ const ChannelOfferReport: FunctionComponent = () => {
   // 获取报表数据
   const getReport = () => {
     const params = {
+      ...time,
       ...search,
       accountId: localStorage.getItem('mjoys_account_id'),
     }
@@ -47,6 +51,12 @@ const ChannelOfferReport: FunctionComponent = () => {
       <Form layout="inline">
         <Form.Item label="日期">
           <DatePicker.RangePicker
+            defaultValue={
+              [
+                moment().add(-1, 'week').startOf('week'),
+                moment().clone().set({hour: 23, minute: 59, second: 59, millisecond: 59}),
+              ]
+            }
             onChange={(date, dateString) => setTime({
               startTime: dateString[0] ? moment(dateString[0]).format('YYYYMMDDHHmmss') : '',
               endTime: dateString[1] ? moment(dateString[1]).clone().set({hour: 23, minute: 59, second: 59, millisecond: 59}).format('YYYYMMDDHHmmss') : '',

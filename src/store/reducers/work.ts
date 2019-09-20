@@ -68,7 +68,7 @@ interface IActionProps {
 
 type retunType = typeof initState;
 
-const common = (previousState = initState, action: IActionProps): retunType => {
+const work = (previousState = initState, action: IActionProps): retunType => {
   switch (action.type) {
     case constants.SET_WORK_USERS:
       return {...previousState, workUsers: action.value}
@@ -86,9 +86,11 @@ const common = (previousState = initState, action: IActionProps): retunType => {
       return {...previousState, sendShow: action.value}
     case constants.SET_SOCKET:
       return {...previousState, socket: action.value}
+    case constants.SET_INIT_STATE:
+      return {...previousState, ...action.value}
     default:
       return previousState;
   }
 };
 
-export default common
+export default work

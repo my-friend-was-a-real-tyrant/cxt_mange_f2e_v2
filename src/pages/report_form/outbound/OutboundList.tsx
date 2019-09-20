@@ -3,6 +3,8 @@ import fetch from 'fetch/axios'
 import BaseTableComponent from 'components/BaseTableComponent'
 import {formatTime} from "utils/utils"
 import SearchForm from './SearchForm'
+import Player from 'components/work/Player'
+import moment from 'moment'
 
 const OutboundList: FunctionComponent = () => {
   const [result, setResult] = useState({data: [], total: 0})
@@ -50,10 +52,17 @@ const OutboundList: FunctionComponent = () => {
     {title: '呼叫时间', dataIndex: 'timeOfOutbound'},
     {title: '响铃时长（s）', dataIndex: 'ringTime'},
     {title: '通话时长（s）', dataIndex: 'duration'},
-    {title: '录音'}
+    {
+      title: '录音', dataIndex: 'soundFilePath', width: 200, render: (path: string, row: any) => {
+        const time = moment(row.timeOfOutbound).format('YYYYMMDD');
+        const dial = path ? path.split('-')[0].substr(-2) : ''
+        const fileUrl = `/sound/${time}/${dial}/${path}.oga`
+        return path ? <Player fileUrl={fileUrl}/> : '无录音'
+      }
+    }
   ]
   return (
-    <div  style={{padding:'0 20px'}}>
+    <div style={{padding: '0 20px'}}>
       <SearchForm onSearch={onSearch}/>
       <BaseTableComponent
         loading={loading}
@@ -61,6 +70,7 @@ const OutboundList: FunctionComponent = () => {
         current={search.page}
         onChange={handleTableChange}
         dataSource={result.data}
+        scroll={{x: 1500}}
         total={result.total}/>
     </div>
   )
