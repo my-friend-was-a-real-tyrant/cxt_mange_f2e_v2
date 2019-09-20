@@ -33,7 +33,7 @@ class Work extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
-    this.props.setWorkUsers({data: [], total: 0})
+    // this.props.setWorkUsers({data: [], total: 0})
     this.props.getWorkCount()
     if (!this.props.socket) {
       this.createConnect()
@@ -48,7 +48,6 @@ class Work extends React.Component<IProps, IState> {
     const webUrl = window.location.origin.replace('http', 'ws')
     const socket = new WebSocket(`${webUrl}/ws`)
     this.props.setSocket(socket)
-    console.log(localStorage.getItem('access_token'))
     if (socket) {
       socket.onopen = () => {
         this.setState({wsState: 'ready'})

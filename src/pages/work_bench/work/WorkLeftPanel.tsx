@@ -27,7 +27,9 @@ class WorkLeftPanel extends React.Component<IProps> {
   }
 
   componentDidMount() {
-    this.getUsers()
+    if (this.props.workUsers.data.length <= 0) {
+      this.getUsers()
+    }
   }
 
   // 获取用户列表
