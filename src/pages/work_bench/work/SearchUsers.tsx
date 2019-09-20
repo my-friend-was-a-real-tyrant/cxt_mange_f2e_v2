@@ -38,8 +38,8 @@ const SearchUsers: React.FC<IProps> = (props) => {
         biz_status: values.biz_status,
         reg_date_b: formatTime(values.regDate)[0],
         reg_date_e: formatTime(values.regDate)[1],
-        create_time_b: formatTime(values.createTime, 'YYYY-MM-DD')[0],
-        create_time_e: formatTime(values.createTime, 'YYYY-MM-DD')[1],
+        create_time_b: formatTime(values.createTime, 'YYYY-MM-DD HH:mm:ss')[0],
+        create_time_e: formatTime(values.createTime, 'YYYY-MM-DD HH:mm:ss')[1],
         next_follow_time_b: formatTime(values.nextTime, 'YYYY-MM-DD')[0],
         next_follow_time_e: formatTime(values.nextTime, 'YYYY-MM-DD')[1],
       }
