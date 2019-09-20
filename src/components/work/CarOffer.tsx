@@ -49,7 +49,15 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
       }
       fetch.post(`/apiv1/insurance/offer`, null, {params}).then((res: any) => {
         if (res.code === 20000 || res.code === 20003) {
-          setCarOffer(res.data)
+          const data = res.data || []
+          data.forEach((v: any) => {
+            v = {
+              ...v,
+              offerDtos: v.offerDtos ? v.offerDtos : [],
+              offerProgressList: v.offerProgressList ? v.offerProgressList : []
+            }
+          })
+          setCarOffer(data)
         }
       })
     }
@@ -98,11 +106,11 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
             </Steps>
             <div className="car-offer-form">
               {
-                offerItem.offerDtos && !offerItem.offerDtos.length ? <Empty description="无报价结果"
-                                                                            image={`https://cxt.mjoys.com/api/1019/2019/9/10/2019091019563595t5cmW.png`}/> :
+                !offerItem.offerDtos.length ? <Empty description="无报价结果"
+                                                     image={`https://cxt.mjoys.com/api/1019/2019/9/10/2019091019563595t5cmW.png`}/> :
                   <Tabs size="small">
                     {
-                      offerItem.offerDtos.map((item: any, index: number) => {
+                      offerItem.offerDtos && offerItem.offerDtos.map((item: any, index: number) => {
                         return <Tabs.TabPane tab={`${item.insuranceCompanyName}-${item.schemeName}`} key={index + ''}>
                           <Form labelAlign="left">
                             <Form.Item label="车牌号" {...formItemLayout}>
