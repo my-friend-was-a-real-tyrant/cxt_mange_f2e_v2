@@ -45,14 +45,14 @@ const RobotCallLog: FunctionComponent<IProps> = (props) => {
       </h5>
       {callLog.map((v: any, index: number) => {
         const time = moment(v.dail_time).format('YYYYMMDD');
-        const dial = v.sound_path ? v.sound_path.split('-')[0].substr(-2) : ''
-        const fileUrl = `/sound/${time}/${dial}/${v.sound_path}.oga`
+        const dial = v.call_record_path ? v.call_record_path.split('-')[0].substr(-2) : ''
+        const fileUrl = `/sound/${time}/${dial}/${v.call_record_path}.oga`
         return <div className="log-item robot" key={v.id || index}>
           <span className="border"/>
           <div className="time">{v.dail_time ? moment(v.dail_time).format('MM/DD HH:mm:ss') : ''}</div>
           {/*<div className="user">{v.contact ? v.contact : '--'}</div>*/}
           <div className="audio">
-            <Player fileUrl={`/sound/${time}/${dial}/${v.sound_path}.oga`}/>
+            <Player fileUrl={`/sound/${time}/${dial}/${v.call_record_path}.oga`}/>
           </div>
           <div className="duration">{v.call_time ? v.call_time : 0}s</div>
           <a href={fileUrl} download={fileUrl} className="download">
