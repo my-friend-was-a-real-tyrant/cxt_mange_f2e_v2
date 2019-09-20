@@ -7,6 +7,7 @@ import moment from 'moment'
 import {Dispatch} from 'redux'
 import * as actions from 'store/actions/work'
 import 'assets/styles/right-panel.less'
+import {checkPhone} from "utils/utils"
 
 const wxStatus: any = {
   "-1": "已删除",
@@ -42,6 +43,11 @@ const UserInfo: FunctionComponent<IProps> = (props) => {
   const {data, total} = workUsers
   const handleChangeUserInfo = () => {
     props.form.validateFields((err, values) => {
+      if (values.mobile) {
+        if (values.mobile.indexOf('*') === -1 && !checkPhone(values.mobile)) {
+          return message.error('请输入正确的手机号')
+        }
+      }
       const mobile = values.mobile.indexOf('*') !== -1 ?
         currentUser.auto_add_aes_mobile ?
           currentUser.auto_add_aes_mobile : '' : values.mobile;
