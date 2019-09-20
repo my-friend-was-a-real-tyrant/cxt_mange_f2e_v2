@@ -88,7 +88,7 @@ class Work extends React.Component<IProps, IState> {
       return
     }
 
-    if (wsState === 'ready') {
+    if (wsState === 'ready' && socketAny) {
       socketAny.send(JSON.stringify({ws_event_type: 'wx_ping'}))
     }
   }
