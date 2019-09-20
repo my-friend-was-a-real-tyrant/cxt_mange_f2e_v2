@@ -42,9 +42,13 @@ const UserInfo: FunctionComponent<IProps> = (props) => {
   const {data, total} = workUsers
   const handleChangeUserInfo = () => {
     props.form.validateFields((err, values) => {
+      const mobile = values.mobile.indexOf('*') !== -1 ?
+        currentUser.auto_add_aes_mobile ?
+          currentUser.auto_add_aes_mobile : '' : values.mobile;
       const params = {
         id: currentUser.id,
         ...values,
+        mobile,
         wx_add_time: values.wx_add_time ? moment(values.wx_add_time).format('YYYY-MM-DD') : values.wx_add_time,
         next_follow_time: values.next_follow_time ? moment(values.next_follow_time).format('YYYY-MM-DD') : values.next_follow_time,
         time_create: values.time_create ? moment(values.time_create).format('YYYY-MM-DD') : values.time_create,

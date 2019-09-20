@@ -196,10 +196,10 @@ const RobotData: FunctionComponent<FormComponentProps & RouteComponentProps> = (
                 </Upload>
                 &nbsp;
                 &nbsp;
-                <a href='/tpl/human-tpl.xlsx' download="human-tpl.xlsx">模版下载</a>
+                <a href='https://cxt.mjoys.com/api/1019/2019/9/20/20190920102537cK6hBE5.xlsx' download="human-tpl.xlsx">模版下载</a>
                 &nbsp;
                 &nbsp;
-                <a href='/tpl/human-car-tpl.xlsc' download="human-car-tpl.xlsx">车险模版下载</a>
+                <a href='https://cxt.mjoys.com/api/1019/2019/9/20/20190920102623h483zo6.xlsx' download="human-car-tpl.xlsx">车险模版下载</a>
               </div>
             </Form.Item>
           </Form>
