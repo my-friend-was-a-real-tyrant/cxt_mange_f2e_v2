@@ -11,9 +11,9 @@ class Verto extends React.Component {
   state = {
     sipNumber: '',
     sipPasswd: '',
-    hostName: 'devqianwei.mjoys.com',
+    hostName: process.env.NODE_ENV === 'production' ? 'qianwei.mjoys.com' : 'devqianwei.mjoys.com',
     bindPreNumber: '',
-    wsUrl: 'wss://devqianwei.mjoys.com',
+    wsUrl: process.env.NODE_ENV === 'production' ? 'wss://qianwei.mjoys.com' : 'wss://devqianwei.mjoys.com',
     vertoHandler: null,
     code: '',
     wslogin: false,
