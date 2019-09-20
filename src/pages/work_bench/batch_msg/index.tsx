@@ -57,7 +57,7 @@ const BatchShortMsg: FC<FormComponentProps> = (props) => {
       access_token: localStorage.getItem('access_token'),
       importFile: fileName,
       accountId: localStorage.getItem('mjoys_account_id'),
-      userId: localStorage.getItem('access_user_id'),
+      userId: localStorage.getItem('mjoys_user_id'),
       content: msgContent,
     }
     setConfirmLoading(true)
