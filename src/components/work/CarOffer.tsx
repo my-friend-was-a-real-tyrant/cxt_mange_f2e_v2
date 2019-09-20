@@ -98,8 +98,8 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
             </Steps>
             <div className="car-offer-form">
               {
-                !offerItem.offerDtos.length ? <Empty description="无报价结果"
-                                                     image={`https://cxt.mjoys.com/api/1019/2019/9/10/2019091019563595t5cmW.png`}/> :
+                offerItem.offerDtos && !offerItem.offerDtos.length ? <Empty description="无报价结果"
+                                                                            image={`https://cxt.mjoys.com/api/1019/2019/9/10/2019091019563595t5cmW.png`}/> :
                   <Tabs size="small">
                     {
                       offerItem.offerDtos.map((item: any, index: number) => {
@@ -151,7 +151,7 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
                     }
                   </Tabs>
               }
-              {!offerItem.offerDtos.length ? null :
+              {offerItem.offerDtos && !offerItem.offerDtos.length ? null :
                 <div className="send-btn">
                   <div
                     className={`send-wechat ${wx ? '' : 'disabled'}`}
