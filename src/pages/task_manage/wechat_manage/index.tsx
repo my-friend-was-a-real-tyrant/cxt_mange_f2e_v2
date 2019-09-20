@@ -209,7 +209,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
       content: `您确定要把该微信分配给${e.item.props.children}吗？`,
       onOk() {
         return fetch.put(`/apiv1/wx/updateWxConfigUser`, {
-          userId: e.key,
+          userId: parseInt(e.key),
           wxConfigIds: visibleRow && visibleRow.id.toString(),
         }).then((res: any) => {
           if (res.code === 20000) {
@@ -350,19 +350,19 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
                       </Select>
                     )}
                   </Form.Item>
-                  <Form.Item>
-                    <Select
-                      style={{width: 200}}
-                      onChange={(value: number) => distributeSeats(value)}
-                      placeholder='分配坐席'
-                      showSearch
-                      optionFilterProp="children"
-                      filterOption={(input: any, option: any) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-                      {user.map((u: any) => <Select.Option value={u.id} key={u.id}>
-                        {u.username}
-                      </Select.Option>)}
-                    </Select>
-                  </Form.Item>
+                  {/*<Form.Item>*/}
+                  {/*  <Select*/}
+                  {/*    style={{width: 200}}*/}
+                  {/*    onChange={(value: number) => distributeSeats(value)}*/}
+                  {/*    placeholder='分配坐席'*/}
+                  {/*    showSearch*/}
+                  {/*    optionFilterProp="children"*/}
+                  {/*    filterOption={(input: any, option: any) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>*/}
+                  {/*    {user.map((u: any) => <Select.Option value={u.id} key={u.id}>*/}
+                  {/*      {u.username}*/}
+                  {/*    </Select.Option>)}*/}
+                  {/*  </Select>*/}
+                  {/*</Form.Item>*/}
                 </Fragment> : null
             }
             <Form.Item>

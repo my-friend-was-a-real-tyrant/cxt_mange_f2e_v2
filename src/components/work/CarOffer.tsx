@@ -1,6 +1,6 @@
 import React, {useState, useEffect, FunctionComponent} from 'react'
 import {connect} from 'react-redux'
-import {Tabs, Form, Empty, message, Steps} from 'antd'
+import {Tabs, Form, Empty, message, Steps, Popover} from 'antd'
 import fetch from 'fetch/axios'
 import {Dispatch} from 'redux'
 import * as actions from 'store/actions/work'
@@ -86,9 +86,15 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
           return <div key={index + ''}>
             <Steps progressDot style={{marginTop: 10}} size="small" initial={1}>
               {offerItem.offerProgressList && offerItem.offerProgressList.map((v: any) =>
-                <Step title={v.msg} status={statusMap[v.status]}
-                      key={v.id}
-                      description={v.time ? moment(v.time).format('YY/MM/DD HH:mm') : ''}/>)}
+                <Step
+                  title={<Popover content={v.msg}>
+                    <div className="offer_title">
+                      {v.msg}
+                    </div>
+                  </Popover>}
+                  status={statusMap[v.status]}
+                  key={v.id}
+                  description={v.time ? moment(v.time).format('YY/MM/DD HH:mm') : ''}/>)}
             </Steps>
             <div className="car-offer-form">
               {
