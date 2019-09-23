@@ -15,6 +15,7 @@ import MyCustomer from 'pages/work_bench/my_customer/MyCustomer'
 import PhoneTask from 'pages/task_manage/phone_task';
 import WechatManage from 'pages/task_manage/wechat_manage';
 import ShortMessage from 'pages/task_manage/short_message';
+import CameraList from 'pages/task_manage/camera_list';
 // 数据管理
 import RobotDataManage from 'pages/data_manage/robot_data'
 import AgentDataManage from 'pages/data_manage/agent_data'
@@ -30,6 +31,7 @@ import Outbound from 'pages/report_form/outbound/Outbound'
 import ShortMessageReport from 'pages/report_form/short_message/ShortMessage'
 import OfferReport from 'pages/report_form/offer_report/OfferReport'
 import WechatReport from 'pages/report_form/wechat_report/WechatReport'
+import Camera from 'pages/report_form/camera/Camera'
 // 系统管理
 import CompanyInfo from 'pages/system_manage/company_info/CompanyInfo'
 import AccountManage from 'pages/system_manage/sub_account_manage/AccountManage'
@@ -56,12 +58,14 @@ const PageRouter = () => {
     <Route path="/app/phone_task" component={PhoneTask}/>
     <Route path="/app/wechat_manage" component={WechatManage}/>
     <Route path="/app/short_message" component={ShortMessage}/>
+    <Route path="/app/camera_list" component={CameraList}/>
     {/* 报表管理 */}
     <Route path="/app/follow_up" component={FollowUp}/>
     <Route path="/app/outbound" component={Outbound}/>
     <Route path="/app/short_message_report" component={ShortMessageReport}/>
     <Route path="/app/offer_report" component={OfferReport}/>
     <Route path="/app/wechat_report" component={WechatReport}/>
+    <Route path="/app/camera" component={Camera}/>
     {/*系统管理*/}
     <Route path="/app/company_info" component={CompanyInfo}/>
     <Route path="/app/permission_management" component={AccountManage}/>
