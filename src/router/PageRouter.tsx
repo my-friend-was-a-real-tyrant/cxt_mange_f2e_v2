@@ -11,6 +11,7 @@ import Home from 'pages/Home'
 import Work from 'pages/work_bench/work'
 import SearchCar from 'pages/work_bench/search_car'
 import MyCustomer from 'pages/work_bench/my_customer/MyCustomer'
+import BatchMsg from 'pages/work_bench/batch_msg'
 // 作业管理
 import PhoneTask from 'pages/task_manage/phone_task';
 import WechatManage from 'pages/task_manage/wechat_manage';
@@ -45,6 +46,7 @@ const PageRouter = () => {
     <Route path="/app/work" component={Work}/>
     <Route path="/app/search_car" component={SearchCar}/>
     <Route path="/app/my_customer" component={MyCustomer}/>
+    <Route path="/app/batch_msg" component={BatchMsg}/>
     {/* 数据管理 */}
     <Route exact path="/app/robot_data" component={RobotDataManage}/>
     <Route exact path="/app/agent_data" component={AgentDataManage}/>

@@ -1,6 +1,6 @@
 import React, {useState, useEffect, FunctionComponent} from 'react'
 import {connect} from 'react-redux'
-import {Tabs, Form, Empty, message, Steps} from 'antd'
+import {Tabs, Form, Empty, message, Steps, Popover} from 'antd'
 import fetch from 'fetch/axios'
 import {Dispatch} from 'redux'
 import * as actions from 'store/actions/work'
@@ -49,7 +49,13 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
       }
       fetch.post(`/apiv1/insurance/offer`, null, {params}).then((res: any) => {
         if (res.code === 20000 || res.code === 20003) {
-          setCarOffer(res.data)
+          const data = res.data || []
+          const newData = data.map((v: any) => ({
+            ...v,
+            offerDtos: v.offerDtos ? v.offerDtos : [],
+            offerProgressList: v.offerProgressList ? v.offerProgressList : []
+          }))
+          setCarOffer(newData)
         }
       })
     }
@@ -86,17 +92,23 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
           return <div key={index + ''}>
             <Steps progressDot style={{marginTop: 10}} size="small" initial={1}>
               {offerItem.offerProgressList && offerItem.offerProgressList.map((v: any) =>
-                <Step title={v.msg} status={statusMap[v.status]}
-                      key={v.id}
-                      description={v.time ? moment(v.time).format('YY/MM/DD HH:mm') : ''}/>)}
+                <Step
+                  title={<Popover content={v.msg}>
+                    <div className="offer_title">
+                      {v.msg}
+                    </div>
+                  </Popover>}
+                  status={statusMap[v.status]}
+                  key={v.id}
+                  description={v.time ? moment(v.time).format('YY/MM/DD HH:mm') : ''}/>)}
             </Steps>
             <div className="car-offer-form">
               {
-                !offerItem.offerDtos.length ? <Empty description="无报价结果"
+                !offerItem.offerDtos ? <Empty description="无报价结果"
                                                      image={`https://cxt.mjoys.com/api/1019/2019/9/10/2019091019563595t5cmW.png`}/> :
                   <Tabs size="small">
                     {
-                      offerItem.offerDtos.map((item: any, index: number) => {
+                      offerItem.offerDtos && offerItem.offerDtos.map((item: any, index: number) => {
                         return <Tabs.TabPane tab={`${item.insuranceCompanyName}-${item.schemeName}`} key={index + ''}>
                           <Form labelAlign="left">
                             <Form.Item label="车牌号" {...formItemLayout}>
@@ -145,7 +157,7 @@ const CarOffer: FunctionComponent<IProps> = (props) => {
                     }
                   </Tabs>
               }
-              {!offerItem.offerDtos.length ? null :
+              {offerItem.offerDtos && !offerItem.offerDtos.length ? null :
                 <div className="send-btn">
                   <div
                     className={`send-wechat ${wx ? '' : 'disabled'}`}

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, FunctionComponent, Fragment} from 'react';
-import {Tabs, Button, message, Modal, Upload, Icon, Form, Input, Select,} from 'antd'
+import {Tabs, Button, message, Modal, Upload, Icon, Form, Input, Select, Menu, Dropdown} from 'antd'
 import fetch from 'fetch/axios'
 import BaseTableComponent from 'components/BaseTableComponent'
 import {EditableCell, EditableFormRow} from "components/BaseEditCellComponent.js"
@@ -25,7 +25,7 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
   const {uploadShow, fileContent} = uploadInfo;
   const [user, setUser] = useState<Array<object>>([])
   const [selectedRowKeys, setSelectedRowKeys] = useState<Array<number | string>>([])
-
+  const [visibleRow, setVisibleRow] = useState<any>(null)
 
   useEffect(() => {
     getWechat()
@@ -75,15 +75,15 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
   }
 
   // 禁用微信
-  const handleDisabled = () => {
-    if (!selectedRowKeys || selectedRowKeys.length <= 0) return message.warning('请选择操作微信')
+  const handleDisabled = (id: number) => {
+    // if (!selectedRowKeys || selectedRowKeys.length <= 0) return message.warning('请选择操作微信')
     Modal.confirm({
       title: '提示',
       content: '当前操作不可恢复，您确定要继续么？',
       okType: 'danger',
       onOk() {
         const params = {
-          wxConfigIds: selectedRowKeys.join(','),
+          wxConfigIds: id,// selectedRowKeys.join(','),
           newStatus: 0,
         }
         return fetch.get(`/apiv1/wx/updateWxConfigStatus`, {params}).then((res: any) => {
@@ -103,16 +103,16 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
     })
   }
   // 解绑微信
-  const handleDelete = () => {
-    if (!selectedRowKeys || selectedRowKeys.length <= 0) return message.warning('请选择操作微信')
+  const handleDelete = (id: number) => {
+    // if (!selectedRowKeys || selectedRowKeys.length <= 0) return message.warning('请选择操作微信')
     Modal.confirm({
       title: '提示',
       content: '当前操作不可恢复，您确定要继续么？',
       okType: 'danger',
       onOk() {
-        return fetch.get(`/apiv1/wx/delWxConfigBindUser`, {params: {wxConfigIds: selectedRowKeys.join(',')}}).then((res: any) => {
+        return fetch.get(`/apiv1/wx/delWxConfigBindUser`, {params: {wxConfigIds: id}}).then((res: any) => {
           if (res.code === 20000) {
-            setSelectedRowKeys([])
+            // setSelectedRowKeys([])
             setSearch({...search, offset: 1})
             message.success('解绑成功')
           }
@@ -196,6 +196,32 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
     })
   }
 
+  const handleVisibleChange = (row: any) => {
+    console.log(row)
+    setVisibleRow(row)
+  }
+
+  // 分配坐席
+  const handleMenuClick = (e: any) => {
+    console.log(e)
+    Modal.confirm({
+      title: '提示',
+      content: `您确定要把该微信分配给${e.item.props.children}吗？`,
+      onOk() {
+        return fetch.put(`/apiv1/wx/updateWxConfigUser`, {
+          userId: parseInt(e.key),
+          wxConfigIds: visibleRow && visibleRow.id.toString(),
+        }).then((res: any) => {
+          if (res.code === 20000) {
+            setSearch({...search, offset: 1})
+            message.success('分配成功')
+            setSelectedRowKeys([])
+          }
+        })
+      }
+    })
+  }
+
   const handleTableChange = (pagination: any) => {
     setSearch({offset: pagination.current, limit: pagination.pageSize})
   }
@@ -245,7 +271,20 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
         {status === 1 ? '正常' : '禁用'}
       </span>
     },
-    {title: '登录设备', dataIndex: 'device'}
+    {title: '登录设备', dataIndex: 'device'},
+    {
+      title: '操作', width: 300, render: (row: any) => <>
+        <Button.Group>
+          <Dropdown overlay={menu} onVisibleChange={() => handleVisibleChange(row)}>
+            <Button>
+              分配坐席 <Icon type="down"/>
+            </Button>
+          </Dropdown>
+          <Button type="primary" onClick={() => handleDelete(row.id)}>解绑</Button>
+          <Button type="danger" onClick={() => handleDisabled(row.id)}>禁用</Button>
+        </Button.Group>
+      </>
+    }
   ]
 
   const rowSelection: object = {
@@ -282,9 +321,12 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
 
   const {getFieldDecorator} = props.form;
   const mjoysUser = JSON.parse(localStorage.getItem('mjoys_user') || '')
-  // let users: any[] = companies.filter((v: any) => v.accountId === mjoysUser.accountId)
-  // users = users.length ? users[0].users || [] : []
 
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      {user.map((v: any) => <Menu.Item key={v.id}>{v.username}</Menu.Item>)}
+    </Menu>
+  );
 
   return (
     <div style={{padding: '0 10px'}}>
@@ -308,30 +350,30 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
                       </Select>
                     )}
                   </Form.Item>
-                  <Form.Item>
-                    <Select
-                      style={{width: 200}}
-                      onChange={(value: number) => distributeSeats(value)}
-                      placeholder='分配坐席'
-                      showSearch
-                      optionFilterProp="children"
-                      filterOption={(input: any, option: any) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-                      {user.map((u: any) => <Select.Option value={u.id} key={u.id}>
-                        {u.username}
-                      </Select.Option>)}
-                    </Select>
-                  </Form.Item>
+                  {/*<Form.Item>*/}
+                  {/*  <Select*/}
+                  {/*    style={{width: 200}}*/}
+                  {/*    onChange={(value: number) => distributeSeats(value)}*/}
+                  {/*    placeholder='分配坐席'*/}
+                  {/*    showSearch*/}
+                  {/*    optionFilterProp="children"*/}
+                  {/*    filterOption={(input: any, option: any) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>*/}
+                  {/*    {user.map((u: any) => <Select.Option value={u.id} key={u.id}>*/}
+                  {/*      {u.username}*/}
+                  {/*    </Select.Option>)}*/}
+                  {/*  </Select>*/}
+                  {/*</Form.Item>*/}
                 </Fragment> : null
             }
             <Form.Item>
               <Button type="primary" onClick={() => setSearch({...search, offset: 1})}>搜索 </Button>
             </Form.Item>
-            <Form.Item>
-              <Button.Group>
-                <Button type="primary" onClick={() => handleDelete()}> 解绑坐席 </Button>
-                <Button type="danger" onClick={() => handleDisabled()}> 禁用微信 </Button>
-              </Button.Group>
-            </Form.Item>
+            {/*<Form.Item>*/}
+            {/*  <Button.Group>*/}
+            {/*    <Button type="primary" onClick={() => handleDelete()}> 解绑坐席 </Button>*/}
+            {/*    <Button type="danger" onClick={() => handleDisabled()}> 禁用微信 </Button>*/}
+            {/*  </Button.Group>*/}
+            {/*</Form.Item>*/}
           </Form>
           <BaseTableComponent
             columns={newColumns}
@@ -339,10 +381,10 @@ const WechatManage: FunctionComponent<FormComponentProps> = (props) => {
             components={components}
             total={result.total}
             loading={result.loading}
-            rowSelection={rowSelection}
+            // rowSelection={rowSelection}
             rowKey="id"
             offset
-            scroll={{x: 1550}}
+            scroll={{x: 1700}}
             onChange={handleTableChange}
             bordered/>
         </Tabs.TabPane>
