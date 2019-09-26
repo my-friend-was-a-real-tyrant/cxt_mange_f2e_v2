@@ -24,6 +24,7 @@ const SearchForm: FunctionComponent<IProps> = (props) => {
 
   const onSearch = () => {
     props.form.validateFields((err, values) => {
+
       props.onSearch(values)
     })
   }
@@ -32,7 +33,7 @@ const SearchForm: FunctionComponent<IProps> = (props) => {
   return (
     <div>
       <Form layout="inline">
-        <Form.Item label="场地编号">
+        {/*<Form.Item label="场地编号">
           {getFieldDecorator('seatId', {initialValue: ''})(
               <Select style={{width: 200}}>
                 <Select.Option value="" key="-1">全部坐席</Select.Option>
@@ -47,13 +48,23 @@ const SearchForm: FunctionComponent<IProps> = (props) => {
                 {props.user && props.user.map((v: any) => <Select.Option key={v.id} value={v.id}>{v.contact}</Select.Option>)}
               </Select>
           )}
-        </Form.Item>
-        <Form.Item label="车牌">
-          {getFieldDecorator('keyword', {initialValue: ''})(
-            <Input placeholder="请输入车牌/电话/姓名"/>
+        </Form.Item>*/}
+        <Form.Item label="">
+          {getFieldDecorator('address_code', {initialValue: ''})(
+            <Input placeholder="场地编号"/>
           )}
         </Form.Item>
-        <Form.Item label="日期">
+        <Form.Item label="">
+          {getFieldDecorator('license', {initialValue: ''})(
+            <Input placeholder="摄像头标号"/>
+          )}
+        </Form.Item>
+        <Form.Item label="">
+          {getFieldDecorator('code', {initialValue: ''})(
+            <Input placeholder="车牌"/>
+          )}
+        </Form.Item>
+        <Form.Item label="">
           {getFieldDecorator('time')(
             <DatePicker.RangePicker
               style={{width: 250}}
@@ -64,11 +75,12 @@ const SearchForm: FunctionComponent<IProps> = (props) => {
           )}
         </Form.Item>
 
-        <Form.Item label="报价是否成功">
-          {getFieldDecorator('followUpType', {initialValue: -1})(
-            <Select style={{width: 100}}>
-              <Select.Option value={-1}>是</Select.Option>
-              <Select.Option value={1}>否</Select.Option>
+        <Form.Item label="">
+          {getFieldDecorator('price_result', {initialValue:-1})(
+            <Select style={{width: 150}} >
+              <Select.Option value={-1}>是否报价成功</Select.Option>
+              <Select.Option value={1}>是</Select.Option>
+              <Select.Option value={0}>否</Select.Option>
             </Select>
           )}
         </Form.Item>

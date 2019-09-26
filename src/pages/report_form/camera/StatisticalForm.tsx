@@ -23,19 +23,21 @@ const StatisticalForm: FunctionComponent = () => {
   // 获取报表数据
   const getReport = () => {
     const params = {
-      ...time,
-      ...search,
-      accountId: localStorage.getItem('mjoys_account_id'),
+      // ...time,
+      // ...search,
+      // accountId: localStorage.getItem('access_token'),
     }
     setLoading(true)
-    fetch.get(`/apiv1/robot/rpt/followup/report/date?`, {params}).then((res: any) => {
+    fetch.get(`/apiv1/camera/submit-license-report?`, {params}).then((res: any) => {
       setLoading(false)
+      console.log(res)
       if (res.code === 20000 || res.code === 20003) {
         const data = res.data || []
-        data.forEach((v: any) => {
-          v.children = []
-        })
-        console.log(data)
+        // debugger
+        // data.forEach((v: any) => {
+        //   v.children = []
+        // })
+        // console.log(data)
         setResult({data: data, total: res.count})
       }
     })
@@ -75,19 +77,19 @@ const StatisticalForm: FunctionComponent = () => {
   }
 
   const columns = [
-    {title: '日期', dataIndex: 'recordTime'},
-    {title: '场地名称', dataIndex: 'teamName'},
-    {title: '摄像头编号', dataIndex: 'seatUsername'},
-    {title: '识别车牌PV', dataIndex: 'countAll'},
-    {title: '识别车牌UV', dataIndex: 'countMobile'},
-    {title: '投保期车牌UV', dataIndex: 'countWechat'},
-    {title: '报价次数', dataIndex: 'countShortMsg'},
-    {title: '成功报价次数', dataIndex: 'countShortMsg'},
+    {title: '日期', dataIndex: 'dtime'},
+    {title: '场地名称', dataIndex: 'address'},
+    {title: '摄像头编号', dataIndex: 'camera_id'},
+    {title: '识别车牌PV', dataIndex: 'PV'},
+    {title: '识别车牌UV', dataIndex: 'UV'},
+    {title: '投保期车牌UV', dataIndex: 'UV1'},
+    {title: '报价次数', dataIndex: 'cprice_submit'},
+    {title: '成功报价次数', dataIndex: 'cprice_result'},
   ]
 
   return (
       <div style={{padding: '0 20px'}}>
-        <Form layout="inline">
+        {/*<Form layout="inline">
           <Form.Item label="日期">
             <DatePicker.RangePicker
                 ranges={quickTimeSelect()}
@@ -110,11 +112,11 @@ const StatisticalForm: FunctionComponent = () => {
           <Form.Item>
             <Button type="primary" onClick={() => setSearch({...search, ...time, page: 1})}>搜索</Button>
           </Form.Item>
-        </Form>
+        </Form>*/}
         <BaseTableComponent
             expandedRowKeys={expandedRow}
             onExpandedRowsChange={(expandedRow: string[]) => setExpandedRow(expandedRow)}
-            rowKey={(row: any, index: number) => row.recordTime + row.seatUsername + row.teamName}
+            // rowKey={(row: any, index: number) => row.recordTime + row.seatUsername + row.teamName}
             indentSize={0}
             onExpand={(flag: boolean, record: any) => onEcpand(flag, record)}
             columns={columns}

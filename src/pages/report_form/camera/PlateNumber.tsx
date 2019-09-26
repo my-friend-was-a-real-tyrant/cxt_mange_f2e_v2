@@ -1,15 +1,18 @@
 import React, {useState, useEffect, FunctionComponent} from 'react'
 import fetch from 'fetch/axios'
 import BaseTableComponent from 'components/BaseTableComponent'
-
+import moment from 'moment'
 import {formatTime} from "utils/utils"
 import service from "fetch/service"
 import SearchForm from "./SearchForm";
 
 const followType = [
-  {title: '电话', type: 1},
-  {title: '微信', type: 2},
-  {title: '短信', type: 3},
+  {title: '已分配标价', type: 1},
+  {title: '未分配标价', type: 0}
+]
+const baojiaType = [
+  {title: '成功', type: 1},
+  {title: '失败', type: 0}
 ]
 const businessStatus = [
   {title: '沉默用户', type: 1},
@@ -37,11 +40,11 @@ const PlateNumber: FunctionComponent = () => {
   const getList = () => {
     const params = {
       ...search,
-      accountId: localStorage.getItem('mjoys_account_id'),
-      userId: localStorage.getItem('mjoys_user_id')
+      // accountId: localStorage.getItem('mjoys_account_id'),
+      // userId: localStorage.getItem('mjoys_user_id')
     }
     setLoading(true)
-    fetch.get(`/apiv1/robot/rpt/followup/record`, {params}).then((res: any) => {
+    fetch.get(`/apiv1/camera/get-license`, {params}).then((res: any) => {
       setLoading(false)
       if (res.code === 20000 || res.code === 20003) {
         setResult({data: res.data || [], total: res.count})
@@ -56,8 +59,8 @@ const PlateNumber: FunctionComponent = () => {
       page: 1,
       startTime: formatTime(values.time, 'YYYYMMDDHHmmss')[0],
       endTime: formatTime(values.time, 'YYYYMMDDHHmmss')[1],
-      appointStartTime: formatTime(values.nextTime, 'YYYYMMDDHHmmss')[0],
-      appointEndTime: formatTime(values.nextTime, 'YYYYMMDDHHmmss')[1],
+      // appointStartTime: formatTime(values.nextTime, 'YYYYMMDDHHmmss')[0],
+      // appointEndTime: formatTime(values.nextTime, 'YYYYMMDDHHmmss')[1],
     })
   }
 
@@ -66,13 +69,13 @@ const PlateNumber: FunctionComponent = () => {
   }
 
   const columns = [
-    {title: '场地编号', dataIndex: 'seatUsername'},
-    {title: '摄像头编号', dataIndex: 'license'},
-    {title: '识别车牌', dataIndex: 'mobile'},
-    {title: '图片', dataIndex: 'realname'},
-    {title: '识别时间', dataIndex: 'wechatAccountId'},
-    {title: '是否分配标价', dataIndex: 'timeOfFollowUp'},
-    {title: '报价是否成功', dataIndex: 'followUpType', render: (status: number) => followType[status - 1].title}
+    {title: '场地编号', dataIndex: 'address_code'},
+    {title: '摄像头编号', dataIndex: 'code'},
+    {title: '识别车牌', dataIndex: 'license'},
+    {title: '图片', dataIndex: 'pic'},
+    {title: '识别时间', dataIndex: 'time_create',render: (time: string) => time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''},
+    {title: '是否分配标价', dataIndex: 'price_submit',render: (status: number) => followType[status - 1].title},
+    {title: '报价是否成功', dataIndex: 'price_result',render: (status: number) => baojiaType[status - 1].title},
   ]
   return (
       <div style={{padding: '0 20px'}}>
