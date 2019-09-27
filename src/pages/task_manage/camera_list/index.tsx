@@ -49,22 +49,24 @@ const CameraList: FunctionComponent<IProps> = (props) => {
 
     // 获取短信模版
     const getMessage = (): void => {
-        const {page, pageSize, orderBy} = pageInfo;
-        const params = {
-            page,
-            pageSize,
-            // orderBy
-        }
-        setLoading(true)
-        fetch.get(`/apiv1/camera/list`, {params}).then((res: any) => {
-            console.log(res)
-            setLoading(false)
-            if (res.code === 20000 || res.code === 20003) {
-                setTotal(res.count || 0)
-                setMessageList(res.data || [])
-            } else {
-                setMessageList([])
+        const {page, pageSize} = pageInfo;
+        props.form.validateFields((err, values) => {
+            const params = {
+                page,
+                pageSize,
+                address_code:values.address_code,
+                seatId:values.seatId
             }
+            setLoading(true)
+            fetch.get(`/apiv1/camera/list`, {params}).then((res: any) => {
+                setLoading(false)
+                if (res.code === 20000 || res.code === 20003) {
+                    setTotal(res.count || 0)
+                    setMessageList(res.data || [])
+                } else {
+                    setMessageList([])
+                }
+            })
         })
     }
 
@@ -94,9 +96,9 @@ const CameraList: FunctionComponent<IProps> = (props) => {
                         "code": values.code,
                         "ip": values.ip,
                         "user_ids": values.user_ids.join(',') + '',
-                    }
+                    },
                 }
-                console.log(params)
+                // console.log(params)
                 let url = visible === 'edit' ? '/apiv1/camera/update' : '/apiv1/camera/add'
                 fetch[visible === 'edit' ? 'put' : 'post'](url, {...params[visible]}).then((res: any) => {
                     if (res.code === 20000) {
@@ -253,7 +255,7 @@ const CameraList: FunctionComponent<IProps> = (props) => {
                             )}
                         </Form.Item>
                         <Form.Item>
-                            <Button type="primary">搜索</Button>
+                            <Button type="primary" onClick={() => getMessage()}>搜索</Button>
                         </Form.Item>
                     </Form>
                     <BaseTableComponent
