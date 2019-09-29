@@ -11,8 +11,8 @@ const followType = [
   {title: '未分配标价', type: 0}
 ]
 const baojiaType = [
-  {title: '成功', type: 1},
-  {title: '失败', type: 0}
+  {title: '已成功', type: 1},
+  {title: '未成功', type: 0}
 ]
 const businessStatus = [
   {title: '沉默用户', type: 1},
@@ -74,8 +74,8 @@ const PlateNumber: FunctionComponent = () => {
     {title: '识别车牌', dataIndex: 'license'},
     {title: '图片', dataIndex: 'pic'},
     {title: '识别时间', dataIndex: 'time_create',render: (time: string) => time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''},
-    {title: '是否分配标价', dataIndex: 'price_submit',render: (status: number) => followType[status - 1].title},
-    {title: '报价是否成功', dataIndex: 'price_result',render: (status: number) => baojiaType[status - 1].title},
+    {title: '是否分配标价', dataIndex: 'price_submit',render: (status: number) => status ? followType[status].title:followType[1].title},
+    {title: '报价是否成功', dataIndex: 'price_result',render: (status: number) =>status? baojiaType[status].title:baojiaType[1].title},
   ]
   return (
       <div style={{padding: '0 20px'}}>
