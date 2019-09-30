@@ -24,7 +24,6 @@ const SearchForm: FunctionComponent<IProps> = (props) => {
 
   const onSearch = () => {
     props.form.validateFields((err, values) => {
-
       props.onSearch(values)
     })
   }

@@ -80,9 +80,10 @@ const StatisticalForm: FunctionComponent = () => {
     {title: '日期', dataIndex: 'dtime'},
     {title: '场地名称', dataIndex: 'address'},
     {title: '摄像头编号', dataIndex: 'camera_id'},
-    {title: '识别车牌PV', dataIndex: 'PV'},
-    {title: '识别车牌UV', dataIndex: 'UV'},
-    {title: '投保期车牌UV', dataIndex: 'UV1'},
+    {title: '识别车牌PV', dataIndex: 'cnum'},
+    {title: '识别车牌UV', dataIndex: 'cunum'},
+    {title: '查得车五项UV', dataIndex: 'cget_car_info_result'},
+    {title: '投保期车牌UV', dataIndex: 'cis_reg_data'},
     {title: '报价次数', dataIndex: 'cprice_submit'},
     {title: '成功报价次数', dataIndex: 'cprice_result'},
   ]
