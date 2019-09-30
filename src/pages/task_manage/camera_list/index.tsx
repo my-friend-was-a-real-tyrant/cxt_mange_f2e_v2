@@ -257,14 +257,15 @@ const CameraList: FunctionComponent<IProps> = (props) => {
     ]
     const {getFieldDecorator, resetFields} = props.form;
     // @ts-ignore
+    // @ts-ignore
     return (
         <div style={{padding: '0 10px'}}>
             <Tabs animated={false}
                   tabBarExtraContent={
-                      <Button type="primary" onClick={() =>
-                          // setEditRow(null)
+                      <Button type="primary" onClick={() =>{
                           setVisible('add')
-                      }>
+                          setEditRow(null)
+                      }}>
                           添加
                       </Button>
                   }>
